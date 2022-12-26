@@ -1,0 +1,31 @@
+{
+  "header": {
+    "specialty": "Chuyên Khoa",
+    "medical-facilities": "Cơ Sở Y Tế",
+    "doctor": "Bác Sĩ",
+    "examination-packs": "Gói Khám"
+  },
+  "home-page": {
+    "banner": {
+      "title1": "Sức khỏe hôm nay - Niềm tin ngày mai",
+      "title2": "Hãy để chúng tôi mang đến nụ cười cho bạn",
+      "search-placeholder": "Bác sĩ, bệnh viện...",
+      "search-btn": "Tìm kiếm"
+    },
+    "specialty": {
+      "title": "Chuyên Khoa",
+      "more-info": "Xem thêm"
+    },
+    "facility": {
+      "title": "Cơ sở y tế",
+      "more-info": "Xem thêm"
+    },
+    "doctor": {
+      "title": "Bác sĩ nổi bật",
+      "more-info": "Xem thêm"
+    }
+  },
+  "footer": {
+    "brand": "Cung cấp dịch vụ sức khỏe từ năm 2019"
+  }
+}

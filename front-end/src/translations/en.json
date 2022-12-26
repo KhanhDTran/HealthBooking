@@ -1,0 +1,31 @@
+{
+  "header": {
+    "specialty": "Specialty",
+    "medical-facilities": "Medical Facilities",
+    "doctor": "Doctors",
+    "examination-packs": "Examination Packs"
+  },
+  "home-page": {
+    "banner": {
+      "title1": "Confidence for the good life",
+      "title2": "Dedicated to Discovery - Committed to Care",
+      "search-placeholder": "Doctor, Specialty...",
+      "search-btn": "Search"
+    },
+    "specialty": {
+      "title": "Specialties",
+      "more-info": "More"
+    },
+    "facility": {
+      "title": "Medical Facility",
+      "more-info": "More"
+    },
+    "doctor": {
+      "title": "Outstanding Docotrs",
+      "more-info": "More"
+    }
+  },
+  "footer": {
+    "brand": " Providing reliable healthcare service since 1992"
+  }
+}
