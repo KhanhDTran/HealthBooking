@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import User from "../db/schemas/User.js";
-import { now } from "mongoose";
+import doten from "dotenv";
+import jwt from "jsonwebtoken";
+doten.config();
 let saltRounds = 10;
 
 export function createUserService(data) {
@@ -45,20 +47,38 @@ export function createUserService(data) {
 }
 
 export function loginService(data) {
-  console.log("login req.body.data: ", data);
+  console.log("login req.body --------------: ", data);
   return new Promise(async (resolve, reject) => {
     if (!data.email || !data.password) {
       resolve({ errCode: 1, message: "Missing Parameter" });
     }
     try {
-      let user = await User.findOne({ email: data.email });
+      let user = await User.findOne({ email: data.email }, [
+        "id",
+        "password",
+        "email",
+        "role",
+        "lastName",
+      ]);
       if (!user) {
         resolve({ errCode: 2, message: "User not exist" });
       } else {
         if (bcrypt.compareSync(data.password, user.password)) {
           delete user._doc.password;
-          user._doc.token = "token";
-          resolve({ errCode: 0, message: "Login Success", data: user });
+          
+          let token = jwt.sign(
+            {
+              data: "khanhdtran",
+            },
+            process.env.SECRET_JWT_STRING,
+            { expiresIn: "1h" }
+          );
+          resolve({
+            errCode: 0,
+            message: "Login Success",
+            user: user,
+            token: token,
+          });
         } else {
           resolve({ errCode: 3, message: "Wrong password" });
         }

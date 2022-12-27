@@ -1,12 +1,14 @@
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 async function changeLanguage(language) {
   i18next.changeLanguage(language).then(() => {});
 }
 
 export default function Header() {
+  let navigate = useNavigate();
   const { t } = useTranslation();
   return (
     <>
@@ -48,7 +50,12 @@ export default function Header() {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">
+          <a
+            className="btn btn-ghost normal-case text-xl"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <div className="w-10 rounded">
               <img src={logo} />
             </div>

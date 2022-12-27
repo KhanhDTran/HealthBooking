@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import specitalyImg1 from "../../../assets/images/xuongkhop.png";
+import specitalyImg1 from "../../../assets/images/specialties/xuongkhop.png";
 import Slider from "react-slick";
 
 export default function Specialty(props) {

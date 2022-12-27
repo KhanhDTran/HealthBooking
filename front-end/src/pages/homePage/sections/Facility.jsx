@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import specitalyImg1 from "../../../assets/images/xuongkhop.png";
+import specitalyImg1 from "../../../assets/images/facilities/benhvien.png";
 import Slider from "react-slick";
 
 export default function Facility(props) {
@@ -21,35 +21,35 @@ export default function Facility(props) {
           <Slider {...props.slickSettings}>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 1</h2>
+              <h2>Benh vien 1</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 2</h2>
+              <h2>Benh vien 2</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 3</h2>
+              <h2>Benh vien 3</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 4</h2>
+              <h2>Benh vien 4</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 5</h2>
+              <h2>Benh vien 5</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 6</h2>
+              <h2>Benh vien 6</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 7</h2>
+              <h2>Benh vien 7</h2>
             </div>
             <div>
               <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Xuong khop 8</h2>
+              <h2>Benh vien 8</h2>
             </div>
           </Slider>
         </div>

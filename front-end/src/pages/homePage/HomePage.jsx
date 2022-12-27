@@ -47,7 +47,9 @@ export default function HomePage() {
         <Header />
         <Banner />
         <Specialty slickSettings={slickSettings} />
+        <div className="divider h-20"></div>
         <Facility slickSettings={slickSettings} />
+        <div className="divider h-20"></div>
         <OutstandingDoctor slickSettings={slickSettings} />
         <Footer />
       </div>

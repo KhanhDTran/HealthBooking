@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
+import doctorImg from "../../../assets/images/doctors/doctor1.png";
 
 export default function OutstandingDoctor(props) {
   const { t } = useTranslation();
@@ -21,10 +22,7 @@ export default function OutstandingDoctor(props) {
         <Slider {...props.slickSettings}>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 1</h2>
@@ -33,10 +31,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl  ">Doctor 2</h2>
@@ -45,10 +40,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 3</h2>
@@ -57,10 +49,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 4</h2>
@@ -69,10 +58,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 5</h2>
@@ -81,10 +67,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 6</h2>
@@ -93,10 +76,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 7</h2>
@@ -105,10 +85,7 @@ export default function OutstandingDoctor(props) {
           </div>
           <div className=" bg-base-100 shadow-xl">
             <div className="items-center justify-items-center flex">
-              <img
-                className="image-doctor"
-                src="https://placeimg.com/192/192/people"
-              />
+              <img className="image-doctor" src={doctorImg} />
             </div>
             <div className="">
               <h2 className="doctor-title text-2xl ">Doctor 8</h2>

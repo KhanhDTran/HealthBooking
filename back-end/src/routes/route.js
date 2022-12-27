@@ -8,7 +8,7 @@ export function webRoute(app) {
     res.send("users page");
   });
 
-  router.post("/api/login", login)
+  router.post("/api/login", login);
 
   router.post("/api/create-user", createUser);
 

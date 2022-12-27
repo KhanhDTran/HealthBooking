@@ -2,11 +2,14 @@ import expess from "express";
 import bodyParser from "body-parser";
 import process from "process";
 import { webRoute } from "./routes/route.js";
-import doten from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
+import doten from "dotenv";
 doten.config();
 
 let app = expess();
+app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 mongoose.set("strictQuery", true);

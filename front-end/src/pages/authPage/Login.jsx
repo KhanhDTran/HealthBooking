@@ -1,21 +1,36 @@
 import logo from "../../assets/images/logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../store/actions/userAction";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [showPass, setShowPass] = useState(false);
+  const { logged_in } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
 
-  function handleLogin() {
+  async function handleLogin() {
     if (!email || !password) {
       toast.warning("Missing input");
     } else {
-      toast.success("Login");
+      dispatch(userLogin({ email, password }));
     }
   }
+  async function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      await handleLogin();
+    }
+  }
+  useEffect(() => {
+    if (logged_in) {
+      navigate("/system/admin");
+    }
+  }, [logged_in]);
 
-  console.log(showPass);
   return (
     <div data-theme="cupcake">
       <div className="hero min-h-screen bg-base-200">
@@ -29,7 +44,7 @@ export default function Login() {
             <span></span>
           </div>
           <div
-            className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+            className="card flex-shrink-0 w-ful max-w shadow-2xl bg-base-100"
             data-theme="light"
           >
             <div className="card-body">
@@ -44,19 +59,22 @@ export default function Login() {
                   className="input input-bordered"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e)}
                 />
               </div>
               <div className="form-control">
                 <label className="label" htmlFor="password">
                   <span className="label-text">Password</span>
-                </label>
+                </label>{" "}
                 <input
                   type={!showPass ? "password" : "text"}
                   id="password"
+                  autoComplete="off"
                   placeholder="Password"
-                  className="input input-bordered"
+                  className="input input-bordered md:w-96"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e)}
                 />
                 <i
                   className={
