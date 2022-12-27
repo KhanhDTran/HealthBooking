@@ -1,15 +1,16 @@
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/images/logo.png";
-
+import { useNavigate } from "react-router-dom";
 async function changeLanguage(language) {
   i18next.changeLanguage(language).then(() => {});
 }
 
-export default function SystemHeader() {
+export default function SystemHeader(props) {
+  let navigate = useNavigate();
   return (
     <>
-      <div className="navbar bg-base-100" data-theme="night">
+      <div className="navbar bg-base-100 sticky  top-0 z-30" data-theme="night">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -32,38 +33,26 @@ export default function SystemHeader() {
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a>Item 1</a>
-              </li>
               <li tabIndex={0}>
-                <a className="justify-between">
-                  Parent
-                  <svg
-                    className="fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-                  </svg>
-                </a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
+                <a></a>
               </li>
               <li>
-                <a>Item 3</a>
+                <a>doctor</a>
+              </li>
+              <li>
+                <a></a>
+              </li>
+              <li>
+                <a></a>
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">
-            {" "}
+          <a
+            className="btn btn-ghost normal-case text-xl"
+            onClick={() => {
+              navigate("/system/admin");
+            }}
+          >
             <div className="w-10 rounded">
               <img src={logo} />
             </div>
@@ -71,9 +60,10 @@ export default function SystemHeader() {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <span className="text-2xl">Admin Page</span>
+          <span className="text-2xl">{props.role && props.role} Page</span>
         </div>
         <div className="navbar-end">
+          <span> {props.lastName && props.lastName}</span>
           <select
             className="select-sm select select-bordered "
             data-theme=""

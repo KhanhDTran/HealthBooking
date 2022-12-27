@@ -29,8 +29,7 @@ export const userLogin = createAsyncThunk(
           autoClose: 3000,
         });
       }
-      // store user's token in local storage
-      //   localStorage.setItem("token", r.userToken);
+
       return res.data;
     } catch (e) {
       console.log(e);

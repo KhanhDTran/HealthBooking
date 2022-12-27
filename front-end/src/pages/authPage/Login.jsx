@@ -9,7 +9,7 @@ export default function Login() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [showPass, setShowPass] = useState(false);
-  const { logged_in } = useSelector((state) => state.user);
+  const { role } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -26,10 +26,13 @@ export default function Login() {
     }
   }
   useEffect(() => {
-    if (logged_in) {
+    if (role === "admin") {
       navigate("/system/admin");
     }
-  }, [logged_in]);
+    if (role === "doctor") {
+      navigate("/system/doctor");
+    }
+  }, [role]);
 
   return (
     <div data-theme="cupcake">

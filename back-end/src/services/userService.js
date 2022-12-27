@@ -65,7 +65,7 @@ export function loginService(data) {
       } else {
         if (bcrypt.compareSync(data.password, user.password)) {
           delete user._doc.password;
-          
+
           let token = jwt.sign(
             {
               data: "khanhdtran",
@@ -77,7 +77,7 @@ export function loginService(data) {
             errCode: 0,
             message: "Login Success",
             user: user,
-            token: token,
+            // token: token,
           });
         } else {
           resolve({ errCode: 3, message: "Wrong password" });
