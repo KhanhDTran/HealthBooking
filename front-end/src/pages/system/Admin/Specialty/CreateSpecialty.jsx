@@ -1,24 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import doctorImg from "../../../../assets/images/specialties/cotsong.png";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { toast } from "react-toastify";
+import { fetchCreateSpecialty } from "../../../../store/actions/specialtyAction";
+import { useDispatch, useSelector } from "react-redux";
+import { toBase64 } from "../../../../utils/CommonUtils";
 
 export default function CreateSpecialty(props) {
+  const dispatch = useDispatch();
   const mdParser = new MarkdownIt(/* Markdown-it options */);
   let [name, setName] = useState("");
   let [markdown, setMarkdown] = useState("");
   let [markdownHtml, setMarkdownHtml] = useState("");
-  let [img, setImg] = useState("");
+  let [img, setImg] = useState(null);
   let [imgUrl, setImgUrl] = useState("");
+  const { createSuccess } = useSelector((state) => state.specialty);
+
+  useEffect(() => {
+    if (createSuccess) {
+      setName("");
+      setMarkdown("");
+      setMarkdownHtml("");
+      setImg("");
+      setImgUrl("");
+      document.getElementById("img").value = "";
+    }
+  }, [createSuccess]);
   function handleEditorChange({ html, text }) {
     setMarkdown(text);
     setMarkdownHtml(html);
   }
 
-  function handleImgChange(file) {
-    setImg(file);
+  async function handleImgChange(file) {
+    let base64 = await toBase64(file);
+    if (base64) setImg(base64);
     setImgUrl(URL.createObjectURL(file));
   }
 
@@ -29,9 +46,9 @@ export default function CreateSpecialty(props) {
     } else return true;
   }
 
-  function createSpecialty() {
+  function handleCreate() {
     if (validateInput()) {
-      console.log("upload");
+      dispatch(fetchCreateSpecialty({ name, markdown, markdownHtml, img }));
     }
   }
 
@@ -95,6 +112,7 @@ export default function CreateSpecialty(props) {
             <div className="pt-4">
               <MdEditor
                 style={{ height: "500px" }}
+                value={markdown}
                 renderHTML={(text) => mdParser.render(text)}
                 onChange={handleEditorChange}
               />
@@ -131,7 +149,7 @@ export default function CreateSpecialty(props) {
               Cancel
             </label>
 
-            <button className="btn btn-primary ml-4" onClick={createSpecialty}>
+            <button className="btn btn-primary ml-4" onClick={handleCreate}>
               Create
             </button>
           </div>

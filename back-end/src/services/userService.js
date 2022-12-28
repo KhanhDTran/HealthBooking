@@ -32,8 +32,6 @@ export function createUserService(data) {
           phoneNumber: data.phoneNumber,
           role: data.role,
           position: data.position,
-          createdAt: Date.now(),
-          updateAt: Date.now(),
         });
         user.save().then(() => console.log("created a user, ", user));
         resolve({ errCode: 0, message: "Created user successful" });

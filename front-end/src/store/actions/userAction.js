@@ -9,7 +9,6 @@ export const userLogin = createAsyncThunk(
       const id = toast.loading("Loging in...");
       let res = await loginService(email, password);
       if (res && res.data.errCode === 0) {
-        console.log(res.data);
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("role", JSON.stringify(res.data.user.role));

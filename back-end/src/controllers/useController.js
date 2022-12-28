@@ -2,6 +2,7 @@ import { createUserService, loginService } from "../services/userService.js";
 
 export async function createUser(req, res) {
   try {
+    await delay(1000);
     let response = await createUserService(req.body);
     return res.status(200).json(response);
   } catch (e) {
