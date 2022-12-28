@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCreateClinic } from "../actions/clinicAction";
+import { fetchCreateSpecialty } from "../actions/specialtyAction";
 
 const initialState = {
-  createSuccess: 0,
+  createSpecialtySuccess: false,
 };
 
 const specialtySlice = createSlice({
@@ -10,9 +10,9 @@ const specialtySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCreateClinic.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchCreateSpecialty.fulfilled, (state, { payload }) => {
       if (payload.errCode === 0) {
-        state.createSuccess += 1;
+        state.createSpecialtySuccess = !state.createSpecialtySuccess;
       }
     });
   },

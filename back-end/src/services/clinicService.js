@@ -24,7 +24,7 @@ export function createClinicService(data) {
             address: data.address,
             markdown: data.markdown,
             markdownHtml: data.markdownHtml,
-            image: data.img,
+            image: data.image,
           });
           await clinic.save().then(() => {
             console.log("Create clinic success");

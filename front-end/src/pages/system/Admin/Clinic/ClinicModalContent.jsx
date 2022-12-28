@@ -1,8 +1,8 @@
-
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 
 export default function ClinicModalContent(props) {
+
   return (
     <>
       <div className=" md:container md:mx-auto flex flex-col ">
@@ -41,6 +41,7 @@ export default function ClinicModalContent(props) {
         </div>
         {/* Name Input */}
         {/* Description Input */}
+        <label htmlFor="">Description</label>
         <div className="pt-4">
           <MdEditor
             style={{ height: "500px" }}
@@ -57,13 +58,13 @@ export default function ClinicModalContent(props) {
               <img src={props.imgUrl} className="rounded-box" />
             </div>
           )}
-          <label htmlFor="img " className="hover:cursor-pointer">
+          <label htmlFor="img" className="hover:cursor-pointer">
             Image
           </label>
           <input
             type="file"
             accept=".png,.jpg"
-            id="img"
+            id="imgClinic"
             className="file-input file-input-bordered file-input-info w-full max-w-xs hover:cursor-pointer"
             onChange={(e) => props.handleImgChange(e.target.files[0])}
           />

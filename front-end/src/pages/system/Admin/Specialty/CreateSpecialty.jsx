@@ -15,7 +15,7 @@ export default function CreateSpecialty(props) {
   let [markdownHtml, setMarkdownHtml] = useState("");
   let [img, setImg] = useState(null);
   let [imgUrl, setImgUrl] = useState("");
-  const { createSuccess } = useSelector((state) => state.specialty);
+  const { createSpecialtySuccess } = useSelector((state) => state.specialty);
 
   useEffect(() => {
     setName("");
@@ -24,7 +24,8 @@ export default function CreateSpecialty(props) {
     setImg("");
     setImgUrl("");
     document.getElementById("img").value = "";
-  }, [createSuccess]);
+  }, [createSpecialtySuccess]);
+
   function handleEditorChange({ html, text }) {
     setMarkdown(text);
     setMarkdownHtml(html);

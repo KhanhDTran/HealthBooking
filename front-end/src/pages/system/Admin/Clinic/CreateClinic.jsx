@@ -17,6 +17,17 @@ export default function CreateClinic(props) {
   let [img, setImg] = useState(null);
   let [imgUrl, setImgUrl] = useState("");
 
+  const { createClinicSuccess } = useSelector((state) => state.clinic);
+  useEffect(() => {
+    setName("");
+    setMarkdown("");
+    setMarkdownHtml("");
+    setAddress("");
+    setImg("");
+    setImgUrl("");
+    document.getElementById("imgClinic").value = "";
+  }, [createClinicSuccess]);
+
   function handleEditorChange({ html, text }) {
     setMarkdown(text);
     setMarkdownHtml(html);
@@ -35,7 +46,7 @@ export default function CreateClinic(props) {
     } else return true;
   }
 
-  function handleCreate() {
+  function handleCreateClinic() {
     if (validateInput()) {
       dispatch(
         fetchCreateClinic({ name, address, markdown, markdownHtml, image: img })
@@ -100,7 +111,10 @@ export default function CreateClinic(props) {
             >
               Cancel
             </label>
-            <button className="btn btn-primary ml-4" onClick={handleCreate}>
+            <button
+              className="btn btn-primary ml-4"
+              onClick={handleCreateClinic}
+            >
               Create
             </button>
           </div>
