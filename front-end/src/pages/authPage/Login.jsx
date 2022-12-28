@@ -25,11 +25,22 @@ export default function Login() {
       await handleLogin();
     }
   }
+
+  let role_local = JSON.parse(localStorage.getItem("role"));
+  let user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    if (role === "admin") {
+    if (role_local && role_local === "ADMIN") {
       navigate("/system/admin");
     }
-    if (role === "doctor") {
+    if (role_local && role_local === "DOCTOR") {
+      navigate("/system/admin");
+    }
+  }, []);
+  useEffect(() => {
+    if (role === "ADMIN") {
+      navigate("/system/admin");
+    }
+    if (role === "DOCTOR") {
       navigate("/system/doctor");
     }
   }, [role]);

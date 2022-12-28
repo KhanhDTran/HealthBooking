@@ -2,10 +2,7 @@ import {
   createSpecialtyService,
   getSpecialtyHomeService,
 } from "../services/specialtyService.js";
-
-const delay = (delayInms) => {
-  return new Promise((resolve) => setTimeout(resolve, delayInms));
-};
+import { delay } from "../utils/commonUtils.js";
 
 export async function createSpecialty(req, res) {
   try {

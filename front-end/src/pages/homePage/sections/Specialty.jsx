@@ -41,7 +41,7 @@ export default function Specialty(props) {
               // console.log(`data:image/pmg;base64,${item.image.data}`);
               return (
                 <div key={item._id}>
-                  <img className="rounded-xl " src={item.image} />
+                  <img className="rounded-box " src={item.image} />
                   <h2>{item.name} </h2>
                 </div>
               );

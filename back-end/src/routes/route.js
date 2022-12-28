@@ -5,6 +5,9 @@ import {
   getSpecialtyHome,
 } from "../controllers/specialtyController.js";
 
+import { createClinic } from "../controllers/clinicController.js";
+import { getAllcode } from "../controllers/allcodeController.js";
+
 let router = expess.Router();
 
 export function webRoute(app) {
@@ -20,6 +23,12 @@ export function webRoute(app) {
   //Specialty
   router.post("/api/create-specialty", createSpecialty);
   router.get("/api/get-specialty-home", getSpecialtyHome);
+
+  //Clinic
+  router.post("/api/create-new-clinic", createClinic);
+
+  //AllCode
+  router.get("/api/get-allcode", getAllcode);
 
   return app.use("", router);
 }

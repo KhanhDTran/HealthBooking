@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import specitalyImg1 from "../../../assets/images/facilities/benhvien.png";
 import Slider from "react-slick";
 
-export default function Facility(props) {
+export default function Clinic(props) {
   const { t } = useTranslation();
 
   return (
@@ -11,10 +11,10 @@ export default function Facility(props) {
         <div className="pt-8 pb-8 flex justify-between">
           <span className="text-2xl font-medium pl-4">
             {" "}
-            {t("home-page.facility.title")}
+            {t("home-page.clinic.title")}
           </span>
           <button className="btn btn-outline btn-info mr-4">
-            {t("home-page.facility.more-info")}
+            {t("home-page.clinic.more-info")}
           </button>
         </div>
         <div className="container mx-auto  slider-container">

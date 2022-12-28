@@ -12,12 +12,11 @@ export default function Admin() {
       navigate("/login");
     }
   }, []);
-
   return (
     <Fragment>
-      {role === "admin" ? (
+      {role === "ADMIN" ? (
         <div>
-          <SystemHeader role="Admin" lastName={user.lastName} />
+          <SystemHeader role="ADMIN" lastName={user.lastName} />
           <div className="container mx-auto pt-4">
             <AdminGrid />
           </div>

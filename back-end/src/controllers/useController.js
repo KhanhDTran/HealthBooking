@@ -1,4 +1,5 @@
 import { createUserService, loginService } from "../services/userService.js";
+import { delay } from "../utils/commonUtils.js";
 
 export async function createUser(req, res) {
   try {
@@ -21,7 +22,3 @@ export async function login(req, res) {
     return res.status(200).json({ errCode: -1, message: "Error from server" });
   }
 }
-
-const delay = (delayInms) => {
-  return new Promise((resolve) => setTimeout(resolve, delayInms));
-};

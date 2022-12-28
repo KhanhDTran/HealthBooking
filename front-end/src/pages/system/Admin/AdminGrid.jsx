@@ -3,7 +3,7 @@ import CreateDoctor from "./Doctor/CreateDoctor";
 import CreateSpecialty from "./Specialty/CreateSpecialty";
 import { useEffect, useState } from "react";
 
-export default function AdminGrid(props) {
+export default function AdminGrid() {
   let [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     if (openModal) {

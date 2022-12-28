@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Header from "../../components/Header";
 import Specialty from "./sections/Specialty";
 import Banner from "./Banner";
-import Facility from "./sections/Facility";
+import Clinic from "./sections/Clinic";
 import OutstandingDoctor from "./sections/OutstandingDoctor";
 import Footer from "../../components/Footer";
 import "./HomePage.scss";
@@ -48,7 +48,7 @@ export default function HomePage() {
         <Banner />
         <Specialty slickSettings={slickSettings} />
         <div className="divider h-20"></div>
-        <Facility slickSettings={slickSettings} />
+        <Clinic slickSettings={slickSettings} />
         <div className="divider h-20"></div>
         <OutstandingDoctor slickSettings={slickSettings} />
         <Footer />
