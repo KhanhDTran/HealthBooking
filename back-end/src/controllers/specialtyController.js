@@ -1,4 +1,11 @@
-import { createSpecialtyService } from "../services/specialtyService.js";
+import {
+  createSpecialtyService,
+  getSpecialtyHomeService,
+} from "../services/specialtyService.js";
+
+const delay = (delayInms) => {
+  return new Promise((resolve) => setTimeout(resolve, delayInms));
+};
 
 export async function createSpecialty(req, res) {
   try {
@@ -11,6 +18,12 @@ export async function createSpecialty(req, res) {
   }
 }
 
-const delay = (delayInms) => {
-  return new Promise((resolve) => setTimeout(resolve, delayInms));
-};
+export async function getSpecialtyHome(req, res) {
+  try {
+    let response = await getSpecialtyHomeService();
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-specialty-home-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}

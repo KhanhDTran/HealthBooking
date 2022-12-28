@@ -12,9 +12,7 @@ const specialtySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCreateSpecialty.fulfilled, (state, { payload }) => {
       if (payload.errCode === 0) {
-        state.createSuccess = true;
-      } else {
-        state.createSuccess = false;
+        state.createSuccess = !state.createSuccess;
       }
     });
   },

@@ -10,8 +10,8 @@ doten.config();
 let app = expess();
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+app.use(bodyParser.json({ limit: "50mb" }));
 mongoose.set("strictQuery", true);
 mongoose.connect(process.env.MONGO_DB_URI);
 

@@ -1,9 +1,25 @@
 import { useTranslation } from "react-i18next";
-import specitalyImg1 from "../../../assets/images/specialties/xuongkhop.png";
 import Slider from "react-slick";
+import { useEffect } from "react";
+import { getSpecialtiesHome } from "../../../services/specialtyService";
+import { useState } from "react";
 
 export default function Specialty(props) {
   const { t } = useTranslation();
+  const [specialties, setSpecialties] = useState([]);
+
+  useEffect(() => {
+    fetchData().catch(console.error);
+  }, []);
+
+  const fetchData = async () => {
+    let res = await getSpecialtiesHome();
+    if (res && res.data.errCode === 0) {
+      setSpecialties(res.data.specialties);
+    }
+  };
+  console.log(specialties);
+
   return (
     <div data-theme="cupcake">
       <div className="container mx-auto">
@@ -19,38 +35,17 @@ export default function Specialty(props) {
       </div>
       <div className="container mx-auto  slider-container">
         <Slider {...props.slickSettings}>
-          <div>
-            <img src={specitalyImg1} className="rounded-box " alt="" />
-            <h2>Xuong khop 1</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 2</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 3</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 4</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 5</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 6</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 7</h2>
-          </div>
-          <div>
-            <img src={specitalyImg1} className="rounded-box" alt="" />
-            <h2>Xuong khop 8</h2>
-          </div>
+          {specialties &&
+            specialties.length > 0 &&
+            specialties.map((item) => {
+              // console.log(`data:image/pmg;base64,${item.image.data}`);
+              return (
+                <div key={item._id}>
+                  <img className="rounded-xl " src={item.image} />
+                  <h2>{item.name} </h2>
+                </div>
+              );
+            })}
         </Slider>
       </div>
     </div>

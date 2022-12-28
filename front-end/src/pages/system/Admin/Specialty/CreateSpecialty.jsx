@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { fetchCreateSpecialty } from "../../../../store/actions/specialtyAction";
 import { useDispatch, useSelector } from "react-redux";
 import { toBase64 } from "../../../../utils/CommonUtils";
-
 export default function CreateSpecialty(props) {
   const dispatch = useDispatch();
   const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -19,14 +18,12 @@ export default function CreateSpecialty(props) {
   const { createSuccess } = useSelector((state) => state.specialty);
 
   useEffect(() => {
-    if (createSuccess) {
-      setName("");
-      setMarkdown("");
-      setMarkdownHtml("");
-      setImg("");
-      setImgUrl("");
-      document.getElementById("img").value = "";
-    }
+    setName("");
+    setMarkdown("");
+    setMarkdownHtml("");
+    setImg("");
+    setImgUrl("");
+    document.getElementById("img").value = "";
   }, [createSuccess]);
   function handleEditorChange({ html, text }) {
     setMarkdown(text);

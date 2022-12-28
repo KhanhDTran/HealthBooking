@@ -6,7 +6,7 @@ const specialtySchema = new Schema(
     name: String,
     markdown: String,
     markdownHtml: String,
-    image: Buffer,
+    image: String,
   },
   {
     timestamps: true,

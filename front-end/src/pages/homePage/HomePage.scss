@@ -21,3 +21,27 @@
 .slick-slider {
   z-index: 10;
 }
+
+.slick-track {
+  display: flex !important;
+  img {
+    height: 200px;
+    width: 100%;
+  }
+  @media screen and (max-width: 600px) {
+    img {
+      height: 150px;
+      width: 100%;
+    }
+  }
+  @media screen and (min-width: 1270px) {
+    img {
+      height: 250px;
+      width: 100%;
+    }
+  }
+}
+
+.slick-slide {
+  // height: inherit !important;
+}

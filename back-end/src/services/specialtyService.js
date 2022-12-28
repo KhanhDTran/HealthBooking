@@ -1,5 +1,6 @@
 import Specialty from "../db/schemas/Specialty.js";
-export async function createSpecialtyService(data) {
+
+export function createSpecialtyService(data) {
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.name || !data.markdown || !data.markdownHtml || !data.img) {
@@ -22,6 +23,19 @@ export async function createSpecialtyService(data) {
             resolve({ errCode: 0, message: "Created specialty successful" });
           });
         }
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export function getSpecialtyHomeService() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let specialties = await Specialty.find({});
+      if (specialties) {
+        resolve({ errCode: 0, specialties });
       }
     } catch (e) {
       reject(e);

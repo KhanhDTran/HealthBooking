@@ -1,6 +1,9 @@
 import expess from "express";
 import { createUser, login } from "../controllers/useController.js";
-import { createSpecialty } from "../controllers/specialtyController.js";
+import {
+  createSpecialty,
+  getSpecialtyHome,
+} from "../controllers/specialtyController.js";
 
 let router = expess.Router();
 
@@ -16,5 +19,7 @@ export function webRoute(app) {
 
   //Specialty
   router.post("/api/create-specialty", createSpecialty);
+  router.get("/api/get-specialty-home", getSpecialtyHome);
+
   return app.use("", router);
 }

@@ -8,3 +8,7 @@ export function createSpecialtyService(name, markdown, markdownHtml, img) {
     img,
   });
 }
+
+export function getSpecialtiesHome() {
+  return instance.get("get-specialty-home");
+}
