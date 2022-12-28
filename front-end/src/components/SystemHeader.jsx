@@ -48,7 +48,7 @@ export default function SystemHeader(props) {
             </ul>
           </div>
           <a
-            className="btn btn-ghost normal-case text-xl"
+            className="btn btn-ghost normal-case text-md lg:text-xl"
             onClick={() => {
               navigate("/system/admin");
             }}
