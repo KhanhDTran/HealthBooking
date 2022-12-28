@@ -1,6 +1,7 @@
 import Clinic from "../db/schemas/Clinic.js";
 
 export function createClinicService(data) {
+  console.log(data);
   return new Promise(async (resolve, reject) => {
     try {
       if (

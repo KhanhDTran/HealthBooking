@@ -1,4 +1,5 @@
 import { createClinicService } from "../services/clinicService.js";
+import { delay } from "../utils/commonUtils.js";
 
 export async function createClinic(req, res) {
   try {

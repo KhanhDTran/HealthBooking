@@ -1,6 +1,7 @@
 import doctorImg from "../../../assets/images/doctors/admindoctor.png";
 import CreateDoctor from "./Doctor/CreateDoctor";
 import CreateSpecialty from "./Specialty/CreateSpecialty";
+import CreateClinic from "./Clinic/CreateClinic";
 import { useEffect, useState } from "react";
 
 export default function AdminGrid() {
@@ -43,6 +44,9 @@ export default function AdminGrid() {
         {/* --------------------------------Edit doctors ----------------------------------- */}
         {/* --------------------------------create specialty ----------------------------------- */}
         <CreateSpecialty setOpenModal={setOpenModal} />
+        {/* --------------------------------create specialty ----------------------------------- */}
+        {/* --------------------------------create specialty ----------------------------------- */}
+        <CreateClinic setOpenModal={setOpenModal} />
         {/* --------------------------------create specialty ----------------------------------- */}
       </div>
     </div>

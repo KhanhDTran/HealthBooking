@@ -5,8 +5,8 @@ const initialState = {
   createSuccess: 0,
 };
 
-const specialtySlice = createSlice({
-  name: "specialty",
+const clinicSlice = createSlice({
+  name: "clinic",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -17,4 +17,4 @@ const specialtySlice = createSlice({
     });
   },
 });
-export default specialtySlice.reducer;
+export default clinicSlice.reducer;

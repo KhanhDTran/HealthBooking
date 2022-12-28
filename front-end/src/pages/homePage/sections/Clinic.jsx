@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import specitalyImg1 from "../../../assets/images/facilities/benhvien.png";
+import specitalyImg1 from "../../../assets/images/clinics/benhvien.png";
 import Slider from "react-slick";
 
 export default function Clinic(props) {
