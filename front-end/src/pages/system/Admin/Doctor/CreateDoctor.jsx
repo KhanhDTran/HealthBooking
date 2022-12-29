@@ -15,7 +15,7 @@ export default function CreateDoctor(props) {
         }}
       >
         <figure className="px-10 pt-10">
-          <img src={doctorImg} alt="Shoes" className="rounded-xl" />
+          <img src={doctorImg} alt="Shoes" className="rounded-box" />
         </figure>
         <div className="card-body items-center text-center">
           <h2 className="card-title">Doctors</h2>

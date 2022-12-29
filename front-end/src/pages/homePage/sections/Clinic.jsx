@@ -1,10 +1,26 @@
 import { useTranslation } from "react-i18next";
 import specitalyImg1 from "../../../assets/images/clinics/benhvien.png";
 import Slider from "react-slick";
+import { useEffect } from "react";
+import { getClinicsHome } from "../../../services/clinicService";
+import { useState } from "react";
 
 export default function Clinic(props) {
   const { t } = useTranslation();
+  const [clinics, setClinics] = useState([]);
 
+  useEffect(() => {
+    fetchClinics().catch();
+  }, []);
+
+  const fetchClinics = async () => {
+    let res = await getClinicsHome();
+    if (res && res.data.errCode === 0) {
+      setClinics(res.data.clinics);
+    }
+  };
+
+  console.log(clinics);
   return (
     <div>
       <div className="container mx-auto">
@@ -19,38 +35,17 @@ export default function Clinic(props) {
         </div>
         <div className="container mx-auto  slider-container">
           <Slider {...props.slickSettings}>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 1</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 2</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 3</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 4</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 5</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 6</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 7</h2>
-            </div>
-            <div>
-              <img src={specitalyImg1} className="rounded-box" alt="" />
-              <h2>Benh vien 8</h2>
-            </div>
+            {clinics &&
+              clinics.length > 0 &&
+              clinics.map((item) => {
+                // console.log(`data:image/pmg;base64,${item.image.data}`);
+                return (
+                  <div key={item._id}>
+                    <img className="rounded-box " src={item.image} />
+                    <h2>{item.name} </h2>
+                  </div>
+                );
+              })}
           </Slider>
         </div>
       </div>

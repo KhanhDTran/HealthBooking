@@ -37,3 +37,14 @@ export function createClinicService(data) {
     }
   });
 }
+
+export function getClinicHomeService() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let clinics = await Clinic.find();
+      resolve({ errCode: 0, clinics });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}

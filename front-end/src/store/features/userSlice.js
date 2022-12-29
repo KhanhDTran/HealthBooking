@@ -1,9 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { userLogin } from "../actions/userAction";
 
+let logged_in = localStorage.getItem("logged_in")
+  ? JSON.parse(localStorage.getItem("logged_in"))
+  : false;
+
+let role = localStorage.getItem("role")
+  ? JSON.parse(localStorage.getItem("role"))
+  : "";
+
+let user = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : null;
+
 const initialState = {
-  logged_in: false,
-  role: "",
+  logged_in,
+  role,
+  user,
 };
 
 const userSlice = createSlice({

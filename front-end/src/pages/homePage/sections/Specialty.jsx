@@ -9,7 +9,7 @@ export default function Specialty(props) {
   const [specialties, setSpecialties] = useState([]);
 
   useEffect(() => {
-    fetchData().catch(console.error);
+    fetchData().catch();
   }, []);
 
   const fetchData = async () => {
@@ -18,7 +18,6 @@ export default function Specialty(props) {
       setSpecialties(res.data.specialties);
     }
   };
-  console.log(specialties);
 
   return (
     <div data-theme="cupcake">

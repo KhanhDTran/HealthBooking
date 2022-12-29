@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import clinicImg from "../../../../assets/images/clinics/benhvien.png";
+import clinicImg from "../../../../assets/images/clinics/laokhoa.jpg";
 import ClinicModalContent from "./ClinicModalContent";
 import MarkdownIt from "markdown-it";
 import { toBase64 } from "../../../../utils/CommonUtils";
@@ -64,8 +64,8 @@ export default function CreateClinic(props) {
           props.setOpenModal(true);
         }}
       >
-        <figure className="px-10 pt-10">
-          <img src={clinicImg} alt="Shoes" className="rounded-xl" />
+        <figure className="px-10 pt-10 h-4/6">
+          <img src={clinicImg} alt="Shoes" className="rounded-box " />
         </figure>
         <div className="card-body items-center text-center">
           <h2 className="card-title">Clinic</h2>

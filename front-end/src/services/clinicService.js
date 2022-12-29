@@ -15,3 +15,7 @@ export function createClinicService(
     image,
   });
 }
+
+export function getClinicsHome() {
+  return instance.get("get-clinic-home");
+}

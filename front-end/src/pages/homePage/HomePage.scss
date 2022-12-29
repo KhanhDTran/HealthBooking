@@ -1,6 +1,10 @@
 .slick-slide {
   padding: 0 10px;
   text-align: center;
+  *:focus {
+    outline: 0;
+    outline: none;
+  }
 }
 
 .slider-container {
@@ -21,6 +25,7 @@
 
 .slick-slider {
   z-index: 10;
+  outline: none;
 }
 
 .slick-track {
