@@ -1,32 +1,62 @@
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
+import Select from "react-select";
+import { useEffect, useState } from "react";
 
 export default function ClinicModalContent(props) {
+  const [isClearable, setIsClearable] = useState(true);
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      height: 46,
+      minHeight: 35,
+    }),
+  };
 
   return (
     <>
       <div className=" md:container md:mx-auto flex flex-col ">
-        {/* Name Input */}
-        <div>
-          <div className="form-control w-full ">
-            <label className="label" htmlFor="name">
-              <span className="label-text">Name</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Name"
-              value={props.name}
-              onChange={(e) => props.setName(e.target.value)}
-              className="input input-bordered w-full "
-            />
+        <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+          {/* Name Input */}
+          <div className="w-ful md:w-1/2">
+            <div className="form-control w-ful">
+              <label className="label" htmlFor="name">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Name"
+                value={props.name}
+                onChange={(e) => props.setName(e.target.value)}
+                className="input input-bordered w-full "
+              />
+            </div>
           </div>
+          {/* Name Input */}
+          {/* Province Input */}
+          <div className="w-ful md:w-1/2">
+            <div className="form-control w-ful">
+              <label className="label" htmlFor="province">
+                <span className="label-text">Province</span>
+              </label>
+              <div className="form-control">
+                <Select
+                  isClearable={isClearable}
+                  styles={customStyles}
+                  value={props.selectedProvince ? props.selectedProvince : null}
+                  onChange={props.setSelectedProvince}
+                  options={props.provinceOptions}
+                />
+              </div>
+            </div>
+          </div>
+          {/* Province Input */}
         </div>
-        {/* Name Input */}
-        {/* Name Input */}
+        {/* Address Input */}
         <div>
           <div className="form-control w-full ">
-            <label className="label" htmlFor="name">
+            <label className="label" htmlFor="address">
               <span className="label-text">Address</span>
             </label>
             <input
@@ -39,7 +69,7 @@ export default function ClinicModalContent(props) {
             />
           </div>
         </div>
-        {/* Name Input */}
+        {/* Address Input */}
         {/* Description Input */}
         <label htmlFor="">Description</label>
         <div className="pt-4">

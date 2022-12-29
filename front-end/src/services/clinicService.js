@@ -2,6 +2,7 @@ import { instance } from "./instance";
 
 export function createClinicService(
   name,
+  provinceId,
   address,
   markdown,
   markdownHtml,
@@ -9,6 +10,7 @@ export function createClinicService(
 ) {
   return instance.post("/create-new-clinic", {
     name,
+    provinceId,
     address,
     markdown,
     markdownHtml,
@@ -17,5 +19,5 @@ export function createClinicService(
 }
 
 export function getClinicsHome() {
-  return instance.get("get-clinic-home");
+  return instance.post("get-clinic-home");
 }

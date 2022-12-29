@@ -40,7 +40,10 @@ export default function Clinic(props) {
               clinics.map((item) => {
                 // console.log(`data:image/pmg;base64,${item.image.data}`);
                 return (
-                  <div key={item._id}>
+                  <div
+                    key={item._id}
+                    className="hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
+                  >
                     <img className="rounded-box " src={item.image} />
                     <h2>{item.name} </h2>
                   </div>

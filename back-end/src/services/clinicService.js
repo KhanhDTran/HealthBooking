@@ -6,6 +6,7 @@ export function createClinicService(data) {
     try {
       if (
         !data.name ||
+        !data.provinceId ||
         !data.address ||
         !data.markdown ||
         !data.markdownHtml ||
@@ -21,6 +22,7 @@ export function createClinicService(data) {
         } else {
           let clinic = await Clinic.create({
             name: data.name.trim(),
+            provinceId: data.provinceId,
             address: data.address,
             markdown: data.markdown,
             markdownHtml: data.markdownHtml,

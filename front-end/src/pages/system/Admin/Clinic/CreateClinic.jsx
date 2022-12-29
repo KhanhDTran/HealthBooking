@@ -6,6 +6,7 @@ import { toBase64 } from "../../../../utils/CommonUtils";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchCreateClinic } from "../../../../store/actions/clinicAction";
+import { fetchProvinceOptions } from "../../../../store/actions/allcodeAction";
 
 export default function CreateClinic(props) {
   const dispatch = useDispatch();
@@ -16,8 +17,11 @@ export default function CreateClinic(props) {
   let [markdownHtml, setMarkdownHtml] = useState("");
   let [img, setImg] = useState(null);
   let [imgUrl, setImgUrl] = useState("");
-
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [provinceOptions, setProvinceOptions] = useState([]);
   const { createClinicSuccess } = useSelector((state) => state.clinic);
+  const { provinces } = useSelector((state) => state.allcode);
+
   useEffect(() => {
     setName("");
     setMarkdown("");
@@ -25,8 +29,17 @@ export default function CreateClinic(props) {
     setAddress("");
     setImg("");
     setImgUrl("");
+    setSelectedProvince(null);
     document.getElementById("imgClinic").value = "";
   }, [createClinicSuccess]);
+
+  useEffect(() => {
+    dispatch(fetchProvinceOptions());
+  }, []);
+
+  useEffect(() => {
+    setProvinceOptions(provinces);
+  }, [provinces]);
 
   function handleEditorChange({ html, text }) {
     setMarkdown(text);
@@ -40,7 +53,7 @@ export default function CreateClinic(props) {
   }
 
   function validateInput() {
-    if (!name || !markdown || !img || !address) {
+    if (!name || !markdown || !img || !address || !selectedProvince) {
       toast.warning("Missing iput");
       return false;
     } else return true;
@@ -49,7 +62,14 @@ export default function CreateClinic(props) {
   function handleCreateClinic() {
     if (validateInput()) {
       dispatch(
-        fetchCreateClinic({ name, address, markdown, markdownHtml, image: img })
+        fetchCreateClinic({
+          name,
+          provinceId: selectedProvince.value,
+          address,
+          markdown,
+          markdownHtml,
+          image: img,
+        })
       );
     }
   }
@@ -101,6 +121,9 @@ export default function CreateClinic(props) {
             img={img}
             imgUrl={imgUrl}
             handleImgChange={handleImgChange}
+            selectedProvince={selectedProvince}
+            setSelectedProvince={setSelectedProvince}
+            provinceOptions={provinceOptions}
           />
           {/* <--------------------- Modal content here --------------------> */}
           <div className="modal-action">

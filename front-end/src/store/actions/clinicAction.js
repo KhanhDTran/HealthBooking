@@ -4,11 +4,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchCreateClinic = createAsyncThunk(
   "clinic/create",
-  async ({ name, address, markdown, markdownHtml, image }) => {
+  async ({ name, provinceId, address, markdown, markdownHtml, image }) => {
     try {
       const id = toast.loading("Creating clinic...");
       let res = await createClinicService(
         name,
+        provinceId,
         address,
         markdown,
         markdownHtml,
