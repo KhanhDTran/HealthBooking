@@ -92,7 +92,41 @@ export default function ModalCreateUser(props) {
           </div>
           {/* lastName Input */}
         </div>
+        {/* ----------------------------- */}
 
+        <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+          {/* gender Input */}
+          <div className="w-ful md:w-1/2">
+            <div className="form-control w-ful">
+              <label className="label" htmlFor="gender">
+                <span className="label-text">Gender</span>
+              </label>
+            </div>
+            <Select
+              isClearable={isClearable}
+              styles={customStyles}
+              value={props.selectedGender ? props.selectedGender : null}
+              onChange={props.setSelectedGender}
+              options={props.genderOptions}
+            />
+          </div>
+          {/* gender Input */}
+          {/* role Input */}
+          <div className="w-ful md:w-1/2">
+            <div className="form-control w-ful">
+              <label className="label" htmlFor="role">
+                <span className="label-text">Role</span>
+              </label>
+            </div>
+            <Select
+              isClearable={isClearable}
+              styles={customStyles}
+              value={props.selectedRole ? props.selectedRole : null}
+              onChange={props.setSelectedRole}
+              options={props.roleOptions}
+            />
+          </div>
+        </div>
         {/* ---------------------------- */}
         <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
           {/* address Input */}
@@ -132,41 +166,10 @@ export default function ModalCreateUser(props) {
         </div>
         {/* ---------------------------- */}
 
-        <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
-          {/* gender Input */}
-          <div className="w-ful md:w-1/2">
-            <div className="form-control w-ful">
-              <label className="label" htmlFor="gender">
-                <span className="label-text">Gender</span>
-              </label>
-            </div>
-            <Select
-              isClearable={isClearable}
-              styles={customStyles}
-              value={props.selectedGender ? props.selectedGender : null}
-              onChange={props.setSelectedGender}
-              options={props.genderOptions}
-            />
-          </div>
-          {/* gender Input */}
-          {/* role Input */}
-          <div className="w-ful md:w-1/2">
-            <div className="form-control w-ful">
-              <label className="label" htmlFor="role">
-                <span className="label-text">Role</span>
-              </label>
-            </div>
-            <Select
-              isClearable={isClearable}
-              styles={customStyles}
-              value={props.selectedRole ? props.selectedRole : null}
-              onChange={props.setSelectedRole}
-              options={props.roleOptions}
-            />
-          </div>
-          {/* role Input */}
-          {/* position Input */}
-          <div className="w-ful md:w-1/2">
+        {/* role Input */}
+        {/* --------------------------------- */}
+        {/* position Input */}
+        {/* <div className="w-ful md:w-1/2">
             <div className="form-control w-ful">
               <label className="label" htmlFor="role">
                 <span className="label-text">Position</span>
@@ -179,14 +182,13 @@ export default function ModalCreateUser(props) {
               onChange={props.setSelectedPosition}
               options={props.positionOptions}
             />
-          </div>
-          {/* position Input */}
-        </div>
+          </div> */}
+        {/* position Input */}
 
         {/* ---------------------------- */}
 
         {/* Image Input */}
-        <div className="pt-4 flex justify-center gap-x-4 flex-col">
+        {/* <div className="pt-4 flex justify-center gap-x-4 flex-col">
           {props.img && (
             <div className="carousel-item h-58 w-72 border-slate-300">
               <img src={props.imgUrl} className="rounded-box" />
@@ -202,7 +204,7 @@ export default function ModalCreateUser(props) {
             className="file-input file-input-bordered file-input-info w-full max-w-xs hover:cursor-pointer"
             onChange={(e) => props.handleImgChange(e.target.files[0])}
           />
-        </div>
+        </div> */}
 
         {/* Image Input */}
       </div>

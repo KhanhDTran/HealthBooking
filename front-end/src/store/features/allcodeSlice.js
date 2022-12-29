@@ -22,7 +22,6 @@ const allcodeSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(fetchProvinceOptions.fulfilled, (state, { payload }) => {
-      console.log(payload);
       if (payload) {
         state.provinces = payload;
       }

@@ -46,8 +46,6 @@ export function createUserService(data) {
           address: data.address,
           phoneNumber: data.phoneNumber,
           role: data.role,
-          position: data.position,
-          image: data.image,
         });
         user.save().then(() => console.log("created a user, ", user));
         resolve({ errCode: 0, message: "Created user successful" });
@@ -79,12 +77,10 @@ export function loginService(data) {
       } else {
         if (bcrypt.compareSync(data.password, user.password)) {
           delete user._doc.password;
-
           resolve({
             errCode: 0,
             message: "Login Success",
             user: user,
-            // token: token,
           });
         } else {
           resolve({ errCode: 3, message: "Wrong password" });

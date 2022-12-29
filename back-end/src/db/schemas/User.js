@@ -12,7 +12,6 @@ const userSchema = new Schema(
     phoneNumber: String,
     role: { type: Schema.Types.ObjectId, ref: "Allcode" },
     position: { type: Schema.Types.ObjectId, ref: "Allcode" },
-    image: String,
   },
   {
     timestamps: true,

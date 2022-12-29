@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import userImg from "../../../../assets/images/user.jpg";
 import { toast } from "react-toastify";
 import ModalCreateUser from "./ModalCreateUser";
-import { toBase64 } from "../../../../utils/CommonUtils";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCreateUserOptions } from "../../../../store/actions/allcodeAction";
 import { fetchCreateUser } from "../../../../store/actions/userAction";
@@ -14,24 +13,14 @@ export default function CreateUser(props) {
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  let [img, setImg] = useState(null);
-  let [imgUrl, setImgUrl] = useState("");
   const [selectedGender, setSelectedGender] = useState(null);
   const [genderOptions, setGenderOptions] = useState([]);
   const [selectedRole, setSelectedRole] = useState(null);
   const [roleOptions, setRoleOptions] = useState([]);
-  const [selectedPosition, setSelectedPosition] = useState(null);
-  const [positionOptions, setpositionOptions] = useState([]);
 
   const dispatch = useDispatch();
-  const { roles, genders, positions } = useSelector((state) => state.allcode);
+  const { roles, genders } = useSelector((state) => state.allcode);
   const { createUserSuccess } = useSelector((state) => state.user);
-
-  async function handleImgChange(file) {
-    let base64 = await toBase64(file);
-    if (base64) setImg(base64);
-    setImgUrl(URL.createObjectURL(file));
-  }
 
   useEffect(() => {
     setEmail("");
@@ -41,12 +30,8 @@ export default function CreateUser(props) {
     setAddress("");
     setPhoneNumber("");
     setAddress("");
-    setImg("");
-    setImgUrl("");
     setSelectedGender(null);
-    setSelectedPosition(null);
     setSelectedRole(null);
-    document.getElementById("imgCreateUser").value = "";
   }, [createUserSuccess]);
 
   useEffect(() => {
@@ -56,7 +41,6 @@ export default function CreateUser(props) {
   useEffect(() => {
     setGenderOptions(genders);
     setRoleOptions(roles);
-    setpositionOptions(positions);
   }, [roles]);
 
   function handleCreateUser() {
@@ -70,9 +54,7 @@ export default function CreateUser(props) {
           phoneNumber,
           address,
           role: selectedRole.value,
-          position: selectedPosition ? selectedPosition.value : "",
           gender: selectedGender.value,
-          image: img,
         })
       );
     }
@@ -140,19 +122,13 @@ export default function CreateUser(props) {
             firstName={firstName}
             lastName={lastName}
             setLastName={setLastName}
-            imgUrl={imgUrl}
-            img={img}
-            handleImgChange={handleImgChange}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
             selectedGender={selectedGender}
             setSelectedGender={setSelectedGender}
-            selectedPosition={selectedPosition}
             selectedRole={selectedRole}
-            setSelectedPosition={setSelectedPosition}
             setSelectedRole={setSelectedRole}
             genderOptions={genderOptions}
-            positionOptions={positionOptions}
             roleOptions={roleOptions}
           />
 

@@ -19,5 +19,5 @@ export function createClinicService(
 }
 
 export function getClinicsHome() {
-  return instance.post("get-clinic-home");
+  return instance.get("/get-clinic-home");
 }
