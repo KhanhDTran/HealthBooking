@@ -13,9 +13,9 @@ export default function Doctor() {
 
   return (
     <Fragment>
-      {role === "DOCTOR" ? (
+      {role === "R2" ? (
         <div>
-          <SystemHeader role="DOCTOR" />
+          <SystemHeader role="Doctor" />
           <div className="doctor">
             <div>doctor</div>
           </div>

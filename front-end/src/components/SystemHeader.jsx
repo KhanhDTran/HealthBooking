@@ -1,10 +1,5 @@
-import i18next from "i18next";
-import { useTranslation } from "react-i18next";
 import logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-async function changeLanguage(language) {
-  i18next.changeLanguage(language).then(() => {});
-}
 
 export default function SystemHeader(props) {
   let navigate = useNavigate();
@@ -64,17 +59,17 @@ export default function SystemHeader(props) {
         </div>
         <div className="navbar-end">
           <span> {props.lastName && props.lastName}</span>
-          <select
-            className="select-sm select select-bordered "
-            data-theme=""
-            value={i18next.language}
-            onChange={(e) => {
-              changeLanguage(e.target.value);
+          <a
+            className="btn btn-ghost normal-case text-md lg:text-xl"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/login");
             }}
           >
-            <option value="vi">VN</option>
-            <option value="en">EN</option>
-          </select>
+            <div className="w-10 rounded">
+              <i className="fa-solid fa-right-from-bracket"></i>
+            </div>
+          </a>
         </div>
       </div>
     </>

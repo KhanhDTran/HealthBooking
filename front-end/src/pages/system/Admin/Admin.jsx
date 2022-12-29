@@ -14,9 +14,9 @@ export default function Admin() {
   }, []);
   return (
     <Fragment>
-      {role === "ADMIN" ? (
+      {role === "R1" ? (
         <div>
-          <SystemHeader role="ADMIN" lastName={user.lastName} />
+          <SystemHeader role="Admin" lastName={user.lastName} />
           <div className="container mx-auto pt-4">
             <AdminGrid />
           </div>

@@ -8,6 +8,12 @@ let saltRounds = 10;
 export function getUserservice(data) {
   return new Promise(async (resolve, reject) => {
     try {
+      let users = await User.find().populate([
+        { path: "role" },
+        { path: "position" },
+        { path: "gender" },
+      ]);
+      resolve({ errCode: 0, users });
     } catch (e) {
       reject(e);
     }
@@ -67,20 +73,13 @@ export function loginService(data) {
         "email",
         "role",
         "lastName",
-      ]);
+      ]).populate([{ path: "role" }, { path: "position" }, { path: "gender" }]);
       if (!user) {
         resolve({ errCode: 2, message: "User not exist" });
       } else {
         if (bcrypt.compareSync(data.password, user.password)) {
           delete user._doc.password;
 
-          let token = jwt.sign(
-            {
-              data: "khanhdtran",
-            },
-            process.env.SECRET_JWT_STRING,
-            { expiresIn: "1h" }
-          );
           resolve({
             errCode: 0,
             message: "Login Success",

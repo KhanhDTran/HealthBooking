@@ -173,11 +173,6 @@ export default function ModalCreateUser(props) {
               </label>
             </div>
             <Select
-              isDisabled={
-                props.selectedRole && props.selectedRole.value == "R2"
-                  ? false
-                  : true
-              }
               isClearable={isClearable}
               styles={customStyles}
               value={props.selectedPosition ? props.selectedPosition : null}

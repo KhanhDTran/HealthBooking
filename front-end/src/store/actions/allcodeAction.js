@@ -10,7 +10,7 @@ export const fetchProvinceOptions = createAsyncThunk(
       if (res && res.data.errCode === 0) {
         let provinces = res.data.allcodes;
         provinces.map((item) => {
-          if (item.type) result.push({ value: item._id, label: item.value });
+          result.push({ value: item._id, label: item.value });
         });
       }
       return result;
@@ -28,10 +28,9 @@ export const fetchCreateUserOptions = createAsyncThunk(
       let roles = [];
       let positions = [];
       let res = await getAllcode(["GENDER", "ROLE", "POSITION"]);
-      console.log(res);
       if (res && res.data.errCode === 0) {
-        let provinces = res.data.allcodes;
-        provinces.map((item) => {
+        let result = res.data.allcodes;
+        result.map((item) => {
           if (item.type === "ROLE")
             roles.push({ value: item._id, label: item.value });
           if (item.type === "POSITION")

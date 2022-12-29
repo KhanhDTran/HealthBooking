@@ -19,14 +19,14 @@ const allcodeSlice = createSlice({
   name: "allcode",
   initialState,
   reducers: {},
+
   extraReducers: (builder) => {
     builder.addCase(fetchProvinceOptions.fulfilled, (state, { payload }) => {
+      console.log(payload);
       if (payload) {
         state.provinces = payload;
       }
     });
-  },
-  extraReducers: (builder) => {
     builder.addCase(fetchCreateUserOptions.fulfilled, (state, { payload }) => {
       if (payload) {
         state.roles = payload.roles;

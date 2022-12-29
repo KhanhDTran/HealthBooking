@@ -9,7 +9,7 @@ export default function Login() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [showPass, setShowPass] = useState(false);
-  const { role } = useSelector((state) => state.user);
+  const { role, logged_in } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -27,23 +27,22 @@ export default function Login() {
   }
 
   let role_local = JSON.parse(localStorage.getItem("role"));
-  let user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    if (role_local && role_local === "ADMIN") {
+    if (role_local && role_local === "R1") {
       navigate("/system/admin");
     }
-    if (role_local && role_local === "DOCTOR") {
-      navigate("/system/admin");
+    if (role_local && role_local === "R2") {
+      navigate("/system/doctor");
     }
   }, []);
   useEffect(() => {
-    if (role === "ADMIN") {
+    if (role.keyMap === "R1") {
       navigate("/system/admin");
     }
-    if (role === "DOCTOR") {
+    if (role.keyMap === "R2") {
       navigate("/system/doctor");
     }
-  }, [role]);
+  }, [logged_in]);
 
   return (
     <div data-theme="cupcake">
