@@ -1,7 +1,7 @@
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 export default function ClinicModalContent(props) {
   const [isClearable, setIsClearable] = useState(true);

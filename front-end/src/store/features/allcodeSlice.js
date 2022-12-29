@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProvinceOptions } from "../actions/allcodeAction";
+import {
+  fetchProvinceOptions,
+  fetchCreateUserOptions,
+} from "../actions/allcodeAction";
 
 const initialState = {
   time: [],
   provinces: [],
-  role: [],
+  roles: [],
   status: [],
-  position: [],
-  gender: [],
+  positions: [],
+  genders: [],
   payment: [],
   price: [],
 };
@@ -20,6 +23,15 @@ const allcodeSlice = createSlice({
     builder.addCase(fetchProvinceOptions.fulfilled, (state, { payload }) => {
       if (payload) {
         state.provinces = payload;
+      }
+    });
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCreateUserOptions.fulfilled, (state, { payload }) => {
+      if (payload) {
+        state.roles = payload.roles;
+        state.positions = payload.positions;
+        state.genders = payload.genders;
       }
     });
   },

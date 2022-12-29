@@ -1,5 +1,5 @@
 import expess from "express";
-import { createUser, login } from "../controllers/useController.js";
+import { createUser, login, getUsers } from "../controllers/useController.js";
 import {
   createSpecialty,
   getSpecialtyHome,
@@ -21,6 +21,7 @@ export function webRoute(app) {
   router.post("/api/login", login);
 
   // User
+  router.get("/api/get-users", getUsers);
   router.post("/api/create-user", createUser);
 
   //Specialty

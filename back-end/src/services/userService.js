@@ -1,12 +1,21 @@
 import bcrypt from "bcrypt";
 import User from "../db/schemas/User.js";
 import doten from "dotenv";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 doten.config();
 let saltRounds = 10;
 
+export function getUserservice(data) {
+  return new Promise(async (resolve, reject) => {
+    try {
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function createUserService(data) {
-  console.log("crreate user req.body.data: ", data);
+  console.log("create user req.body: ", data);
   return new Promise(async (resolve, reject) => {
     if (
       !data.email ||
@@ -32,6 +41,7 @@ export function createUserService(data) {
           phoneNumber: data.phoneNumber,
           role: data.role,
           position: data.position,
+          image: data.image,
         });
         user.save().then(() => console.log("created a user, ", user));
         resolve({ errCode: 0, message: "Created user successful" });

@@ -1,5 +1,15 @@
-import { createUserService, loginService } from "../services/userService.js";
+import { createUserService, loginService, getUserservice } from "../services/userService.js";
 import { delay } from "../utils/commonUtils.js";
+
+export async function getUsers(req, res) {
+  try {
+    let response = await getUserservice(req.body);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-user-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function createUser(req, res) {
   try {
@@ -21,4 +31,5 @@ export async function login(req, res) {
     console.log("login-error", e);
     return res.status(200).json({ errCode: -1, message: "Error from server" });
   }
+
 }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userLogin } from "../actions/userAction";
+import { userLogin, fetchCreateUser } from "../actions/userAction";
 
 let logged_in = localStorage.getItem("logged_in")
   ? JSON.parse(localStorage.getItem("logged_in"))
@@ -17,6 +17,7 @@ const initialState = {
   logged_in,
   role,
   user,
+  createUserSuccess: false,
 };
 
 const userSlice = createSlice({
@@ -28,6 +29,11 @@ const userSlice = createSlice({
       if (payload.user) {
         state.logged_in = true;
         state.role = payload.user.role;
+      }
+    });
+    builder.addCase(fetchCreateUser.fulfilled, (state, { payload }) => {
+      if (payload.errCode === 0) {
+        state.createUserSuccess = !state.createUserSuccess;
       }
     });
   },
