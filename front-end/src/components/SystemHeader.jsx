@@ -12,7 +12,7 @@ export default function SystemHeader(props) {
       <div className="navbar bg-base-100 sticky  top-0 z-30" data-theme="night">
         <div className="navbar-start">
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -33,10 +33,16 @@ export default function SystemHeader(props) {
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li tabIndex={0}>
-                <a></a>
+                <a
+                  onClick={() => {
+                    navigate("/system/admin");
+                  }}
+                >
+                  Dash Board
+                </a>
               </li>
               <li>
-                <a>doctor</a>
+                <a>Doctor</a>
               </li>
             </ul>
           </div>
@@ -58,7 +64,7 @@ export default function SystemHeader(props) {
           </span>
         </div>
         <div className="navbar-end">
-          <span> {props.lastName && props.lastName}</span>
+          <span> {user.lastName && user.lastName}</span>
           <a
             className="btn btn-ghost normal-case text-md lg:text-xl"
             onClick={() => {

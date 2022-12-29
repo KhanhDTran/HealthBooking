@@ -29,7 +29,6 @@ const allcodeSlice = createSlice({
     builder.addCase(fetchCreateUserOptions.fulfilled, (state, { payload }) => {
       if (payload) {
         state.roles = payload.roles;
-        state.positions = payload.positions;
         state.genders = payload.genders;
       }
     });

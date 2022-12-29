@@ -4,6 +4,10 @@ export function loginService(email, password) {
   return instance.post("/login", { email, password });
 }
 
+export function getAllUsers() {
+  return instance.get("/get-users", {});
+}
+
 export function createUser(
   email,
   password,

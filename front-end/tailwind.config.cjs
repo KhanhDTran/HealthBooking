@@ -7,6 +7,9 @@ module.exports = {
         400: "400px",
       },
     },
+    minWidth: {
+      370: "375px",
+    },
   },
   plugins: [require("daisyui")],
 };

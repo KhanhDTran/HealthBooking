@@ -26,20 +26,17 @@ export const fetchCreateUserOptions = createAsyncThunk(
     try {
       let genders = [];
       let roles = [];
-      let positions = [];
-      let res = await getAllcode(["GENDER", "ROLE", "POSITION"]);
+      let res = await getAllcode(["GENDER", "ROLE"]);
       if (res && res.data.errCode === 0) {
         let result = res.data.allcodes;
         result.map((item) => {
           if (item.type === "ROLE")
             roles.push({ value: item._id, label: item.value });
-          if (item.type === "POSITION")
-            positions.push({ value: item._id, label: item.value });
           if (item.type === "GENDER")
             genders.push({ value: item._id, label: item.value });
         });
       }
-      return { genders, roles, positions };
+      return { genders, roles };
     } catch (e) {
       console.log(e);
     }

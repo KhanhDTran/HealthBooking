@@ -69,8 +69,7 @@ export default function CreateUser(props) {
       !phoneNumber ||
       !address ||
       !selectedGender.value ||
-      !selectedRole.value ||
-      !img
+      !selectedRole.value
     ) {
       toast.warning("Missing input");
       return false;
