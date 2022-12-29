@@ -2,10 +2,12 @@ import doctorImg from "../../../assets/images/doctors/admindoctor.png";
 import CreateUser from "./User/CreateUser";
 import CreateSpecialty from "./Specialty/CreateSpecialty";
 import CreateClinic from "./Clinic/CreateClinic";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function AdminGrid() {
   let [openModal, setOpenModal] = useState(false);
+  let navigate = useNavigate();
   useEffect(() => {
     if (openModal) {
       document.querySelector("body").style.overflow = "hidden";
@@ -32,20 +34,25 @@ export default function AdminGrid() {
             <img src={doctorImg} alt="Shoes" className="rounded-box" />
           </figure>
           <div className="card-body items-center text-center">
-            <h2 className="card-title">Doctors</h2>
-            <p>Spectate all doctors</p>
+            <h2 className="card-title">Users</h2>
+            <p>Manage User Infomation</p>
           </div>
         </div>
         {/* --------------------------------All doctor ----------------------------------- */}
 
         {/* --------------------------------Edit doctors ----------------------------------- */}
-        <div className="card w-ful bg-base-100 shadow-xl hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer">
+        <div
+          className="card w-ful bg-base-100 shadow-xl hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
+          onClick={() => {
+            navigate("/system/admin/manage-doctors-profile");
+          }}
+        >
           <figure className="px-10 pt-10">
             <img src={doctorImg} alt="Shoes" className="rounded-box" />
           </figure>
           <div className="card-body items-center text-center">
             <h2 className="card-title">Doctors</h2>
-            <p>Edit doctors Profile</p>
+            <p>Edit Doctors Profile</p>
           </div>
         </div>
         {/* --------------------------------Edit doctors ----------------------------------- */}

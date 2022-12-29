@@ -1,8 +1,12 @@
 import logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../store/actions/userAction";
 export default function SystemHeader(props) {
   let navigate = useNavigate();
+  let { user } = useSelector((state) => state.user);
+  let dispatch = useDispatch();
   return (
     <>
       <div className="navbar bg-base-100 sticky  top-0 z-30" data-theme="night">
@@ -34,12 +38,6 @@ export default function SystemHeader(props) {
               <li>
                 <a>doctor</a>
               </li>
-              <li>
-                <a></a>
-              </li>
-              <li>
-                <a></a>
-              </li>
             </ul>
           </div>
           <a
@@ -55,15 +53,18 @@ export default function SystemHeader(props) {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <span className="text-2xl">{props.role && props.role} Page</span>
+          <span className="text-2xl">
+            {user.role.keyMap === "R1" ? "Admin" : "Doctor"} Page
+          </span>
         </div>
         <div className="navbar-end">
           <span> {props.lastName && props.lastName}</span>
           <a
             className="btn btn-ghost normal-case text-md lg:text-xl"
             onClick={() => {
-              localStorage.clear();
-              navigate("/login");
+              dispatch(userLogout()).then(() => {
+                navigate("/login");
+              });
             }}
           >
             <div className="w-10 rounded">

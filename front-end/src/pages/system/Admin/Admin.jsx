@@ -2,21 +2,22 @@ import { Fragment, useEffect, useState } from "react";
 import SystemHeader from "../../../components/SystemHeader";
 import { useNavigate } from "react-router-dom";
 import AdminGrid from "./AdminGrid";
+import { useSelector } from "react-redux";
 
 export default function Admin() {
   let navigate = useNavigate();
-  let role = JSON.parse(localStorage.getItem("role"));
-  let user = JSON.parse(localStorage.getItem("user"));
+  let { user } = useSelector((state) => state.user);
+
   useEffect(() => {
-    if (!role) {
+    if (!user) {
       navigate("/login");
     }
   }, []);
   return (
     <Fragment>
-      {role === "R1" ? (
+      {user && user.role.keyMap === "R1" ? (
         <div>
-          <SystemHeader role="Admin" lastName={user.lastName} />
+          <SystemHeader />
           <div className="container mx-auto pt-4">
             <AdminGrid />
           </div>

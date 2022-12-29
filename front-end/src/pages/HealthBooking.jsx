@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Doctor from "./system/Doctor/Doctor";
 import Admin from "./system/Admin/Admin";
+import ManageDoctor from "./system/Admin/Doctor/ManageDoctor";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,17 +17,18 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-    errorElement: <ErrorPage />,
   },
   {
     path: "/system/admin",
     element: <Admin />,
-    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/system/admin/manage-doctors-profile",
+    element: <ManageDoctor />,
   },
   {
     path: "/system/doctor",
     element: <Doctor />,
-    errorElement: <ErrorPage />,
   },
 ]);
 

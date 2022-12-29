@@ -87,3 +87,9 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
+
+export const userLogout = createAsyncThunk("user/logout", async () => {
+  localStorage.clear();
+
+  return {};
+});

@@ -1,7 +1,7 @@
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
-import {  useState } from "react";
+import { useState } from "react";
 
 export default function ClinicModalContent(props) {
   const [isClearable, setIsClearable] = useState(true);
@@ -20,12 +20,12 @@ export default function ClinicModalContent(props) {
           {/* Name Input */}
           <div className="w-ful md:w-1/2">
             <div className="form-control w-ful">
-              <label className="label" htmlFor="name">
+              <label className="label" htmlFor="name-clinic">
                 <span className="label-text">Name</span>
               </label>
               <input
                 type="text"
-                id="name"
+                id="name-clinic"
                 placeholder="Name"
                 value={props.name}
                 onChange={(e) => props.setName(e.target.value)}
@@ -56,12 +56,12 @@ export default function ClinicModalContent(props) {
         {/* Address Input */}
         <div>
           <div className="form-control w-full ">
-            <label className="label" htmlFor="address">
+            <label className="label" htmlFor="address-clinic">
               <span className="label-text">Address</span>
             </label>
             <input
               type="text"
-              id="address"
+              id="address-clinic"
               placeholder="Address"
               value={props.address}
               onChange={(e) => props.setAddress(e.target.value)}

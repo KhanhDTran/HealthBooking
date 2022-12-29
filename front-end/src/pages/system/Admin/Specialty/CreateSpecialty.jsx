@@ -92,12 +92,12 @@ export default function CreateSpecialty(props) {
             {/* Name Input */}
             <div>
               <div className="form-control w-full ">
-                <label className="label" htmlFor="name">
+                <label className="label" htmlFor="name-specialty">
                   <span className="label-text">Name</span>
                 </label>
                 <input
                   type="text"
-                  id="name"
+                  id="name-specialty"
                   placeholder="Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}

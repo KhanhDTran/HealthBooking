@@ -132,12 +132,12 @@ export default function ModalCreateUser(props) {
           {/* address Input */}
           <div className="w-ful md:w-1/2">
             <div className="form-control w-ful">
-              <label className="label" htmlFor="address">
+              <label className="label" htmlFor="address-create-user">
                 <span className="label-text">Address</span>
               </label>
               <input
                 type="text"
-                id="address"
+                id="address-create-user"
                 placeholder="Address"
                 value={props.address}
                 onChange={(e) => props.setAddress(e.target.value)}
