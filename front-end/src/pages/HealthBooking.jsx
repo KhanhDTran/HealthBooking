@@ -8,6 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Doctor from "./system/Doctor/Doctor";
 import Admin from "./system/Admin/Admin";
 import ManageDoctor from "./system/Admin/Doctor/ManageDoctor";
+import ManageUser from "./system/Admin/User/ManageUser";
+import ManageSpecialty from "./system/Admin/Specialty/ManageSpecialty";
+import ManageClinic from "./system/Admin/Clinic/ManageClinic";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +28,18 @@ const router = createBrowserRouter([
   {
     path: "/system/admin/manage-doctors-profile",
     element: <ManageDoctor />,
+  },
+  {
+    path: "/system/admin/manage-users",
+    element: <ManageUser />,
+  },
+  {
+    path: "/system/admin/manage-specialties",
+    element: <ManageSpecialty />,
+  },
+  {
+    path: "/system/admin/manage-clinics",
+    element: <ManageClinic />,
   },
   {
     path: "/system/doctor",

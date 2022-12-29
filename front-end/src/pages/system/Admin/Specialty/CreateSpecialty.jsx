@@ -128,7 +128,7 @@ export default function CreateSpecialty(props) {
               </label>
               <input
                 type="file"
-                accept=".png,.jpg"
+                accept="image/x-png,image/gif,image/jpeg"
                 id="img"
                 className="file-input file-input-bordered file-input-info w-full max-w-xs hover:cursor-pointer"
                 onChange={(e) => handleImgChange(e.target.files[0])}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 
 export default function ModalCreateUser(props) {
+  let [showPass, setShowPass] = useState(false);
   const [isClearable, setIsClearable] = useState(true);
   const customStyles = {
     control: (base) => ({
@@ -42,13 +43,21 @@ export default function ModalCreateUser(props) {
                 <span className="label-text">Password</span>
               </label>
               <input
-                type="password"
+                type={!showPass ? "password" : "text"}
                 id="password"
                 placeholder="Password"
                 value={props.password}
                 onChange={(e) => props.setPassword(e.target.value)}
                 className="input input-bordered w-full "
               />
+              <i
+                className={
+                  !showPass
+                    ? "fa-solid fa-eye text-lg absolute right-10 top-36 pt-2 hover:cursor-pointer"
+                    : "fa-solid fa-eye-slash text-lg absolute right-10 top-36 pt-2 hover:cursor-pointer"
+                }
+                onClick={() => setShowPass(!showPass)}
+              ></i>
             </div>
           </div>
           {/* password Input */}
@@ -199,7 +208,7 @@ export default function ModalCreateUser(props) {
           </label>
           <input
             type="file"
-            accept=".png,.jpg"
+          accept="image/x-png,image/gif,image/jpeg"
             id="imgCreateUser"
             className="file-input file-input-bordered file-input-info w-full max-w-xs hover:cursor-pointer"
             onChange={(e) => props.handleImgChange(e.target.files[0])}

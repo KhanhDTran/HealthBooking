@@ -93,7 +93,7 @@ export default function ClinicModalContent(props) {
           </label>
           <input
             type="file"
-            accept=".png,.jpg"
+            accept="image/x-png,image/gif,image/jpeg"
             id="imgClinic"
             className="file-input file-input-bordered file-input-info w-full max-w-xs hover:cursor-pointer"
             onChange={(e) => props.handleImgChange(e.target.files[0])}
