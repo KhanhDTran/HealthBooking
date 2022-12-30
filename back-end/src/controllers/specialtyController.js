@@ -3,8 +3,19 @@ import {
   getSpecialtyHomeService,
   deleteSpecialtyByIdService,
   updateSpecialtyByIdService,
+  getSpecialtyByIdService,
 } from "../services/specialtyService.js";
 import { delay } from "../utils/commonUtils.js";
+
+export async function getSpecialtyById(req, res) {
+  try {
+    let response = await getSpecialtyByIdService(req.query.id);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-specialty-by-id-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function deleteSpecialtyById(req, res) {
   try {

@@ -64,7 +64,7 @@ export default function CreateClinic(props) {
       dispatch(
         fetchCreateClinic({
           name,
-          provinceId: selectedProvince.value,
+          province: selectedProvince.value,
           address,
           markdown,
           markdownHtml,

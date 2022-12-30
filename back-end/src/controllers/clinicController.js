@@ -3,8 +3,19 @@ import {
   getClinicHomeService,
   deleteClinicByIdService,
   updateClinicByIdService,
+  getclinicByIdService,
 } from "../services/clinicService.js";
 import { delay } from "../utils/commonUtils.js";
+
+export async function getclinicById(req, res) {
+  try {
+    let response = await getclinicByIdService(req.query.id);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-clinic-by-id-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function deleteClinicById(req, res) {
   try {

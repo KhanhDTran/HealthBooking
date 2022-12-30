@@ -1,5 +1,18 @@
 import Clinic from "../db/schemas/Clinic.js";
 
+export function getclinicByIdService(id) {
+  return new Promise(async (resolve, reject) => {
+    if (!id) resolve({ errCode: 1, message: "Missing parameter" });
+    try {
+      let clinic = await Clinic.findOne({ _id: id }).populate("province");
+      if (clinic) resolve({ errCode: 0, clinic });
+      resolve({ errCode: 2, message: "Something was wrong" });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function updateClinicByIdService(data) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -49,7 +62,7 @@ export function createClinicService(data) {
     try {
       if (
         !data.name ||
-        !data.provinceId ||
+        !data.province ||
         !data.address ||
         !data.markdown ||
         !data.markdownHtml ||
@@ -65,7 +78,7 @@ export function createClinicService(data) {
         } else {
           let clinic = await Clinic.create({
             name: data.name.trim(),
-            provinceId: data.provinceId,
+            province: data.province,
             address: data.address,
             markdown: data.markdown,
             markdownHtml: data.markdownHtml,

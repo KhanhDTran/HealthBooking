@@ -10,5 +10,9 @@ export function createSpecialtyService(name, markdown, markdownHtml, img) {
 }
 
 export function getSpecialtiesHome() {
-  return instance.get("get-specialty-home");
+  return instance.get("get-all-specialty");
+}
+
+export function getSpecialtyById(id) {
+  return instance.get("get-specialty-by-id", { params: { id } });
 }

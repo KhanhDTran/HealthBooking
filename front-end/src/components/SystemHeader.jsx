@@ -60,11 +60,11 @@ export default function SystemHeader(props) {
         </div>
         <div className="navbar-center hidden lg:flex">
           <span className="text-2xl">
-            {user.role.keyMap === "R1" ? "Admin" : "Doctor"} Page
+            {user && user.role.keyMap === "R1" ? "Admin" : "Doctor"} Page
           </span>
         </div>
         <div className="navbar-end">
-          <span> {user.lastName && user.lastName}</span>
+          <span> {user && user.lastName && user.lastName}</span>
           <a
             className="btn btn-ghost normal-case text-md lg:text-xl"
             onClick={() => {

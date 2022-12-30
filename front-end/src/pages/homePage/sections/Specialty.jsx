@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSpecialtiesHome } from "../../../services/specialtyService";
-import { useState } from "react";
 
 export default function Specialty(props) {
   const { t } = useTranslation();

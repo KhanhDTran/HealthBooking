@@ -1,5 +1,18 @@
 import Specialty from "../db/schemas/Specialty.js";
 
+export function getSpecialtyByIdService(id) {
+  return new Promise(async (resolve, reject) => {
+    if (!id) resolve({ errCode: 1, message: "Missing parameter" });
+    try {
+      let specialty = await Specialty.findOne({ _id: id });
+      if (specialty) resolve({ errCode: 0, specialty });
+      resolve({ errCode: 2, message: "Something was wrong" });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function updateSpecialtyByIdService(data) {
   return new Promise(async (resolve, reject) => {
     try {
