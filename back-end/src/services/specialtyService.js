@@ -1,5 +1,46 @@
 import Specialty from "../db/schemas/Specialty.js";
 
+export function updateSpecialtyByIdService(data) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await Specialty.findByIdAndUpdate(
+        { _id: data.id },
+        {
+          name: data.name,
+          markdown: data.markdown,
+          markdownHtml: data.markdownHtml,
+          image: data.image,
+        }
+      );
+      if (user) {
+        resolve({
+          errCode: 0,
+          message: "Updated Specialty Successful",
+        });
+      } else {
+        resolve({
+          errCode: 2,
+          message: "Something was wrong",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export function deleteSpecialtyByIdService(id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) resolve({ errCode: 1, message: "Missing parameter" });
+      await Specialty.findByIdAndDelete({ _id: id });
+      resolve({ errCode: 0, message: "Deleted Specialty Successful" });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function createSpecialtyService(data) {
   return new Promise(async (resolve, reject) => {
     try {

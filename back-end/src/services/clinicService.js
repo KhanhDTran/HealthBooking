@@ -1,5 +1,48 @@
 import Clinic from "../db/schemas/Clinic.js";
 
+export function updateClinicByIdService(data) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await Clinic.findByIdAndUpdate(
+        { _id: data.id },
+        {
+          name: data.name,
+          address: data.address,
+          markdown: data.markdown,
+          province: data.province,
+          markdownHtml: data.markdownHtml,
+          image: data.image,
+        }
+      );
+      if (user) {
+        resolve({
+          errCode: 0,
+          message: "Updated Clinic Successful",
+        });
+      } else {
+        resolve({
+          errCode: 2,
+          message: "Something was wrong",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export function deleteClinicByIdService(id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) resolve({ errCode: 1, message: "Missing parameter" });
+      await Clinic.findByIdAndDelete({ _id: id });
+      resolve({ errCode: 0, message: "Deleted Clinic Successful" });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function createClinicService(data) {
   console.log(data);
   return new Promise(async (resolve, reject) => {

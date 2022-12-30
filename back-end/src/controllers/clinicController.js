@@ -1,8 +1,32 @@
 import {
   createClinicService,
   getClinicHomeService,
+  deleteClinicByIdService,
+  updateClinicByIdService,
 } from "../services/clinicService.js";
 import { delay } from "../utils/commonUtils.js";
+
+export async function deleteClinicById(req, res) {
+  try {
+    await delay(1000);
+    let response = await deleteClinicByIdService(req.query.id);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("delete-specialty-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
+
+export async function updateClinicById(req, res) {
+  try {
+    await delay(1000);
+    let response = await updateClinicByIdService(req.body.clinic);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("update-specialty-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function createClinic(req, res) {
   try {
