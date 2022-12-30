@@ -1,5 +1,11 @@
 import expess from "express";
-import { createUser, login, getUsers } from "../controllers/useController.js";
+import {
+  createUser,
+  login,
+  getUsers,
+  deleteUserById,
+  updateUserById,
+} from "../controllers/useController.js";
 import {
   createSpecialty,
   getSpecialtyHome,
@@ -23,8 +29,11 @@ export function webRoute(app) {
   // User
   router.get("/api/get-users", getUsers);
   router.post("/api/create-user", createUser);
+  router.delete("/api/delete-user-by-id", deleteUserById);
+  router.put("/api/update-user-by-id", updateUserById);
 
   //Specialty
+
   router.post("/api/create-specialty", createSpecialty);
   router.get("/api/get-specialty-home", getSpecialtyHome);
 

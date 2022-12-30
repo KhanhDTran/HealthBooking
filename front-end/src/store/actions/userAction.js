@@ -1,6 +1,68 @@
-import { loginService, createUser } from "../../services/userService";
+import {
+  loginService,
+  createUser,
+  deleteUserById,
+  updateUserById,
+} from "../../services/userService";
 import { toast } from "react-toastify";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const fetchUpdateUser = createAsyncThunk(
+  "user/update",
+  async ({ user }) => {
+    console.log(user);
+    try {
+      const toastId = toast.loading("Updating User...");
+      let res = await updateUserById(user);
+      if (res && res.data.errCode === 0) {
+        toast.update(toastId, {
+          render: res.data.message,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      } else {
+        toast.update(toastId, {
+          render: res.data.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      }
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const fetchDeleteUser = createAsyncThunk(
+  "user/delete",
+  async ({ id }) => {
+    try {
+      const toastId = toast.loading("Deleting User...");
+      let res = await deleteUserById(id);
+      if (res && res.data.errCode === 0) {
+        toast.update(toastId, {
+          render: res.data.message,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      } else {
+        toast.update(toastId, {
+          render: res.data.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      }
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
 export const fetchCreateUser = createAsyncThunk(
   "user/create",

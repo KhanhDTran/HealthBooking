@@ -4,6 +4,11 @@ import { getAllUsers } from "../../../../services/userService";
 import Select from "react-select";
 import { fetchCreateUserOptions } from "../../../../store/actions/allcodeAction";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import {
+  fetchUpdateUser,
+  fetchDeleteUser,
+} from "../../../../store/actions/userAction";
 
 export default function ManageUser() {
   const [users, setUsers] = useState([]);
@@ -23,6 +28,9 @@ export default function ManageUser() {
 
   const dispatch = useDispatch();
   const { roles, genders } = useSelector((state) => state.allcode);
+  const { deleteUserSuccess, updateUserSuccess } = useSelector(
+    (state) => state.user
+  );
 
   const customStyles = {
     control: (base) => ({
@@ -50,6 +58,17 @@ export default function ManageUser() {
     setRoleOptions(roles);
   }, [roles]);
 
+  useEffect(() => {
+    fetchUsers();
+    clearInputState();
+    document.getElementById("confirm-delete-modal").checked = false;
+  }, [deleteUserSuccess]);
+
+  useEffect(() => {
+    clearInputState();
+    fetchUsers();
+  }, [updateUserSuccess]);
+
   async function fetchUsers() {
     try {
       let res = await getAllUsers();
@@ -74,23 +93,49 @@ export default function ManageUser() {
         setSelectedGender({ value: user.gender._id, label: user.gender.value });
         setSelectedRole({ value: user.role._id, label: user.role.value });
       } else {
-        setSelectUser(null);
-        setSelectUser("");
-        setPassword("");
-        setEmail("");
-        setFirstName("");
-        setLastName("");
-        setAddress("");
-        setPhoneNumber("");
-        setSelectedGender(null);
-        setSelectedRole(null);
+        clearInputState();
       }
     }
   }
 
-  function validateInputCreateUser() {
+  function clearInputState() {
+    setSelectUser(null);
+    setSelectUser("");
+    setPassword("");
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setAddress("");
+    setPhoneNumber("");
+    setSelectedGender(null);
+    setSelectedRole(null);
+  }
+
+  function handleUpdateUser() {
+    if (validateInput())
+      dispatch(
+        fetchUpdateUser({
+          user: {
+            id: selectUser._id,
+            firstName: firstName,
+            lastName: lastName,
+            gender: selectedGender.value,
+            address: address,
+            phoneNumber: phoneNumber,
+            role: selectedRole.value,
+          },
+        })
+      );
+  }
+
+  function handleDeleteUser() {
+    setOpenModal(true);
+    if (selectUser !== null) dispatch(fetchDeleteUser({ id: selectUser._id }));
+    setOpenModal(false);
+  }
+
+  function validateInput() {
     if (
-      !email ||
       !firstName ||
       !lastName ||
       !phoneNumber ||
@@ -267,12 +312,28 @@ export default function ManageUser() {
           </div>
         </div>
         <div className="flex flex-row pt-8 pb-4 justify-between">
-          <button
-            className="btn btn-info text-white ml-4"
-            disabled={selectUser ? false : true}
-          >
-            Save
-          </button>
+          {selectUser ? (
+            <>
+              {" "}
+              <button
+                className="btn btn-info text-white ml-4"
+                disabled={false}
+                onClick={() => {
+                  handleUpdateUser();
+                }}
+              >
+                Save
+              </button>
+            </>
+          ) : (
+            <>
+              {" "}
+              <button className="btn btn-info text-white ml-4" disabled={true}>
+                Save
+              </button>
+            </>
+          )}
+
           {selectUser ? (
             <>
               {" "}
@@ -281,7 +342,7 @@ export default function ManageUser() {
                   href="#confirm-delete-modal"
                   className="btn btn-error text-white mr-4"
                   onClick={() => {
-                    setOpenModal(true);
+                    setOpenModal(false);
                   }}
                 >
                   Delete
@@ -295,9 +356,6 @@ export default function ManageUser() {
                 disabled={true}
                 href="#confirm-delete-modal"
                 className="btn btn-error text-white mr-4"
-                onClick={() => {
-                  setOpenModal(true);
-                }}
               >
                 Delete
               </button>
@@ -337,12 +395,13 @@ export default function ManageUser() {
               >
                 Cancel
               </a>
+
               <a href="#">
                 <button
                   href="#"
                   className="btn btn-error text-white mr-4"
                   onClick={() => {
-                    setOpenModal(false);
+                    handleDeleteUser();
                   }}
                 >
                   Delete
@@ -372,33 +431,42 @@ export default function ManageUser() {
               <tbody>
                 {/* <!-- row 1 --> */}
                 {users.map((item, index) => {
-                  return (
-                    <tr
-                      className={
-                        selectUser === item
-                          ? "hover hover:cursor-pointer active"
-                          : "hover hover:cursor-pointer"
-                      }
-                      key={index}
-                      onClick={() => handleSelectUser(item)}
-                    >
-                      <th>{index + 1}</th>
-                      <td> {item.email} </td>
-                      <td> {item.firstName} </td>
-                      <td> {item.lastName} </td>
-                      <td> {item.role.value} </td>
-                      <td> {item.gender.value} </td>
-                      <td> {item.phoneNumber} </td>
-                      <td> {item.address} </td>
-                    </tr>
-                  );
+                  if (item.role.keyMap !== "R1") {
+                    return (
+                      <tr
+                        className={
+                          selectUser === item
+                            ? "hover hover:cursor-pointer active"
+                            : "hover hover:cursor-pointer"
+                        }
+                        key={index}
+                        onClick={() => handleSelectUser(item)}
+                      >
+                        <th>{index + 1}</th>
+                        <td> {item.email} </td>
+                        <td> {item.firstName} </td>
+                        <td> {item.lastName} </td>
+                        <td> {item.role.value} </td>
+                        <td> {item.gender.value} </td>
+                        <td> {item.phoneNumber} </td>
+                        <td> {item.address} </td>
+                      </tr>
+                    );
+                  } else {
+                    return (
+                      <tr className="" key={index}>
+                        <th>{index + 1}</th>
+                        <td> {item.email} </td>
+                        <td> {item.firstName} </td>
+                        <td> {item.lastName} </td>
+                        <td> {item.role.value} </td>
+                        <td> {item.gender.value} </td>
+                        <td> {item.phoneNumber} </td>
+                        <td> {item.address} </td>
+                      </tr>
+                    );
+                  }
                 })}
-                {/* <tr className=" hover:cursor-pointer">
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-                </tr> */}
               </tbody>
             </table>
           </div>

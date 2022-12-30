@@ -5,6 +5,49 @@ import doten from "dotenv";
 doten.config();
 let saltRounds = 10;
 
+export function updateUserService(data) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await User.findByIdAndUpdate(
+        { _id: data.id },
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          gender: data.gender,
+          address: data.address,
+          phoneNumber: data.phoneNumber,
+          role: data.role,
+        }
+      );
+      if (user) {
+        resolve({
+          errCode: 0,
+          message: "Updated User Successful",
+        });
+      } else {
+        resolve({
+          errCode: 2,
+          message: "Something was wrong",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export function deleteUserService(id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) resolve({ errCode: 1, message: "Missing parameter" });
+      await User.findByIdAndDelete({ _id: id });
+      resolve({ errCode: 0, message: "Deleted User Successful" });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function getUserservice(data) {
   return new Promise(async (resolve, reject) => {
     try {

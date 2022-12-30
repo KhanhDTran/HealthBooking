@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userLogin, fetchCreateUser, userLogout } from "../actions/userAction";
+import {
+  userLogin,
+  fetchCreateUser,
+  userLogout,
+  fetchDeleteUser,
+  fetchUpdateUser,
+} from "../actions/userAction";
 
 let role = localStorage.getItem("role")
   ? JSON.parse(localStorage.getItem("role"))
@@ -14,6 +20,8 @@ const initialState = {
   role,
   user,
   createUserSuccess: false,
+  deleteUserSuccess: false,
+  updateUserSuccess: false,
 };
 
 const userSlice = createSlice({
@@ -36,6 +44,16 @@ const userSlice = createSlice({
     builder.addCase(userLogout.fulfilled, (state, { payload }) => {
       state.logged_in = !state.logged_in;
       state.user = null;
+    });
+    builder.addCase(fetchDeleteUser.fulfilled, (state, { payload }) => {
+      if (payload.errCode === 0) {
+        state.deleteUserSuccess = !state.deleteUserSuccess;
+      }
+    });
+    builder.addCase(fetchUpdateUser.fulfilled, (state, { payload }) => {
+      if (payload.errCode === 0) {
+        state.updateUserSuccess = !state.updateUserSuccess;
+      }
     });
   },
 });
