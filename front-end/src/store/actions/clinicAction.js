@@ -4,19 +4,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchDeleteClinic = createAsyncThunk(
   "clinic/delete",
-  async ({ clinic }) => {
+  async ({ id }) => {
     try {
-      const id = toast.loading("Deleting clinic...");
-      let res = await createClinicService(clinic);
+      const toastId = toast.loading("Deleting clinic...");
+      let res = await createClinicService(id);
       if (res && res.data.errCode === 0) {
-        toast.update(id, {
+        toast.update(toastId, {
           render: res.data.message,
           type: "success",
           isLoading: false,
           autoClose: 3000,
         });
       } else {
-        toast.update(id, {
+        toast.update(toastId, {
           render: res.data.message,
           type: "error",
           isLoading: false,

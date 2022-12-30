@@ -8,6 +8,8 @@ import MarkdownIt from "markdown-it";
 import { toBase64 } from "../../../../utils/CommonUtils";
 import { fetchProvinceOptions } from "../../../../store/actions/allcodeAction";
 import { getClinicById } from "../../../../services/clinicService";
+import { toast } from "react-toastify";
+import { fetchDeleteClinic } from "../../../../store/actions/clinicAction";
 
 export default function ManageClinic() {
   const [isClearable, setIsClearable] = useState(true);
@@ -24,6 +26,9 @@ export default function ManageClinic() {
   const [clinicOptions, setClinicOptions] = useState([]);
   const [selectedClinic, setSelectedClinic] = useState(null);
   const { provinces } = useSelector((state) => state.allcode);
+  const { updateClinicSuccess, deleteClinicSuccess } = useSelector(
+    (state) => state.clinic
+  );
 
   const customStyles = {
     control: (base) => ({
@@ -37,6 +42,12 @@ export default function ManageClinic() {
     dispatch(fetchProvinceOptions());
     fetchClinics().catch();
   }, []);
+
+  useEffect(() => {
+    clearInputState();
+    setSelectedClinic(null);
+    setSelectedProvince(null);
+  }, [updateClinicSuccess, deleteClinicSuccess]);
 
   useEffect(() => {
     clearInputState();
@@ -108,7 +119,24 @@ export default function ManageClinic() {
   }
 
   function handleSaveClinic() {
+    if (!selectedClinic) {
+      toast.warning("Please select a clinic");
+    }
     if (validateInput()) {
+      // dispatch(fetch)
+    }
+  }
+
+  function handleDeleteClinic() {
+    if (!selectedClinic) {
+      toast.warning("Please select a clinic");
+    } else {
+      if (validateInput()) {
+        var result = confirm(`Are you sure to delete "${name}" specialty ?`);
+        if (result) {
+          dispatch(fetchDeleteClinic({ id: selectedClinic.value }));
+        }
+      }
     }
   }
 
@@ -224,12 +252,18 @@ export default function ManageClinic() {
                   onChange={(e) => handleImgChange(e.target.files[0])}
                 />
               </div>
-              <div className="pt-8 pb-8 justify-center flex">
+              <div className="pt-8 pb-8 justify-center flex ">
                 <button
                   className="btn btn-success w-40 text-white"
                   onClick={() => handleSaveClinic()}
                 >
                   Save
+                </button>
+                <button
+                  className="btn btn-error w-40 text-white pl-4"
+                  onClick={() => handleDeleteClinic()}
+                >
+                  Delete
                 </button>
               </div>
               {/* Image Input */}

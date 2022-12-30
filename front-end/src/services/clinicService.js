@@ -27,10 +27,7 @@ export function getClinicById(id) {
 }
 
 export function updateClinicById(clinic) {
-  return instance.put("/update-clinic-by-id", {
-    id: clinic.id,
-    clinic,
-  });
+  return instance.put("/update-clinic-by-id", { clinic });
 }
 
 export function deleteClinicById(id) {
