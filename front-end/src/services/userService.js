@@ -1,7 +1,7 @@
 import { instance } from "./instance";
 
 export function updateUserById(user) {
-  return instance.put("/update-user-by-id", { id: user.id, user });
+  return instance.put("/update-user-by-id", { user });
 }
 
 export function deleteUserById(id) {

@@ -39,8 +39,21 @@ export default function ManageClinic() {
   }, []);
 
   useEffect(() => {
-    if (selectedClinic) fetchClinicChangeSelect();
+    clearInputState();
+    if (selectedClinic) {
+      fetchClinicChangeSelect();
+    }
   }, [selectedClinic]);
+
+  function clearInputState() {
+    setName("");
+    setAddress("");
+    setSelectedProvince(null);
+    setMarkdown("");
+    setMarkdownHtml("");
+    setImg(null);
+    setImgUrl("");
+  }
 
   async function fetchClinicChangeSelect() {
     try {
@@ -50,7 +63,9 @@ export default function ManageClinic() {
       setName(clinic.name);
       setAddress(clinic.address);
       setMarkdown(clinic.markdown);
+      setMarkdownHtml(clinic.markdownHtml);
       setImgUrl(clinic.image);
+      setImg(clinic.image);
       if (clinic.province) {
         setSelectedProvince({
           value: clinic.province._id,

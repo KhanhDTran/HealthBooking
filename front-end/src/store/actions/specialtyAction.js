@@ -1,6 +1,65 @@
-import { createSpecialtyService } from "../../services/specialtyService";
+import {
+  createSpecialtyService,
+  updateSpecialtyById,
+  deleteSpecialtyById,
+} from "../../services/specialtyService";
 import { toast } from "react-toastify";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const fetchDeleteSpecialty = createAsyncThunk(
+  "specialty/delete",
+  async ({ id }) => {
+    try {
+      const toastId = toast.loading("Updating speacilty...");
+      let res = await deleteSpecialtyById(id);
+      if (res && res.data.errCode === 0) {
+        toast.update(toastId, {
+          render: res.data.message,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      } else {
+        toast.update(toastId, {
+          render: res.data.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      }
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+export const fetchUpdateSpecialty = createAsyncThunk(
+  "specialty/update",
+  async ({ specialty }) => {
+    try {
+      const id = toast.loading("Updating speacilty...");
+      let res = await updateSpecialtyById(specialty);
+      if (res && res.data.errCode === 0) {
+        toast.update(id, {
+          render: res.data.message,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      } else {
+        toast.update(id, {
+          render: res.data.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      }
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
 export const fetchCreateSpecialty = createAsyncThunk(
   "specialty/create",

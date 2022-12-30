@@ -25,3 +25,14 @@ export function getClinicsHome() {
 export function getClinicById(id) {
   return instance.get("get-clinic-by-id", { params: { id } });
 }
+
+export function updateClinicById(clinic) {
+  return instance.put("/update-clinic-by-id", {
+    id: clinic.id,
+    clinic,
+  });
+}
+
+export function deleteClinicById(id) {
+  return instance.delete("/delete-clinic-by-id", { params: { id } });
+}

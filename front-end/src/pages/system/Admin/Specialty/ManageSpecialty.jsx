@@ -7,6 +7,11 @@ import MarkdownIt from "markdown-it";
 import { toBase64 } from "../../../../utils/CommonUtils";
 import { getSpecialtiesHome } from "../../../../services/specialtyService";
 import { getSpecialtyById } from "../../../../services/specialtyService";
+import { toast } from "react-toastify";
+import {
+  fetchDeleteSpecialty,
+  fetchUpdateSpecialty,
+} from "../../../../store/actions/specialtyAction";
 
 export default function ManageSpecialty() {
   const [isClearable, setIsClearable] = useState(true);
@@ -19,6 +24,9 @@ export default function ManageSpecialty() {
   let [imgUrl, setImgUrl] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState(null);
   const [specialtyOtions, setSpecialtyOtions] = useState([]);
+  const { updateSpecialtySuccess, deleteSpecialtySuccess } = useSelector(
+    (state) => state.specialty
+  );
 
   const customStyles = {
     control: (base) => ({
@@ -33,22 +41,39 @@ export default function ManageSpecialty() {
   }, []);
 
   useEffect(() => {
-    if (selectedSpecialty) fetchSpecialtyChangeSelect();
+    clearInputState();
+    setSelectedSpecialty(null);
+  }, [updateSpecialtySuccess, deleteSpecialtySuccess]);
+
+  useEffect(() => {
+    clearInputState();
+    if (selectedSpecialty) {
+      fetchSpecialtyChangeSelect();
+    }
   }, [selectedSpecialty]);
 
   const fetchSpecialtyChangeSelect = async () => {
     try {
       let res = await getSpecialtyById(selectedSpecialty.value);
-      console.log(res);
       let specialty = res.data.specialty;
       console.log(specialty);
       setName(specialty.name);
       setMarkdown(specialty.markdown);
+      setMarkdownHtml(specialty.markdownHtml);
       setImgUrl(specialty.image);
+      setImg(specialty.image);
     } catch (e) {
       console.log(e);
     }
   };
+
+  function clearInputState() {
+    setName("");
+    setMarkdown("");
+    setMarkdownHtml("");
+    setImg(null);
+    setImgUrl("");
+  }
 
   const fetchSpecialties = async () => {
     let res = await getSpecialtiesHome();
@@ -56,10 +81,10 @@ export default function ManageSpecialty() {
       let specialties = res.data.specialties;
       let options = [];
       specialties.map((item) => {
-        let specialtie = {};
-        specialtie.value = item._id;
-        specialtie.label = item.name;
-        options.push(specialtie);
+        let specialty = {};
+        specialty.value = item._id;
+        specialty.label = item.name;
+        options.push(specialty);
       });
       setSpecialtyOtions(options);
     }
@@ -83,12 +108,43 @@ export default function ManageSpecialty() {
     } else return true;
   }
 
+  function handleUpdateClinic() {
+    if (!selectedSpecialty) {
+      toast.warning("Please select a speacialty!");
+    }
+    if (validateInput) {
+      dispatch(
+        fetchUpdateSpecialty({
+          specialty: {
+            id: selectedSpecialty.value,
+            name: name,
+            markdown: markdown,
+            markdownHtml: markdownHtml,
+            image: img,
+          },
+        })
+      );
+    }
+  }
+
+  function handleDeleteClinic() {
+    if (!selectedSpecialty) {
+      toast.warning("Please select a speacialty!");
+    }
+    if (validateInput()) {
+      var result = confirm(`Are you sure to delete "${name}" specialty ?`);
+      if (result) {
+        dispatch(fetchDeleteSpecialty({ id: selectedSpecialty.value }));
+      }
+    }
+  }
+
   return (
     <>
       <SystemHeader />
       <div className="container mx-auto px-2">
         <div className="text-center uppercase text-3xl font-medium pt-4 mb-10">
-          Manage Clinics
+          Manage Specialties
         </div>
         <div className="container mx-auto px-2">
           <Select
@@ -148,12 +204,18 @@ export default function ManageSpecialty() {
                 />
               </div>
               {/* Image Input */}
-              <div className="pt-8 pb-8 justify-center flex">
+              <div className="pt-8 pb-8 justify-center flex justify-between">
                 <button
                   className="btn btn-success w-40 text-white"
-                  onClick={() => handleSaveClinic()}
+                  onClick={() => handleUpdateClinic()}
                 >
                   Save
+                </button>
+                <button
+                  className="btn btn-error w-40 text-white"
+                  onClick={() => handleDeleteClinic()}
+                >
+                  Delete
                 </button>
               </div>
             </div>

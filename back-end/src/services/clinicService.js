@@ -16,6 +16,7 @@ export function getclinicByIdService(id) {
 export function updateClinicByIdService(data) {
   return new Promise(async (resolve, reject) => {
     try {
+      if (!data.id) resolve({ errCode: 1, message: "missing parameter" });
       let user = await Clinic.findByIdAndUpdate(
         { _id: data.id },
         {
