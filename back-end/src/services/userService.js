@@ -64,7 +64,6 @@ export function getUserservice(data) {
 }
 
 export function createUserService(data) {
-  console.log("create user req.body: ", data);
   return new Promise(async (resolve, reject) => {
     if (
       !data.email ||
@@ -102,7 +101,6 @@ export function createUserService(data) {
 }
 
 export function loginService(data) {
-  console.log("login req.body --------------: ", data);
   return new Promise(async (resolve, reject) => {
     if (!data.email || !data.password) {
       resolve({ errCode: 1, message: "Missing Parameter" });

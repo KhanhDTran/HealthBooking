@@ -9,7 +9,10 @@ import { toBase64 } from "../../../../utils/CommonUtils";
 import { fetchProvinceOptions } from "../../../../store/actions/allcodeAction";
 import { getClinicById } from "../../../../services/clinicService";
 import { toast } from "react-toastify";
-import { fetchDeleteClinic } from "../../../../store/actions/clinicAction";
+import {
+  fetchDeleteClinic,
+  fetchUpdateClinic,
+} from "../../../../store/actions/clinicAction";
 
 export default function ManageClinic() {
   const [isClearable, setIsClearable] = useState(true);
@@ -47,6 +50,7 @@ export default function ManageClinic() {
     clearInputState();
     setSelectedClinic(null);
     setSelectedProvince(null);
+    fetchClinics().catch();
   }, [updateClinicSuccess, deleteClinicSuccess]);
 
   useEffect(() => {
@@ -70,7 +74,6 @@ export default function ManageClinic() {
     try {
       let res = await getClinicById(selectedClinic.value);
       let clinic = res.data.clinic;
-      console.log(clinic);
       setName(clinic.name);
       setAddress(clinic.address);
       setMarkdown(clinic.markdown);
@@ -123,7 +126,19 @@ export default function ManageClinic() {
       toast.warning("Please select a clinic");
     }
     if (validateInput()) {
-      // dispatch(fetch)
+      dispatch(
+        fetchUpdateClinic({
+          clinic: {
+            id: selectedClinic.value,
+            name: name,
+            address: address,
+            markdown: markdown,
+            province: selectedProvince.value,
+            markdownHtml: markdownHtml,
+            image: img,
+          },
+        })
+      );
     }
   }
 
@@ -134,7 +149,8 @@ export default function ManageClinic() {
       if (validateInput()) {
         var result = confirm(`Are you sure to delete "${name}" specialty ?`);
         if (result) {
-          dispatch(fetchDeleteClinic({ id: selectedClinic.value }));
+          console.log(selectedClinic.value);
+          dispatch(fetchDeleteClinic(selectedClinic.value));
         }
       }
     }

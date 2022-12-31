@@ -14,7 +14,6 @@ export function getSpecialtyByIdService(id) {
 }
 
 export function updateSpecialtyByIdService(data) {
-  console.log("--------------", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) resolve({ errCode: 1, message: "missing parameter" });

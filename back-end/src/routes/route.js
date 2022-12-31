@@ -52,8 +52,8 @@ export function webRoute(app) {
   router.get("/api/get-clinic-by-id", getclinicById);
   router.get("/api/get-all-clinic", getClinicHome);
   router.post("/api/create-new-clinic", createClinic);
-  router.delete("/api/delete-Clinic-by-id", deleteClinicById);
-  router.put("/api/update-Clinic-by-id", updateClinicById);
+  router.delete("/api/delete-clinic-by-id", deleteClinicById);
+  router.put("/api/update-clinic-by-id", updateClinicById);
 
   //AllCode
 

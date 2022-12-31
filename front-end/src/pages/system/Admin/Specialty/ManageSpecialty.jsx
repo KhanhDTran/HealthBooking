@@ -43,6 +43,7 @@ export default function ManageSpecialty() {
   useEffect(() => {
     clearInputState();
     setSelectedSpecialty(null);
+    fetchSpecialties().catch();
   }, [updateSpecialtySuccess, deleteSpecialtySuccess]);
 
   useEffect(() => {

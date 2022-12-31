@@ -48,9 +48,12 @@ export function updateClinicByIdService(data) {
 export function deleteClinicByIdService(id) {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!id) resolve({ errCode: 1, message: "Missing parameter" });
-      await Clinic.findByIdAndDelete({ _id: id });
-      resolve({ errCode: 0, message: "Deleted Clinic Successful" });
+      if (!id) {
+        resolve({ errCode: 1, message: "Missing parameter" });
+      } else {
+        await Clinic.findByIdAndDelete({ _id: id });
+        resolve({ errCode: 0, message: "Deleted Clinic Successful" });
+      }
     } catch (e) {
       reject(e);
     }
@@ -58,7 +61,6 @@ export function deleteClinicByIdService(id) {
 }
 
 export function createClinicService(data) {
-  console.log(data);
   return new Promise(async (resolve, reject) => {
     try {
       if (

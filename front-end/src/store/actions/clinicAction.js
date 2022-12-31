@@ -1,13 +1,13 @@
-import { createClinicService } from "../../services/clinicService";
+import { createClinicService, deleteClinicById, updateClinicById } from "../../services/clinicService";
 import { toast } from "react-toastify";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchDeleteClinic = createAsyncThunk(
   "clinic/delete",
-  async ({ id }) => {
+  async (id) => {
     try {
       const toastId = toast.loading("Deleting clinic...");
-      let res = await createClinicService(id);
+      let res = await deleteClinicById(id);
       if (res && res.data.errCode === 0) {
         toast.update(toastId, {
           render: res.data.message,
@@ -34,7 +34,7 @@ export const fetchUpdateClinic = createAsyncThunk(
   async ({ clinic }) => {
     try {
       const id = toast.loading("Updating clinic...");
-      let res = await createClinicService(clinic);
+      let res = await updateClinicById(clinic);
       if (res && res.data.errCode === 0) {
         toast.update(id, {
           render: res.data.message,
