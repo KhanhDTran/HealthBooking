@@ -20,7 +20,6 @@ export default function Clinic(props) {
     }
   };
 
-  console.log(clinics);
   return (
     <div>
       <div className="container mx-auto">
@@ -38,7 +37,6 @@ export default function Clinic(props) {
             {clinics &&
               clinics.length > 0 &&
               clinics.map((item) => {
-                // console.log(`data:image/pmg;base64,${item.image.data}`);
                 return (
                   <div
                     key={item._id}

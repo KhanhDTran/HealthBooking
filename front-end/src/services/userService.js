@@ -13,7 +13,7 @@ export function loginService(email, password) {
 }
 
 export function getAllUsers() {
-  return instance.get("/get-users", {});
+  return instance.get("/get-users");
 }
 
 export function createUser(
@@ -40,4 +40,8 @@ export function createUser(
     gender,
     image,
   });
+}
+
+export function getDoctorUsers() {
+  return instance.get("/get-all-doctor-users");
 }

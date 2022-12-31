@@ -9,6 +9,7 @@ import {
   fetchUpdateUser,
   fetchDeleteUser,
 } from "../../../../store/actions/userAction";
+import { customStyles } from "../../../../utils/CommonUtils";
 
 export default function ManageUser() {
   const [users, setUsers] = useState([]);
@@ -32,23 +33,16 @@ export default function ManageUser() {
     (state) => state.user
   );
 
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      height: 46,
-      minHeight: 35,
-    }),
-  };
-
   useEffect(() => {
     if (openModal) {
       document.querySelector("body").style.overflow = "hidden";
     } else {
-      document.querySelector("body").style.overflow = "auto";
+      document.querySelector("body").style = "";
     }
   }, [openModal]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchUsers();
     dispatch(fetchCreateUserOptions());
   }, []);
@@ -431,7 +425,7 @@ export default function ManageUser() {
               <tbody>
                 {/* <!-- row 1 --> */}
                 {users.map((item, index) => {
-                  if (item.role.keyMap !== "R1") {
+                  if (item && item.role && item.role.keyMap !== "R1") {
                     return (
                       <tr
                         className={
@@ -452,7 +446,8 @@ export default function ManageUser() {
                         <td> {item.address} </td>
                       </tr>
                     );
-                  } else {
+                  }
+                  if (item && item.role && item.role.keyMap !== "R2") {
                     return (
                       <tr className="" key={index}>
                         <th>{index + 1}</th>

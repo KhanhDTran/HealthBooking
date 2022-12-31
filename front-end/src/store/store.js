@@ -3,6 +3,7 @@ import userReducer from "./features/userSlice";
 import specialtyReducer from "./features/specialtySlice";
 import clinicReducer from "./features/clinicSlice";
 import allcodeReducer from "./features/allcodeSlice";
+import doctorReducer from "./features/doctorSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     clinic: clinicReducer,
     allcode: allcodeReducer,
     specialty: specialtyReducer,
+    doctor: doctorReducer,
   },
 });
 

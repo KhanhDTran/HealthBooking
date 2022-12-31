@@ -9,6 +9,7 @@ import { toBase64 } from "../../../../utils/CommonUtils";
 import { fetchProvinceOptions } from "../../../../store/actions/allcodeAction";
 import { getClinicById } from "../../../../services/clinicService";
 import { toast } from "react-toastify";
+import { customStyles } from "../../../../utils/CommonUtils";
 import {
   fetchDeleteClinic,
   fetchUpdateClinic,
@@ -29,19 +30,13 @@ export default function ManageClinic() {
   const [clinicOptions, setClinicOptions] = useState([]);
   const [selectedClinic, setSelectedClinic] = useState(null);
   const { provinces } = useSelector((state) => state.allcode);
+
   const { updateClinicSuccess, deleteClinicSuccess } = useSelector(
     (state) => state.clinic
   );
 
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      height: 46,
-      minHeight: 35,
-    }),
-  };
-
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(fetchProvinceOptions());
     fetchClinics().catch();
   }, []);
@@ -124,21 +119,22 @@ export default function ManageClinic() {
   function handleSaveClinic() {
     if (!selectedClinic) {
       toast.warning("Please select a clinic");
-    }
-    if (validateInput()) {
-      dispatch(
-        fetchUpdateClinic({
-          clinic: {
-            id: selectedClinic.value,
-            name: name,
-            address: address,
-            markdown: markdown,
-            province: selectedProvince.value,
-            markdownHtml: markdownHtml,
-            image: img,
-          },
-        })
-      );
+    } else {
+      if (validateInput()) {
+        dispatch(
+          fetchUpdateClinic({
+            clinic: {
+              id: selectedClinic.value,
+              name: name,
+              address: address,
+              markdown: markdown,
+              province: selectedProvince.value,
+              markdownHtml: markdownHtml,
+              image: img,
+            },
+          })
+        );
+      }
     }
   }
 
@@ -147,9 +143,8 @@ export default function ManageClinic() {
       toast.warning("Please select a clinic");
     } else {
       if (validateInput()) {
-        var result = confirm(`Are you sure to delete "${name}" specialty ?`);
+        var result = confirm(`Are you sure to delete "${name}" clinic ?`);
         if (result) {
-          console.log(selectedClinic.value);
           dispatch(fetchDeleteClinic(selectedClinic.value));
         }
       }
@@ -241,17 +236,6 @@ export default function ManageClinic() {
                 </div>
               </div>
               {/* Address Input */}
-              {/* Description Input */}
-              <label htmlFor="">Description</label>
-              <div className="pt-4">
-                <MdEditor
-                  style={{ height: "700px" }}
-                  value={markdown}
-                  renderHTML={(text) => mdParser.render(text)}
-                  onChange={handleEditorChange}
-                />
-              </div>
-              {/* Description Input */}
               {/* Image Input */}
               <div className="pt-4 flex justify-center items-center gap-x-4 flex-col md:flex-row">
                 <div className="carousel-item h-58 w-72 border-slate-300">
@@ -268,6 +252,18 @@ export default function ManageClinic() {
                   onChange={(e) => handleImgChange(e.target.files[0])}
                 />
               </div>
+              {/* Description Input */}
+              <label htmlFor="">Description</label>
+              <div className="pt-4">
+                <MdEditor
+                  style={{ height: "700px" }}
+                  value={markdown}
+                  renderHTML={(text) => mdParser.render(text)}
+                  onChange={handleEditorChange}
+                />
+              </div>
+              {/* Description Input */}
+
               <div className="pt-8 pb-8 justify-center flex ">
                 <button
                   className="btn btn-success w-40 text-white"

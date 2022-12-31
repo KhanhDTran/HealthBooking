@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchProvinceOptions,
   fetchCreateUserOptions,
+  fetchManageDoctorsOptions,
 } from "../actions/allcodeAction";
 
 const initialState = {
@@ -32,6 +33,17 @@ const allcodeSlice = createSlice({
         state.genders = payload.genders;
       }
     });
+    builder.addCase(
+      fetchManageDoctorsOptions.fulfilled,
+      (state, { payload }) => {
+        if (payload) {
+          state.provinces = payload.provinces;
+          state.positions = payload.positions;
+          state.payment = payload.payment;
+          state.price = payload.price;
+        }
+      }
+    );
   },
 });
 export default allcodeSlice.reducer;

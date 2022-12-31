@@ -36,7 +36,6 @@ export default function Specialty(props) {
           {specialties &&
             specialties.length > 0 &&
             specialties.map((item) => {
-              // console.log(`data:image/pmg;base64,${item.image.data}`);
               return (
                 <div
                   key={item._id}

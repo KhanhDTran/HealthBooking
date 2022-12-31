@@ -5,6 +5,31 @@ import doten from "dotenv";
 doten.config();
 let saltRounds = 10;
 
+export function getAllDoctorUserService() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let doctors = [];
+      await User.find({}, "-password")
+        .populate("role", "keyMap")
+        .exec()
+        .then((docs) => {
+          docs.map((item) => {
+            if (item.role.keyMap === "R2") {
+              doctors.push(item);
+            }
+          });
+        });
+      if (doctors) {
+        resolve({ errCode: 0, doctors });
+      } else {
+        resolve({ errCode: 2, message: "No Doctor Found" });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function updateUserService(data) {
   return new Promise(async (resolve, reject) => {
     try {

@@ -10,7 +10,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchUpdateUser = createAsyncThunk(
   "user/update",
   async ({ user }) => {
-    console.log(user);
     try {
       const toastId = toast.loading("Updating User...");
       let res = await updateUserById(user);

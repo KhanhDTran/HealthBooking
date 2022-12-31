@@ -2,17 +2,11 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
 import { useState } from "react";
+import { customStyles } from "../../../../utils/CommonUtils";
 
 export default function ClinicModalContent(props) {
   const [isClearable, setIsClearable] = useState(true);
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      height: 46,
-      minHeight: 35,
-    }),
-  };
-
+ 
   return (
     <>
       <div className=" md:container md:mx-auto flex flex-col ">

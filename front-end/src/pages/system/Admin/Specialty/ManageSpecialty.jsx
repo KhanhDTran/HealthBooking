@@ -12,6 +12,7 @@ import {
   fetchDeleteSpecialty,
   fetchUpdateSpecialty,
 } from "../../../../store/actions/specialtyAction";
+import { customStyles } from "../../../../utils/CommonUtils";
 
 export default function ManageSpecialty() {
   const [isClearable, setIsClearable] = useState(true);
@@ -28,15 +29,8 @@ export default function ManageSpecialty() {
     (state) => state.specialty
   );
 
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      height: 46,
-      minHeight: 35,
-    }),
-  };
-
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchSpecialties().catch();
   }, []);
 
@@ -57,7 +51,6 @@ export default function ManageSpecialty() {
     try {
       let res = await getSpecialtyById(selectedSpecialty.value);
       let specialty = res.data.specialty;
-      console.log(specialty);
       setName(specialty.name);
       setMarkdown(specialty.markdown);
       setMarkdownHtml(specialty.markdownHtml);
@@ -112,30 +105,32 @@ export default function ManageSpecialty() {
   function handleUpdateClinic() {
     if (!selectedSpecialty) {
       toast.warning("Please select a speacialty!");
-    }
-    if (validateInput) {
-      dispatch(
-        fetchUpdateSpecialty({
-          specialty: {
-            id: selectedSpecialty.value,
-            name: name,
-            markdown: markdown,
-            markdownHtml: markdownHtml,
-            image: img,
-          },
-        })
-      );
+    } else {
+      if (validateInput) {
+        dispatch(
+          fetchUpdateSpecialty({
+            specialty: {
+              id: selectedSpecialty.value,
+              name: name,
+              markdown: markdown,
+              markdownHtml: markdownHtml,
+              image: img,
+            },
+          })
+        );
+      }
     }
   }
 
   function handleDeleteClinic() {
     if (!selectedSpecialty) {
       toast.warning("Please select a speacialty!");
-    }
-    if (validateInput()) {
-      var result = confirm(`Are you sure to delete "${name}" specialty ?`);
-      if (result) {
-        dispatch(fetchDeleteSpecialty({ id: selectedSpecialty.value }));
+    } else {
+      if (validateInput()) {
+        var result = confirm(`Are you sure to delete "${name}" specialty ?`);
+        if (result) {
+          dispatch(fetchDeleteSpecialty({ id: selectedSpecialty.value }));
+        }
       }
     }
   }
@@ -176,18 +171,6 @@ export default function ManageSpecialty() {
                 {/* </div> */}
                 {/* Name Input */}
               </div>
-
-              {/* Description Input */}
-              <label htmlFor="">Description</label>
-              <div className="pt-4">
-                <MdEditor
-                  style={{ height: "700px" }}
-                  value={markdown}
-                  renderHTML={(text) => mdParser.render(text)}
-                  onChange={handleEditorChange}
-                />
-              </div>
-              {/* Description Input */}
               {/* Image Input */}
               <div className="pt-4 flex justify-center items-center gap-x-4 flex-col md:flex-row">
                 <div className="carousel-item h-58 w-72 border-slate-300">
@@ -205,6 +188,19 @@ export default function ManageSpecialty() {
                 />
               </div>
               {/* Image Input */}
+
+              {/* Description Input */}
+              <label htmlFor="">Description</label>
+              <div className="pt-4">
+                <MdEditor
+                  style={{ height: "700px" }}
+                  value={markdown}
+                  renderHTML={(text) => mdParser.render(text)}
+                  onChange={handleEditorChange}
+                />
+              </div>
+              {/* Description Input */}
+
               <div className="pt-8 pb-8 justify-center flex justify-between">
                 <button
                   className="btn btn-success w-40 text-white"

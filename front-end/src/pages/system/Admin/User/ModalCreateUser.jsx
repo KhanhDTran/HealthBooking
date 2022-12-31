@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import { customStyles } from "../../../../utils/CommonUtils";
 
 export default function ModalCreateUser(props) {
   let [showPass, setShowPass] = useState(false);
   const [isClearable, setIsClearable] = useState(true);
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      height: 46,
-      minHeight: 35,
-    }),
-  };
 
   return (
     <>

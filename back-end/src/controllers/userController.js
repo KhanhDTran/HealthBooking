@@ -4,8 +4,19 @@ import {
   getUserservice,
   deleteUserService,
   updateUserService,
+  getAllDoctorUserService,
 } from "../services/userService.js";
 import { delay } from "../utils/commonUtils.js";
+
+export async function getAllDoctorUser(req, res) {
+  try {
+    let response = await getAllDoctorUserService();
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-all-doctor-user-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function deleteUserById(req, res) {
   try {
@@ -17,6 +28,7 @@ export async function deleteUserById(req, res) {
     return res.status(200).json({ errCode: -1, message: "Error from server" });
   }
 }
+
 export async function updateUserById(req, res) {
   try {
     await delay(1000);

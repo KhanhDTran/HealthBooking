@@ -5,6 +5,7 @@ import {
   getUsers,
   deleteUserById,
   updateUserById,
+  getAllDoctorUser,
 } from "../controllers/userController.js";
 import {
   createSpecialty,
@@ -23,6 +24,11 @@ import {
 } from "../controllers/clinicController.js";
 import { getAllcode } from "../controllers/allcodeController.js";
 
+import {
+  upsertDoctorProfile,
+  getDoctorProfileByUserId,
+} from "../controllers/doctorController.js";
+
 let router = expess.Router();
 
 export function webRoute(app) {
@@ -38,6 +44,11 @@ export function webRoute(app) {
   router.post("/api/create-user", createUser);
   router.delete("/api/delete-user-by-id", deleteUserById);
   router.put("/api/update-user-by-id", updateUserById);
+  router.get("/api/get-all-doctor-users", getAllDoctorUser);
+
+  //Doctor
+  router.get("/api/get-doctor-profile-by-user-id", getDoctorProfileByUserId);
+  router.put("/api/upsert-doctor-profile", upsertDoctorProfile);
 
   //Specialty
 

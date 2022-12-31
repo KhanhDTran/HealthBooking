@@ -23,7 +23,7 @@ export default function CreateSpecialty(props) {
     setMarkdownHtml("");
     setImg("");
     setImgUrl("");
-    document.getElementById("img").value = "";
+    document.getElementById("img-specialty").value = "";
   }, [createSpecialtySuccess]);
 
   function handleEditorChange({ html, text }) {
@@ -123,13 +123,13 @@ export default function CreateSpecialty(props) {
                   <img src={imgUrl} className="rounded-box" />
                 </div>
               )}
-              <label htmlFor="img " className="hover:cursor-pointer">
+              <label htmlFor="img-specialty " className="hover:cursor-pointer">
                 Image
               </label>
               <input
                 type="file"
                 accept="image/x-png,image/gif,image/jpeg"
-                id="img"
+                id="img-specialty"
                 className="file-input file-input-bordered file-input-info w-full max-w-xs hover:cursor-pointer"
                 onChange={(e) => handleImgChange(e.target.files[0])}
               />

@@ -33,4 +33,5 @@ const clinicSlice = createSlice({
     });
   },
 });
+
 export default clinicSlice.reducer;
