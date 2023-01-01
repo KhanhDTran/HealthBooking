@@ -8,7 +8,6 @@ export const fetchUpsertDoctorProfile = createAsyncThunk(
     try {
       const toastId = toast.loading("Upserting Doctor Profile...");
       let res = await upsertDoctorProfile(data);
-      console.log(res);
       if (res && res.data.errCode === 0) {
         toast.update(toastId, {
           render: res.data.message,

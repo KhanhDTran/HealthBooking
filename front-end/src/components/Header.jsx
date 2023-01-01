@@ -1,15 +1,8 @@
-import i18next from "i18next";
-import { useTranslation } from "react-i18next";
 import logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 
-async function changeLanguage(language) {
-  i18next.changeLanguage(language).then(() => {});
-}
-
 export default function Header() {
   let navigate = useNavigate();
-  const { t } = useTranslation();
   return (
     <>
       <div className="navbar  sticky  top-0 z-30 " data-theme="">
@@ -37,16 +30,16 @@ export default function Header() {
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>{t("header.specialty")}</a>
-              </li>
-              <li tabIndex={0}>
-                <a>{t("header.medical-facilities")}</a>
+                <a>Chuyên khoa</a>
               </li>
               <li>
-                <a>{t("header.doctor")}</a>
+                <a>Cơ sở Y tế</a>
               </li>
               <li>
-                <a>{t("header.examination-packs")}</a>
+                <a>Bác sĩ</a>
+              </li>
+              <li>
+                <a>Gói khám</a>
               </li>
             </ul>
           </div>
@@ -66,33 +59,21 @@ export default function Header() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>{t("header.specialty")}</a>
-            </li>
-            <li tabIndex={0}>
-              <a>{t("header.medical-facilities")}</a>
+              <a>Chuyên khoa</a>
             </li>
             <li>
-              <a>{t("header.doctor")}</a>
+              <a>Cơ sở Y tế</a>
             </li>
             <li>
-              <a>{t("header.examination-packs")}</a>
+              <a>Bác sĩ</a>
+            </li>
+            <li>
+              <a>Gói khám</a>
             </li>
           </ul>
         </div>
         {/* nav - right */}
-        <div className="navbar-end">
-          <select
-            className="select-sm select select-bordered "
-            data-theme=""
-            value={i18next.language}
-            onChange={(e) => {
-              changeLanguage(e.target.value);
-            }}
-          >
-            <option value="vi">VN</option>
-            <option value="en">EN</option>
-          </select>
-        </div>
+        <div className="navbar-end"></div>
       </div>
     </>
   );

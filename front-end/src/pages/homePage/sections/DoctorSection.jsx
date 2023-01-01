@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
-import doctorImg from "../../../assets/images/doctors/doctor1.png";
 import { useState, useEffect } from "react";
 import { getDoctorsHome } from "../../../services/doctorService";
+import { useNavigate } from "react-router-dom";
 
 export default function DoctorSection(props) {
   const { t } = useTranslation();
+  let navigate = useNavigate();
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
@@ -45,11 +46,12 @@ export default function DoctorSection(props) {
                 <div
                   key={index}
                   className="hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer my-10"
+                  onClick={() => navigate(`/doctor/${item._id}`)}
                 >
                   <div className=" bg-base-100 shadow-xl p-4">
                     <div className="items-center justify-items-center flex flex-col">
                       <img className="image-doctor" src={item.image} />
-                      <h2 className="doctor-title text-md ">
+                      <h2 className="doctor-title text-md text-lg  ">
                         {item.position.value} {item.user.firstName}{" "}
                         {item.user.lastName}
                       </h2>

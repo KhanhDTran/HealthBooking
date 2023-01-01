@@ -1,5 +1,9 @@
 import { instance } from "./instance";
 
+export function getDoctorById(id) {
+  return instance.get("/get-doctor-by-id", { params: { id } });
+}
+
 export function upsertDoctorProfile(data) {
   return instance.put("/upsert-doctor-profile", { data });
 }

@@ -4,7 +4,18 @@ import {
   upsertDoctorProfileService,
   getDoctorProfileByUserIdService,
   getDoctorHomeService,
+  getDoctorByIdService,
 } from "../services/doctorService.js";
+
+export async function getDoctorById(req, res) {
+  try {
+    let response = await getDoctorByIdService(req.query.id);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-doctor-by-id-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function getDoctorHome(req, res) {
   try {

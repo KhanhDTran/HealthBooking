@@ -29,6 +29,7 @@ import {
   upsertDoctorProfile,
   getDoctorProfileByUserId,
   getDoctorHome,
+  getDoctorById,
 } from "../controllers/doctorController.js";
 
 let router = expess.Router();
@@ -49,6 +50,7 @@ export function webRoute(app) {
   router.get("/api/get-all-doctor-users", getAllDoctorUser);
 
   //Doctor
+  router.get("/api/get-doctor-by-id", getDoctorById);
   router.get("/api/get-doctors-home", getDoctorHome);
   router.get("/api/get-doctor-profile-by-user-id", getDoctorProfileByUserId);
   router.put("/api/upsert-doctor-profile", upsertDoctorProfile);

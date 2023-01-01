@@ -202,7 +202,7 @@ export default function ManageDoctor() {
   return (
     <>
       <SystemHeader />
-      <div className="conainer mx-auto px-2">
+      <div className="container mx-auto px-2">
         <div className="text-center uppercase text-3xl font-medium pt-4 mb-10">
           Manage Doctors Profile
         </div>
