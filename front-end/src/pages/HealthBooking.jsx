@@ -12,11 +12,28 @@ import ManageUser from "./system/Admin/User/ManageUser";
 import ManageSpecialty from "./system/Admin/Specialty/ManageSpecialty";
 import ManageClinic from "./system/Admin/Clinic/ManageClinic";
 import DoctorPage from "./doctorPages/DoctorPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function HealthBooking() {
   return (
     <Fragment>
-      <RouterProvider router={router} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/doctor/:id" element={<DoctorPage />} />
+          <Route path="system/admin">
+            <Route index={true} element={<Admin />} />
+            <Route path="manage-doctors-profile" element={<ManageDoctor />} />
+            <Route path="manage-users" element={<ManageUser />} />
+            <Route path="manage-specialties" element={<ManageSpecialty />} />
+            <Route path="manage-clinics" element={<ManageClinic />} />
+          </Route>
+          <Route path="system/doctor">
+            <Route index={true} element={<Doctor />} />
+          </Route>
+        </Routes>
+      </Router>
       <ToastContainer
         position="top-center"
         autoClose={3000}

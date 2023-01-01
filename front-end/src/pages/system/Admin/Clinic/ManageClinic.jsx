@@ -10,12 +10,14 @@ import { fetchProvinceOptions } from "../../../../store/actions/allcodeAction";
 import { getClinicById } from "../../../../services/clinicService";
 import { toast } from "react-toastify";
 import { customStyles } from "../../../../utils/CommonUtils";
+import { useNavigate } from "react-router-dom";
 import {
   fetchDeleteClinic,
   fetchUpdateClinic,
 } from "../../../../store/actions/clinicAction";
 
 export default function ManageClinic() {
+  let navigate = useNavigate();
   const [isClearable, setIsClearable] = useState(true);
   const dispatch = useDispatch();
   const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -34,12 +36,24 @@ export default function ManageClinic() {
   const { updateClinicSuccess, deleteClinicSuccess } = useSelector(
     (state) => state.clinic
   );
+  let { user } = useSelector((state) => state.user);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      if (user.role.keyMap !== "R1") {
+        navigate("/login");
+      }
+    }
     window.scrollTo(0, 0);
     dispatch(fetchProvinceOptions());
     fetchClinics().catch();
   }, []);
+
+  console.log(user);
+
+  function checkAdminLogin() {}
 
   useEffect(() => {
     clearInputState();

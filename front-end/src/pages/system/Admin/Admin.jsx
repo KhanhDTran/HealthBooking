@@ -11,22 +11,20 @@ export default function Admin() {
   useEffect(() => {
     if (!user) {
       navigate("/login");
+    } else {
+      if (user.role.keyMap !== "R1") {
+        navigate("/login");
+      }
     }
   }, []);
   return (
     <Fragment>
-      {user && user.role.keyMap === "R1" ? (
-        <div>
-          <SystemHeader />
-          <div className="container mx-auto pt-4">
-            <AdminGrid />
-          </div>
+      <div>
+        <SystemHeader />
+        <div className="container mx-auto pt-4">
+          <AdminGrid />
         </div>
-      ) : (
-        <div>
-          <h1 className="text-center">Your're not athorized here!</h1>
-        </div>
-      )}
+      </div>
     </Fragment>
   );
 }

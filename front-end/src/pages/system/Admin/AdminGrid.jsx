@@ -7,10 +7,22 @@ import CreateSpecialty from "./Specialty/CreateSpecialty";
 import CreateClinic from "./Clinic/CreateClinic";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function AdminGrid() {
   let [openModal, setOpenModal] = useState(false);
+  let { user } = useSelector((state) => state.user);
   let navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      if (user.role.keyMap !== "R1") {
+        navigate("/login");
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (openModal) {
       document.querySelector("body").style.overflow = "hidden";

@@ -9,11 +9,13 @@ import { fetchManageDoctorsOptions } from "../../../../store/actions/allcodeActi
 import { getDoctorUsers } from "../../../../services/userService";
 import { customStyles } from "../../../../utils/CommonUtils";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { fetchUpsertDoctorProfile } from "../../../../store/actions/doctorAction";
 import { getDoctorProfileByUserId } from "../../../../services/doctorService";
 import { fetchSpecialtyOptions } from "../../../../store/actions/specialtyAction";
 
 export default function ManageDoctor() {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   const mdParser = new MarkdownIt(/* */);
   let [email, setEmail] = useState("");
@@ -44,8 +46,16 @@ export default function ManageDoctor() {
   );
   const { upsertDoctorProfile } = useSelector((state) => state.doctor);
   const { specialtyOptionsRedux } = useSelector((state) => state.specialty);
+  let { user } = useSelector((state) => state.user);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      if (user.role.keyMap !== "R1") {
+        navigate("/login");
+      }
+    }
     window.scrollTo(0, 0);
     dispatch(fetchManageDoctorsOptions());
     fetchDoctorUsers();

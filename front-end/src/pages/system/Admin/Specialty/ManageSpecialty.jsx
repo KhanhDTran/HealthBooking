@@ -8,6 +8,8 @@ import { toBase64 } from "../../../../utils/CommonUtils";
 import { getSpecialtiesHome } from "../../../../services/specialtyService";
 import { getSpecialtyById } from "../../../../services/specialtyService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 import {
   fetchDeleteSpecialty,
   fetchUpdateSpecialty,
@@ -15,6 +17,7 @@ import {
 import { customStyles } from "../../../../utils/CommonUtils";
 
 export default function ManageSpecialty() {
+  let navigate = useNavigate();
   const [isClearable, setIsClearable] = useState(true);
   const dispatch = useDispatch();
   const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -28,6 +31,7 @@ export default function ManageSpecialty() {
   const { updateSpecialtySuccess, deleteSpecialtySuccess } = useSelector(
     (state) => state.specialty
   );
+  let { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,6 +39,13 @@ export default function ManageSpecialty() {
   }, []);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      if (user.role.keyMap !== "R1") {
+        navigate("/login");
+      }
+    }
     clearInputState();
     setSelectedSpecialty(null);
     fetchSpecialties().catch();
