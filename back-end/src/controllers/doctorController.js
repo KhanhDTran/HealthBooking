@@ -5,7 +5,18 @@ import {
   getDoctorProfileByUserIdService,
   getDoctorHomeService,
   getDoctorByIdService,
+  getAllDoctorsService,
 } from "../services/doctorService.js";
+
+export async function getAllDoctors(req, res) {
+  try {
+    let response = await getAllDoctorsService();
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-doctor-by-id-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
 
 export async function getDoctorById(req, res) {
   try {

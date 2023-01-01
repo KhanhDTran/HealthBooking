@@ -390,13 +390,13 @@ export default function ManageDoctor() {
 
             {/* Image Input */}
             <div className="pt-4 flex justify-center items-center gap-x-4 flex-col md:flex-row">
-              {/* img Input */}
+              {/* img  */}
               <div className="w-ful md:w-1/2 pt-2">
                 <div className="carousel-item h-58 w-72 border-slate-300">
                   <img src={imgUrl} className="rounded-box" />
                 </div>
               </div>
-              {/* img Input */}
+              {/* img  */}
               <label
                 htmlFor="img-doctor-profile"
                 className="hover:cursor-pointer"

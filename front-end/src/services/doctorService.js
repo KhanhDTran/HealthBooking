@@ -1,5 +1,9 @@
 import { instance } from "./instance";
 
+export function getAllDoctors() {
+  return instance.get("/get-all-doctors");
+}
+
 export function getDoctorById(id) {
   return instance.get("/get-doctor-by-id", { params: { id } });
 }

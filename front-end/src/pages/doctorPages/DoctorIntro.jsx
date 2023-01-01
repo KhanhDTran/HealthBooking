@@ -4,7 +4,7 @@ export default function DoctorIntro(props) {
       {props.doctor && (
         <div className="" data-theme="">
           <div className="w-full flex flex-col md:flex-row align-center justify-center ">
-            <div className="avatar p-4">
+            <div className="">
               <div className="w-40 h-40 rounded-full">
                 <img src={props.doctor.image} />
               </div>

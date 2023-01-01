@@ -18,7 +18,6 @@ import {
 
 export default function ManageClinic() {
   let navigate = useNavigate();
-  const [isClearable, setIsClearable] = useState(true);
   const dispatch = useDispatch();
   const mdParser = new MarkdownIt(/* Markdown-it options */);
   let [name, setName] = useState("");
@@ -187,8 +186,9 @@ export default function ManageClinic() {
           Manage Clinics
         </div>
         <div className="container mx-auto px-2">
+          <label htmlFor="">Select Clinic</label>
           <Select
-            isClearable={isClearable}
+            isClearable={true}
             styles={customStyles}
             value={selectedClinic ? selectedClinic : null}
             onChange={setSelectedClinic}

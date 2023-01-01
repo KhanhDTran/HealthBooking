@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUpsertDoctorProfile } from "../actions/doctorAction";
+import {
+  fetchUpsertDoctorProfile,
+  fetchAllDoctors,
+} from "../actions/doctorAction";
 
 const initialState = {
   upsertDoctorProfile: false,
+  doctors: [],
+  doctorOptionsRedux: [],
 };
 
 const doctorSlice = createSlice({
@@ -10,9 +15,18 @@ const doctorSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUpsertDoctorProfile.fulfilled, (state, { payload }) => {
-      if (payload.errCode === 0) {
-        state.upsertDoctorProfile = !state.upsertDoctorProfile;
+    builder.addCase(
+      fetchUpsertDoctorProfile.fulfilled,
+      (state, { payload }) => {
+        if (payload.errCode === 0) {
+          state.upsertDoctorProfile = !state.upsertDoctorProfile;
+        }
+      }
+    );
+    builder.addCase(fetchAllDoctors.fulfilled, (state, { payload }) => {
+      if (payload) {
+        state.doctors = payload.doctors;
+        state.doctorOptionsRedux = payload.doctorOptions;
       }
     });
   },

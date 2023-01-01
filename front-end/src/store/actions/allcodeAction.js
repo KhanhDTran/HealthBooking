@@ -1,6 +1,22 @@
 import { getAllcode } from "../../services/allcodeService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+export const fetchTimeSchedule = createAsyncThunk(
+  "allcode/doctor-schedule",
+  async () => {
+    try {
+      let times = [];
+      let res = await getAllcode(["TIME"]);
+      if (res && res.data.errCode === 0) {
+        times = res.data.allcodes;
+      }
+      return { times };
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const fetchManageDoctorsOptions = createAsyncThunk(
   "allcode/manage-doctors",
   async () => {

@@ -12,6 +12,7 @@ import ManageUser from "./system/Admin/User/ManageUser";
 import ManageSpecialty from "./system/Admin/Specialty/ManageSpecialty";
 import ManageClinic from "./system/Admin/Clinic/ManageClinic";
 import DoctorPage from "./doctorPages/DoctorPage";
+import ManageDoctorSchedule from "./system/Admin/Doctor/ManageDoctorSchedule";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function HealthBooking() {
@@ -28,6 +29,10 @@ export default function HealthBooking() {
             <Route path="manage-users" element={<ManageUser />} />
             <Route path="manage-specialties" element={<ManageSpecialty />} />
             <Route path="manage-clinics" element={<ManageClinic />} />
+            <Route
+              path="manage-doctors-schedule"
+              element={<ManageDoctorSchedule />}
+            />
           </Route>
           <Route path="system/doctor">
             <Route index={true} element={<Doctor />} />
@@ -49,49 +54,3 @@ export default function HealthBooking() {
     </Fragment>
   );
 }
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <HomePage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/doctor/:id",
-    element: <DoctorPage />,
-  },
-
-  // System for admin  -----------------
-
-  {
-    path: "/system/admin",
-    element: <Admin />,
-  },
-  {
-    path: "/system/admin/manage-doctors-profile",
-    element: <ManageDoctor />,
-  },
-  {
-    path: "/system/admin/manage-users",
-    element: <ManageUser />,
-  },
-  {
-    path: "/system/admin/manage-specialties",
-    element: <ManageSpecialty />,
-  },
-  {
-    path: "/system/admin/manage-clinics",
-    element: <ManageClinic />,
-  },
-
-  // System for doctor  -----------------
-
-  {
-    path: "/system/doctor",
-    element: <Doctor />,
-  },
-]);

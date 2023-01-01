@@ -3,10 +3,11 @@ import {
   fetchProvinceOptions,
   fetchCreateUserOptions,
   fetchManageDoctorsOptions,
+  fetchTimeSchedule,
 } from "../actions/allcodeAction";
 
 const initialState = {
-  time: [],
+  times: [],
   provinces: [],
   roles: [],
   status: [],
@@ -44,6 +45,11 @@ const allcodeSlice = createSlice({
         }
       }
     );
+    builder.addCase(fetchTimeSchedule.fulfilled, (state, { payload }) => {
+      if (payload) {
+        state.times = payload.times;
+      }
+    });
   },
 });
 export default allcodeSlice.reducer;

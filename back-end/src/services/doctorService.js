@@ -1,5 +1,25 @@
 import Doctor from "../db/schemas/Doctor.js";
 
+export function getAllDoctorsService() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let doctors = await Doctor.find({})
+        .populate("user", ["-password"])
+        .populate("position", "value")
+        .populate("price", "value")
+        .populate("payment", "value")
+        .populate("specialty", "value");
+      if (doctors) {
+        resolve({ errCode: 0, doctors });
+      } else {
+        resolve({ errCode: 1, message: "Found no doctor" });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function getDoctorByIdService(id) {
   if (!id) return { errCode: 1, message: "Missing parameter" };
   return new Promise(async (resolve, reject) => {

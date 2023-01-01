@@ -1,6 +1,7 @@
 import doctorImg from "../../../assets/images/doctors/admindoctor.png";
 import specialtyImg from "../../../assets/images/specialties/timmach.jpg";
 import clinicImg from "../../../assets/images/clinics/laokhoa.jpg";
+import scheduleImg from "../../../assets/images/schedule.jpeg";
 import userImg from "../../../assets/images/user.jpg";
 import CreateUser from "./User/CreateUser";
 import CreateSpecialty from "./Specialty/CreateSpecialty";
@@ -37,7 +38,7 @@ export default function AdminGrid() {
         <CreateSpecialty setOpenModal={setOpenModal} />
         <CreateClinic setOpenModal={setOpenModal} />
 
-        {/* --------------------------------All doctor ----------------------------------- */}
+        {/* --------------------------------Manage User ----------------------------------- */}
         <div
           onClick={() => navigate("/system/admin/manage-users")}
           className="card w-ful bg-base-100 shadow-xl hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
@@ -50,7 +51,7 @@ export default function AdminGrid() {
             <p>Manage Users Infomation</p>
           </div>
         </div>
-        {/* --------------------------------All doctor ----------------------------------- */}
+        {/* --------------------------------Manage User ----------------------------------- */}
 
         {/* --------------------------------Edit doctors ----------------------------------- */}
         <div
@@ -67,7 +68,9 @@ export default function AdminGrid() {
             <p>Edit Doctors Profile</p>
           </div>
         </div>
+
         {/* --------------------------------Edit specialties ----------------------------------- */}
+
         <div
           className="card w-ful bg-base-100 shadow-xl hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
           onClick={() => {
@@ -82,7 +85,9 @@ export default function AdminGrid() {
             <p>Manage Specialties Information</p>
           </div>
         </div>
+
         {/* --------------------------------Edit clinics ----------------------------------- */}
+
         <div
           className="card w-ful bg-base-100 shadow-xl hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
           onClick={() => {
@@ -95,6 +100,23 @@ export default function AdminGrid() {
           <div className="card-body items-center text-center">
             <h2 className="card-title">Clinics</h2>
             <p>Manage Clinics Information</p>
+          </div>
+        </div>
+
+        {/* --------------------------------Manage doctors schedule ----------------------------------- */}
+
+        <div
+          className="card w-ful bg-base-100 shadow-xl hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
+          onClick={() => {
+            navigate("/system/admin/manage-doctors-schedule");
+          }}
+        >
+          <figure className="px-10 pt-10">
+            <img src={scheduleImg} alt="" className="rounded-box" />
+          </figure>
+          <div className="card-body items-center text-center">
+            <h2 className="card-title">Doctor Schedule</h2>
+            <p>Manage Dctors Schedule</p>
           </div>
         </div>
       </div>
