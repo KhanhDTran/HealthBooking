@@ -23,8 +23,6 @@ export default function DoctorSection(props) {
     }
   };
 
-  console.log(doctors);
-
   return (
     <div data-theme="cupcake" className="">
       <div className="container mx-auto">
@@ -46,7 +44,7 @@ export default function DoctorSection(props) {
               return (
                 <div
                   key={index}
-                  className="hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer"
+                  className="hover:bg-base-200 transition-all duration-200 hover:-translate-y-1 hover:cursor-pointer my-10"
                 >
                   <div className=" bg-base-100 shadow-xl p-4">
                     <div className="items-center justify-items-center flex flex-col">
@@ -55,7 +53,7 @@ export default function DoctorSection(props) {
                         {item.position.value} {item.user.firstName}{" "}
                         {item.user.lastName}
                       </h2>
-                      <span>{item.description}</span>
+                      <span>{item.specialty.name}</span>
                     </div>
                   </div>
                 </div>

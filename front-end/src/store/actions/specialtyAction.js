@@ -2,9 +2,29 @@ import {
   createSpecialtyService,
   updateSpecialtyById,
   deleteSpecialtyById,
+  getAllSpecialties,
 } from "../../services/specialtyService";
 import { toast } from "react-toastify";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const fetchSpecialtyOptions = createAsyncThunk(
+  "specialty/get-options",
+  async () => {
+    try {
+      let result = [];
+      let res = await getAllSpecialties();
+      if (res && res.data.errCode === 0) {
+        let specialties = res.data.specialties;
+        specialties.map((item) => {
+          result.push({ value: item._id, label: item.name });
+        });
+      }
+      return result;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
 export const fetchDeleteSpecialty = createAsyncThunk(
   "specialty/delete",
@@ -33,6 +53,7 @@ export const fetchDeleteSpecialty = createAsyncThunk(
     }
   }
 );
+
 export const fetchUpdateSpecialty = createAsyncThunk(
   "specialty/update",
   async ({ specialty }) => {

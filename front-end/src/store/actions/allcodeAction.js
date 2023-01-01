@@ -29,6 +29,7 @@ export const fetchManageDoctorsOptions = createAsyncThunk(
     }
   }
 );
+
 export const fetchProvinceOptions = createAsyncThunk(
   "allcode/province",
   async () => {

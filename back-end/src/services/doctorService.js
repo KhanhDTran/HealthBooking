@@ -1,13 +1,14 @@
 import Doctor from "../db/schemas/Doctor.js";
+import Specialty from "../db/schemas/Specialty.js";
 
 export function getDoctorHomeService() {
   return new Promise(async (resolve, reject) => {
     try {
-      let doctors = await Doctor.find({}, ["description", "image"])
+      let doctors = await Doctor.find({}, ["image"])
         .populate("user", ["firstName", "lastName"])
         .populate("position", "value")
+        .populate("specialty", "name")
         .limit(20);
-
       if (doctors) {
         resolve({ errCode: 0, doctors });
       } else {
@@ -27,7 +28,9 @@ export function getDoctorProfileByUserIdService(userId) {
         .populate("position")
         .populate("price")
         .populate("province")
-        .populate("payment");
+        .populate("payment")
+        .populate("specialty");
+
       if (doctor) {
         resolve({ errCode: 0, doctor });
       } else {
@@ -40,6 +43,7 @@ export function getDoctorProfileByUserIdService(userId) {
 }
 
 export function upsertDoctorProfileService(data) {
+  console.log(data.specialty);
   if (
     !data.price ||
     !data.position ||
@@ -49,7 +53,8 @@ export function upsertDoctorProfileService(data) {
     !data.user ||
     !data.province ||
     !data.payment ||
-    !data.image
+    !data.image ||
+    !data.specialty
   )
     return { errCode: 1, message: "Missing parameter" };
   return new Promise(async (resolve, reject) => {
@@ -64,11 +69,13 @@ export function upsertDoctorProfileService(data) {
         province: data.province,
         payment: data.payment,
         image: data.image,
+        specialty: data.specialty,
         note: data.note,
       };
+
       let doc = await Doctor.findOneAndUpdate(filter, update, {
         new: true,
-        upsert: true, // Make this update into an upsert
+        upsert: true,
       });
       if (doc) {
         resolve({ errCode: 0, message: "Updated Doctor Profile successful" });

@@ -13,6 +13,7 @@ import {
   deleteSpecialtyById,
   updateSpecialtyById,
   getSpecialtyById,
+  getAllSpecialties,
 } from "../controllers/specialtyController.js";
 
 import {
@@ -27,7 +28,7 @@ import { getAllcode } from "../controllers/allcodeController.js";
 import {
   upsertDoctorProfile,
   getDoctorProfileByUserId,
-  getDoctorHome
+  getDoctorHome,
 } from "../controllers/doctorController.js";
 
 let router = expess.Router();
@@ -48,14 +49,15 @@ export function webRoute(app) {
   router.get("/api/get-all-doctor-users", getAllDoctorUser);
 
   //Doctor
-  router.get("/api/get-doctors-home", getDoctorHome)
+  router.get("/api/get-doctors-home", getDoctorHome);
   router.get("/api/get-doctor-profile-by-user-id", getDoctorProfileByUserId);
   router.put("/api/upsert-doctor-profile", upsertDoctorProfile);
 
   //Specialty
 
+  router.get("/api/get-all-specialties", getAllSpecialties);
   router.get("/api/get-specialty-by-id", getSpecialtyById);
-  router.get("/api/get-all-specialty", getSpecialtyHome);
+  router.get("/api/get-specialties-home", getSpecialtyHome);
   router.post("/api/create-specialty", createSpecialty);
   router.delete("/api/delete-specialty-by-id", deleteSpecialtyById);
   router.put("/api/update-specialty-by-id", updateSpecialtyById);

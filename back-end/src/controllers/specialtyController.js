@@ -4,6 +4,7 @@ import {
   deleteSpecialtyByIdService,
   updateSpecialtyByIdService,
   getSpecialtyByIdService,
+  getAllSpecialtiesService
 } from "../services/specialtyService.js";
 import { delay } from "../utils/commonUtils.js";
 
@@ -53,6 +54,16 @@ export async function createSpecialty(req, res) {
 export async function getSpecialtyHome(req, res) {
   try {
     let response = await getSpecialtyHomeService();
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("get-specialty-home-error", e);
+    return res.status(200).json({ errCode: -1, message: "Error from server" });
+  }
+}
+
+export async function getAllSpecialties(req, res) {
+  try {
+    let response = await getAllSpecialtiesService();
     return res.status(200).json(response);
   } catch (e) {
     console.log("get-specialty-home-error", e);

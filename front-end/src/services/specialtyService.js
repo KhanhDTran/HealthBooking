@@ -9,8 +9,12 @@ export function createSpecialtyService(name, markdown, markdownHtml, img) {
   });
 }
 
+export function getAllSpecialties() {
+  return instance.get("get-all-specialties");
+}
+
 export function getSpecialtiesHome() {
-  return instance.get("get-all-specialty");
+  return instance.get("get-specialties-home");
 }
 
 export function getSpecialtyById(id) {

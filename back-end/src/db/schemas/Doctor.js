@@ -13,6 +13,7 @@ const doctorSchema = new Schema(
     payment: { type: Schema.Types.String, ref: "Allcode" },
     image: String,
     note: String,
+    specialty: { type: Schema.Types.String, ref: "Specialty" },
   },
   {
     timestamps: true,

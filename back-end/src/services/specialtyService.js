@@ -88,9 +88,26 @@ export function createSpecialtyService(data) {
 export function getSpecialtyHomeService() {
   return new Promise(async (resolve, reject) => {
     try {
+      let specialties = await Specialty.find({}).limit(20);
+      if (specialties) {
+        resolve({ errCode: 0, specialties });
+      } else {
+        resolve({ errCode: 1, message: "No speacialty found" });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export function getAllSpecialtiesService() {
+  return new Promise(async (resolve, reject) => {
+    try {
       let specialties = await Specialty.find({});
       if (specialties) {
         resolve({ errCode: 0, specialties });
+      } else {
+        resolve({ errCode: 1, message: "No speacialty found" });
       }
     } catch (e) {
       reject(e);

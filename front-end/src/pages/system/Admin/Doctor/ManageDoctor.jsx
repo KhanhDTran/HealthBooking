@@ -11,6 +11,7 @@ import { customStyles } from "../../../../utils/CommonUtils";
 import { toast } from "react-toastify";
 import { fetchUpsertDoctorProfile } from "../../../../store/actions/doctorAction";
 import { getDoctorProfileByUserId } from "../../../../services/doctorService";
+import { fetchSpecialtyOptions } from "../../../../store/actions/specialtyAction";
 
 export default function ManageDoctor() {
   const dispatch = useDispatch();
@@ -35,17 +36,25 @@ export default function ManageDoctor() {
   const [paymentOptions, setPaymentOptions] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [priceOptions, setPriceOptions] = useState([]);
+  const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+  const [specialtyOptions, setSpecialtyOptions] = useState([]);
 
   const { provinces, positions, payment, price } = useSelector(
     (state) => state.allcode
   );
   const { upsertDoctorProfile } = useSelector((state) => state.doctor);
+  const { specialtyOptionsRedux } = useSelector((state) => state.specialty);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchManageDoctorsOptions());
     fetchDoctorUsers();
+    dispatch(fetchSpecialtyOptions());
   }, []);
+
+  useEffect(() => {
+    setSpecialtyOptions(specialtyOptionsRedux);
+  }, [specialtyOptionsRedux]);
 
   useEffect(() => {
     clearInputState();
@@ -106,6 +115,7 @@ export default function ManageDoctor() {
             payment: selectedPayment.value,
             image: img,
             note: note,
+            specialty: selectedSpecialty.value,
           })
         );
       }
@@ -148,6 +158,10 @@ export default function ManageDoctor() {
           value: doctor.province._id,
           label: doctor.province.value,
         });
+        setSelectedSpecialty({
+          value: doctor.specialty._id,
+          label: doctor.specialty.name,
+        });
       }
     }
   }
@@ -160,7 +174,8 @@ export default function ManageDoctor() {
       !selectedPayment ||
       !selectedPosition ||
       !selectedPrice ||
-      !description
+      !description ||
+      !selectedSpecialty
     ) {
       toast.warning("Missing iput");
       return false;
@@ -180,6 +195,7 @@ export default function ManageDoctor() {
     setSelectedPosition(null);
     setSelectedPrice(null);
     setSelectedProvince(null);
+    setSelectedSpecialty(null);
     document.getElementById("img-doctor-profile").value = "";
   }
 
@@ -262,24 +278,24 @@ export default function ManageDoctor() {
                 </div>
               </div>
               {/* Position Input */}
-              {/* Price Input */}
+              {/* Specialty Input */}
               <div className="w-ful md:w-1/2">
                 <div className="form-control w-ful">
                   <label className="label">
-                    <span className="label-text">Price</span>
+                    <span className="label-text">Specialty</span>
                   </label>
                   <div className="form-control">
                     <Select
                       isClearable={true}
                       styles={customStyles}
-                      value={selectedPrice ? selectedPrice : null}
-                      onChange={setSelectedPrice}
-                      options={priceOptions}
+                      value={selectedSpecialty ? selectedSpecialty : null}
+                      onChange={setSelectedSpecialty}
+                      options={specialtyOptions}
                     />
                   </div>
                 </div>
               </div>
-              {/* Price Input */}
+              {/* Specialty Input */}
             </div>
 
             {/* -----------------------------------------*/}
@@ -303,6 +319,27 @@ export default function ManageDoctor() {
                 </div>
               </div>
               {/* Payment Input */}
+              {/* Price Input */}
+              <div className="w-ful md:w-1/2">
+                <div className="form-control w-ful">
+                  <label className="label">
+                    <span className="label-text">Price</span>
+                  </label>
+                  <div className="form-control">
+                    <Select
+                      isClearable={true}
+                      styles={customStyles}
+                      value={selectedPrice ? selectedPrice : null}
+                      onChange={setSelectedPrice}
+                      options={priceOptions}
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* Price Input */}
+            </div>
+            {/* -------------------------- */}
+            <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
               {/* Note Input */}
               <div className="w-ful md:w-1/2">
                 <div className="form-control w-ful">
@@ -322,13 +359,8 @@ export default function ManageDoctor() {
                 </div>
               </div>
               {/* Note Input */}
-            </div>
-            {/* -------------------------- */}
-            <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
               {/* description Input */}
               <div className="w-ful md:w-1/2">
-                {/* Description Input */}
-
                 <div className="form-control w-ful">
                   <label className="label">
                     <span className="label-text">Description</span>
@@ -342,9 +374,12 @@ export default function ManageDoctor() {
                     ></textarea>
                   </div>
                 </div>
-                {/* Description Input */}
               </div>
               {/* description Input */}
+            </div>
+
+            {/* Image Input */}
+            <div className="pt-4 flex justify-center items-center gap-x-4 flex-col md:flex-row">
               {/* img Input */}
               <div className="w-ful md:w-1/2 pt-2">
                 <div className="carousel-item h-58 w-72 border-slate-300">
@@ -352,10 +387,6 @@ export default function ManageDoctor() {
                 </div>
               </div>
               {/* img Input */}
-            </div>
-
-            {/* Image Input */}
-            <div className="pt-4 flex justify-center items-center gap-x-4 flex-col md:flex-row">
               <label
                 htmlFor="img-doctor-profile"
                 className="hover:cursor-pointer"
