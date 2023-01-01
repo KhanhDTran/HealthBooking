@@ -1,5 +1,24 @@
 import Doctor from "../db/schemas/Doctor.js";
 
+export function getDoctorHomeService() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let doctors = await Doctor.find({}, ["description", "image"])
+        .populate("user", ["firstName", "lastName"])
+        .populate("position", "value")
+        .limit(20);
+
+      if (doctors) {
+        resolve({ errCode: 0, doctors });
+      } else {
+        resolve({ errCode: 1, message: "Found no doctor" });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export function getDoctorProfileByUserIdService(userId) {
   if (!userId) return { errCode: 1, message: "Missing paramter" };
   return new Promise(async (resolve, reject) => {
@@ -21,7 +40,6 @@ export function getDoctorProfileByUserIdService(userId) {
 }
 
 export function upsertDoctorProfileService(data) {
-  console.log(data);
   if (
     !data.price ||
     !data.position ||

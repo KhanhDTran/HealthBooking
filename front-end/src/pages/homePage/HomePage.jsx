@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import Header from "../../components/Header";
-import Specialty from "./sections/Specialty";
+import SpecialtySection from "./sections/SpecialtySection";
 import Banner from "./Banner";
-import Clinic from "./sections/Clinic";
-import OutstandingDoctor from "./sections/OutstandingDoctor";
+import ClinicSection from "./sections/ClinicSection";
+import DoctorSection from "./sections/DoctorSection";
 import Footer from "../../components/Footer";
 import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
@@ -11,10 +11,11 @@ import "slick-carousel/slick/slick-theme.css";
 
 let slickSettings = {
   dots: true,
-  infinite: false,
+  infinite: true,
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 4,
+  adaptiveHeight: true,
   initialSlide: 0,
   arrows: false,
 
@@ -33,6 +34,7 @@ let slickSettings = {
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
+        infinite: true,
         initialSlide: 2,
         arrows: false,
       },
@@ -46,11 +48,11 @@ export default function HomePage() {
       <div className="HomePage ">
         <Header />
         <Banner />
-        <Specialty slickSettings={slickSettings} />
+        <SpecialtySection slickSettings={slickSettings} />
         <div className="divider h-20"></div>
-        <Clinic slickSettings={slickSettings} />
+        <ClinicSection slickSettings={slickSettings} />
         <div className="divider h-20"></div>
-        <OutstandingDoctor slickSettings={slickSettings} />
+        <DoctorSection slickSettings={slickSettings} />
         <Footer />
       </div>
     </Fragment>

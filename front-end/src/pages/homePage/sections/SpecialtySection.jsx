@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import { useEffect, useState } from "react";
 import { getSpecialtiesHome } from "../../../services/specialtyService";
 
-export default function Specialty(props) {
+export default function SpecialtySection(props) {
   const { t } = useTranslation();
   const [specialties, setSpecialties] = useState([]);
 

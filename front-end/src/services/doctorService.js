@@ -7,3 +7,7 @@ export function upsertDoctorProfile(data) {
 export function getDoctorProfileByUserId(userId) {
   return instance.get("/get-doctor-profile-by-user-id", { params: { userId } });
 }
+
+export function getDoctorsHome() {
+  return instance.get("/get-doctors-home");
+}

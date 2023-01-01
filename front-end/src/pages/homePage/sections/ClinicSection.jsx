@@ -1,11 +1,10 @@
 import { useTranslation } from "react-i18next";
-import specitalyImg1 from "../../../assets/images/clinics/benhvien.png";
 import Slider from "react-slick";
 import { useEffect } from "react";
 import { getClinicsHome } from "../../../services/clinicService";
 import { useState } from "react";
 
-export default function Clinic(props) {
+export default function ClinicSection(props) {
   const { t } = useTranslation();
   const [clinics, setClinics] = useState([]);
 
