@@ -10,7 +10,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllcode } from "../../../../services/allcodeService";
 import { toast } from "react-toastify";
-import { fetchUpsertSchedule } from "../../../../store/actions/scheduleAction";
+import {
+  fetchUpsertSchedule,
+  fetchDoctorSchedule,
+} from "../../../../store/actions/scheduleAction";
 
 export default function ManageDoctorSchedule() {
   const dispatch = useDispatch();
@@ -28,6 +31,7 @@ export default function ManageDoctorSchedule() {
   let { user } = useSelector((state) => state.user);
   // let { times } = useSelector((state) => state.allcode);
   let { doctors, doctorOptionsRedux } = useSelector((state) => state.doctor);
+  let { schedules } = useSelector((state) => state.schedule);
 
   let [imgUrl, setImgUrl] = useState("");
 
@@ -53,6 +57,22 @@ export default function ManageDoctorSchedule() {
   }, []);
 
   useEffect(() => {
+    if (schedules.length > 0) {
+      for (let i = 0; i < schedules.length; i++) {
+        for (let j = 0; j < timeList.length; j++) {
+          if (timeList[j]._id === schedules[i].time) {
+            timeList[j].selected = true;
+            break;
+          }
+        }
+      }
+    }
+    if (schedules[0] && schedules[0].maxNumber)
+      setNumber(schedules[0].maxNumber);
+    setClickTime(!clickTime);
+  }, [schedules]);
+
+  useEffect(() => {
     setDoctorOptions(doctorOptionsRedux);
   }, [doctorOptionsRedux]);
 
@@ -64,17 +84,35 @@ export default function ManageDoctorSchedule() {
 
   useEffect(() => {
     clearAllSelectTime();
-
     if (selectedDoctor) {
       doctors.map((item) => {
         if (item._id == selectedDoctor.value) {
           setImgUrl(item.image);
         }
       });
+      dispatch(
+        fetchDoctorSchedule({
+          doctor: selectedDoctor.value,
+          date: selectedDate.toDateString(),
+        })
+      );
     } else {
       setImgUrl("");
     }
   }, [selectedDoctor]);
+
+  useEffect(() => {
+    if (selectedDoctor) {
+      dispatch(
+        fetchDoctorSchedule({
+          doctor: selectedDoctor.value,
+          date: selectedDate.toDateString(),
+        })
+      );
+      if (schedules[0] && schedules[0].maxNumber)
+        setNumber(schedules[0].maxNumber);
+    }
+  }, [selectedDate]);
 
   async function fetchTimesAllcode() {
     try {
@@ -103,8 +141,8 @@ export default function ManageDoctorSchedule() {
   }
 
   function handleOnChangeDate(date) {
-    clearAllSelectTime();
     setSelectedDate(date);
+    clearAllSelectTime();
   }
 
   function handleSave() {

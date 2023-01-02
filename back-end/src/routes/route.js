@@ -33,7 +33,10 @@ import {
   getAllDoctors,
 } from "../controllers/doctorController.js";
 
-import { upsertSchedule } from "../controllers/scheduleController.js";
+import {
+  upsertSchedule,
+  getDoctorSchedule,
+} from "../controllers/scheduleController.js";
 
 let router = expess.Router();
 
@@ -44,6 +47,7 @@ export function webRoute(app) {
 
   // Schedule
   router.post("/api/upsert-schedule", upsertSchedule);
+  router.get("/api/get-doctor-schedule", getDoctorSchedule);
 
   // User
 
