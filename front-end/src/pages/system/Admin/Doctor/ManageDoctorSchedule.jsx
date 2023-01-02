@@ -1,7 +1,6 @@
 import SystemHeader from "../../../../components/SystemHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { fetchAllDoctors } from "../../../../store/actions/doctorAction";
 import Select from "react-select";
@@ -15,11 +14,13 @@ export default function ManageDoctorSchedule() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
+  const [currentMoment, setCurrentMoment] = useState(new Date());
   const [doctorsOptions, setDoctorOptions] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [timeList, setTimeList] = useState([]);
   const [clickTime, setClickTime] = useState(false);
+  const [isSelectAll, setIsSelectAll] = useState(false);
 
   let { user } = useSelector((state) => state.user);
   // let { times } = useSelector((state) => state.allcode);
@@ -36,8 +37,16 @@ export default function ManageDoctorSchedule() {
       }
     }
     window.scrollTo(0, 0);
+
+    if (
+      +currentMoment.getHours() >= 17 &&
+      selectedDate.toDateString() === currentMoment.toDateString()
+    ) {
+      selectedDate.setDate(selectedDate.getDate() + 1);
+    }
     dispatch(fetchAllDoctors());
     dispatch(fetchTimeSchedule());
+    fetchTimesAllcode();
   }, []);
 
   useEffect(() => {
@@ -51,14 +60,11 @@ export default function ManageDoctorSchedule() {
   }, [timeList]);
 
   useEffect(() => {
-    fetchTimesAllcode();
-  }, []);
+    clearAllSelectTime();
 
-  useEffect(() => {
     if (selectedDoctor) {
       doctors.map((item) => {
         if (item._id == selectedDoctor.value) {
-          console.log(item);
           setImgUrl(item.image);
         }
       });
@@ -78,6 +84,27 @@ export default function ManageDoctorSchedule() {
     }
   }
 
+  function handleSelectAll() {
+    if (!isSelectAll) {
+      timeList.map((item) => (item.selected = true));
+      setIsSelectAll(true);
+    } else {
+      clearAllSelectTime();
+    }
+  }
+
+  function clearAllSelectTime() {
+    timeList.map((item) => (item.selected = false));
+    setIsSelectAll(false);
+  }
+
+  function handleOnChangeDate(date) {
+    clearAllSelectTime();
+    setSelectedDate(date);
+  }
+
+  console.log(currentMoment)
+
   return (
     <>
       <SystemHeader />
@@ -89,7 +116,7 @@ export default function ManageDoctorSchedule() {
           <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4 items-center">
             {/* doctor select Input */}
             <div className="w-full md:w-1/2">
-              <label htmlFor="">Select Clinic</label>
+              <label htmlFor="">Select a doctor</label>
               <Select
                 isClearable={true}
                 styles={customStyles}
@@ -124,38 +151,98 @@ export default function ManageDoctorSchedule() {
                 </label>
                 <DatePicker
                   id="date-picker"
+                  dateFormat="dd-MM-yyyy"
                   className="border-2 hover:cursor-pointer border-slate-400 p-2"
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  selected={selectedDate}
+                  minDate={currentMoment}
+                  onChange={(date) => handleOnChangeDate(date)}
                 />
+                <button className="btn btn-info w-32 text-white m-4">
+                  Save
+                </button>
               </div>
-              <div className="divider divider-horizontal"></div>
-              <div className=" w-ful">
-                <div className="text-xl items-center p-2">Schedule</div>
-                <div className="flex flex-wrap gap-4">
-                  {timeList &&
-                    timeList.length > 0 &&
-                    timeList.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <button
-                            className={
-                              item.selected
-                                ? "btn btn-success w-36"
-                                : "btn btn-outline btn-success w-36"
-                            }
-                            onClick={() => {
-                              item.selected = !item.selected;
-                              setClickTime(!clickTime);
-                            }}
-                          >
-                            {item.value}
-                          </button>
+
+              {selectedDoctor && (
+                <>
+                  {" "}
+                  <div className="divider divider-horizontal"></div>{" "}
+                  <div className=" w-ful">
+                    <div className="text-xl items-center p-2">Schedule</div>
+                    <div className="form-control w-24">
+                      <label className="cursor-pointer label">
+                        <span className="label-text">Select All</span>
+                        <input
+                          type="checkbox"
+                          checked={isSelectAll}
+                          onChange={() => handleSelectAll()}
+                          className="checkbox checkbox-success"
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      {selectedDate.toDateString() ===
+                      currentMoment.toDateString() ? (
+                        <div className="flex flex-wrap gap-4">
+                          {timeList &&
+                            timeList.length > 0 &&
+                            timeList.map((item, index) => {
+                              let hours = item.value.split(":")[0]
+                              let minutes = item.value.split(":")[0].split("-")[0]                
+                              if (
+                              +hours >=
+                                  +currentMoment.getHours() && +minutes > +currentMoment.getHours()
+                              ) {
+                                return (
+                                  <div key={index}>
+                                    <button
+                                      className={
+                                        item.selected
+                                          ? "btn btn-success w-36"
+                                          : "btn btn-outline btn-success w-36"
+                                      }
+                                      onClick={() => {
+                                        item.selected = !item.selected;
+                                        setClickTime(!clickTime);
+                                      }}
+                                    >
+                                      {item.value}
+                                    </button>
+                                  </div>
+                                );
+                              } else {
+                                return;
+                              }
+                            })}
                         </div>
-                      );
-                    })}
-                </div>
-              </div>
+                      ) : (
+                        <div className="flex flex-wrap gap-4">
+                          {timeList &&
+                            timeList.length > 0 &&
+                            timeList.map((item, index) => {
+                              return (
+                                <div key={index}>
+                                  <button
+                                    className={
+                                      item.selected
+                                        ? "btn btn-success w-36"
+                                        : "btn btn-outline btn-success w-36"
+                                    }
+                                    onClick={() => {
+                                      item.selected = !item.selected;
+                                      setClickTime(!clickTime);
+                                    }}
+                                  >
+                                    {item.value}
+                                  </button>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

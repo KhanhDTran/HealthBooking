@@ -52,8 +52,8 @@ export default function DoctorSection(props) {
                     <div className="items-center justify-items-center flex flex-col">
                       <img className="image-doctor" src={item.image} />
                       <h2 className="doctor-title text-md text-lg  ">
-                        {item.position.value} {item.user.firstName}{" "}
-                        {item.user.lastName}
+                        {item && item.position && item.position.value} {item && item.user && item.user.firstName}{" "}
+                        {item && item.user && item.user.lastName}
                       </h2>
                       <span>{item.specialty.name}</span>
                     </div>

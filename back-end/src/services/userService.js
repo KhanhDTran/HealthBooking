@@ -137,7 +137,7 @@ export function loginService(data) {
         "email",
         "role",
         "lastName",
-      ]).populate([{ path: "role" }, { path: "gender" }]);
+      ]).populate([{ path: "role" }]);
       if (!user) {
         resolve({ errCode: 2, message: "User not exist" });
       } else {
