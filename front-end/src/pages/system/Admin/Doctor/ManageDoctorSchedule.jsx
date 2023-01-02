@@ -9,11 +9,14 @@ import { fetchTimeSchedule } from "../../../../store/actions/allcodeAction";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllcode } from "../../../../services/allcodeService";
+import { toast } from "react-toastify";
+import { fetchUpsertSchedule } from "../../../../store/actions/scheduleAction";
 
 export default function ManageDoctorSchedule() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
+  const [number, setNumber] = useState(5);
   const [currentMoment, setCurrentMoment] = useState(new Date());
   const [doctorsOptions, setDoctorOptions] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -95,6 +98,7 @@ export default function ManageDoctorSchedule() {
 
   function clearAllSelectTime() {
     timeList.map((item) => (item.selected = false));
+    setNumber(5);
     setIsSelectAll(false);
   }
 
@@ -103,7 +107,33 @@ export default function ManageDoctorSchedule() {
     setSelectedDate(date);
   }
 
-  console.log(currentMoment)
+  function handleSave() {
+    if (selectedDoctor) {
+      if (number > 10 || number < 1) {
+        toast.warning("Number of patients must be in range 1- 10");
+        return;
+      }
+      let list = [];
+      timeList.map((item) => {
+        if (item.selected) {
+          let obj = {};
+          obj.doctor = selectedDoctor.value;
+          obj.currentNumber = 0;
+          obj.maxNumber = number;
+          obj.date = selectedDate.toDateString();
+          obj.time = item._id;
+          list.push(obj);
+        }
+      });
+      dispatch(
+        fetchUpsertSchedule({
+          doctor: selectedDoctor.value,
+          date: selectedDate.toDateString(),
+          list,
+        })
+      );
+    }
+  }
 
   return (
     <>
@@ -142,6 +172,7 @@ export default function ManageDoctorSchedule() {
             </div>
             {/* Img Input */}
           </div>
+          {/* -------------------------------------------------------------------------- */}
           <div className="divider"></div>
           <div className="p-4">
             <div className="flex w-full flex-col md:flex-row">
@@ -157,7 +188,10 @@ export default function ManageDoctorSchedule() {
                   minDate={currentMoment}
                   onChange={(date) => handleOnChangeDate(date)}
                 />
-                <button className="btn btn-info w-32 text-white m-4">
+                <button
+                  className="btn btn-info w-32 text-white m-4"
+                  onClick={() => handleSave()}
+                >
                   Save
                 </button>
               </div>
@@ -186,11 +220,13 @@ export default function ManageDoctorSchedule() {
                           {timeList &&
                             timeList.length > 0 &&
                             timeList.map((item, index) => {
-                              let hours = item.value.split(":")[0]
-                              let minutes = item.value.split(":")[0].split("-")[0]                
+                              let hours = item.value.split(":")[0];
+                              let minutes = item.value
+                                .split(":")[0]
+                                .split("-")[0];
                               if (
-                              +hours >=
-                                  +currentMoment.getHours() && +minutes > +currentMoment.getHours()
+                                +hours >= +currentMoment.getHours() &&
+                                +minutes > +currentMoment.getHours()
                               ) {
                                 return (
                                   <div key={index}>
@@ -240,11 +276,26 @@ export default function ManageDoctorSchedule() {
                         </div>
                       )}
                     </div>
+
+                    <div className="pt-4 flex flex-col gap-2">
+                      <label htmlFor="">Number of patients per time</label>
+                      <input
+                        type="number"
+                        value={number}
+                        min="1"
+                        max="10"
+                        onChange={(e) => setNumber(e.target.value)}
+                        placeholder=""
+                        className="input input-bordered input-success w-full max-w-xs"
+                      />
+                    </div>
                   </div>
                 </>
               )}
             </div>
           </div>
+
+          {/* ------------------------------------------------------------------ */}
         </div>
       </div>
     </>

@@ -29,6 +29,7 @@ export const fetchDeleteClinic = createAsyncThunk(
     }
   }
 );
+
 export const fetchUpdateClinic = createAsyncThunk(
   "clinic/update",
   async ({ clinic }) => {

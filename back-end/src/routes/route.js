@@ -30,8 +30,10 @@ import {
   getDoctorProfileByUserId,
   getDoctorHome,
   getDoctorById,
-  getAllDoctors
+  getAllDoctors,
 } from "../controllers/doctorController.js";
+
+import { upsertSchedule } from "../controllers/scheduleController.js";
 
 let router = expess.Router();
 
@@ -40,12 +42,14 @@ export function webRoute(app) {
     res.send("users page");
   });
 
-  router.post("/api/login", login);
+  // Schedule
+  router.post("/api/upsert-schedule", upsertSchedule);
 
   // User
 
   router.get("/api/get-users", getUsers);
   router.post("/api/create-user", createUser);
+  router.post("/api/login", login);
   router.delete("/api/delete-user-by-id", deleteUserById);
   router.put("/api/update-user-by-id", updateUserById);
   router.get("/api/get-all-doctor-users", getAllDoctorUser);
