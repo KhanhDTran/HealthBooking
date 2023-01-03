@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDoctorSchedule } from "../../store/actions/scheduleAction";
+import { NumericFormat } from "react-number-format";
+
 moment().format();
 
 export default function DoctorSchedule(props) {
@@ -121,8 +123,42 @@ export default function DoctorSchedule(props) {
               </div>
               {/* <i className="fa-regular fa-calendar-days"></i> Schedule */}
               <div className="divider md:divider-horizontal"></div>
-              <div className="grid   rounded-box place-items-center w-full md:w-1/2">
-                content
+              <div className="   rounded-box  w-full md:w-1/2">
+                {!_.isEmpty(props.doctor) && (
+                  <div className="flex flex-col gap-2 p-2">
+                    <div>
+                      <span className="font-semibold">Địa chỉ khám</span>
+                      <br />
+                      <span>
+                        <i className="fa-solid fa-location-dot p-2"></i>{" "}
+                        {props.doctor.user.address},{" "}
+                        {props.doctor.province.value}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-semibold ">Giá khám</span>
+                      <br />
+                      <span>
+                        <i className="fa-solid fa-dollar-sign p-2"></i>{" "}
+                        <NumericFormat
+                          type="text"
+                          displayType="text"
+                          value={props.doctor.price.value}
+                          thousandSeparator={true}
+                          suffix="VNĐ"
+                        />
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-semibold ">Lưu ý</span>
+                      <br />
+                      <span>
+                        <i className="fa-solid fa-exclamation p-2"></i>{" "}
+                        {props.doctor.note}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

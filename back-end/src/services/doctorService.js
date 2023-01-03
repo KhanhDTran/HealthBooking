@@ -28,7 +28,8 @@ export function getDoctorByIdService(id) {
         .populate("user", ["address", "firstName", "lastName"])
         .populate("position", "value")
         .populate("price", "value")
-        .populate("payment", "value");
+        .populate("payment", "value")
+        .populate("province", "value");
       if (doctor) {
         resolve({ errCode: 0, doctor });
       } else {
