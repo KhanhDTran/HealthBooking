@@ -1,7 +1,6 @@
 import Schedule from "../db/schemas/Schedule.js";
 
 export function getDoctorScheduleService(data) {
-  console.log(data);
   if (!data.doctor || !data.date)
     return { errCode: 1, message: "Missing paramter" };
   return new Promise(async (resolve, reject) => {
@@ -9,7 +8,7 @@ export function getDoctorScheduleService(data) {
       let schedules = await Schedule.find({
         doctor: data.doctor,
         date: data.date,
-      });
+      }).populate("time");
       if (schedules) {
         resolve({ errCode: 0, schedules });
       } else {
@@ -22,6 +21,7 @@ export function getDoctorScheduleService(data) {
 }
 
 export function upsertScheduleService(data) {
+  console.log(data);
   if (!data.doctor) return { errCode: 1, message: "Missing paramter" };
   return new Promise(async (resolve, reject) => {
     try {
@@ -34,7 +34,7 @@ export function upsertScheduleService(data) {
       } else {
         await Schedule.deleteMany({ doctor: data.doctor, date: data.date });
       }
-      resolve({ errCode: 0, message: "Save doctor's schedule success" });
+      resolve({ errCode: 0, message: "Saved doctor's schedule success" });
     } catch (e) {
       reject(e);
     }

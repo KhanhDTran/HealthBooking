@@ -2,11 +2,14 @@ export default function DoctorIntro(props) {
   return (
     <>
       {props.doctor && (
-        <div className="" data-theme="">
+        <div className="" data-theme="cupcake">
           <div className="w-full flex flex-col md:flex-row align-center justify-center ">
-            <div className="">
-              <div className="w-40 h-40 rounded-full">
-                <img src={props.doctor.image} />
+            <div className="p-2">
+              <div>
+                <img
+                  src={props.doctor.image}
+                  className="w-40 h-40 rounded-full"
+                />
               </div>
             </div>
             <div className="p-4 ">
@@ -17,7 +20,7 @@ export default function DoctorIntro(props) {
               <br />
 
               <div
-                className="prose prose-neutral text-sm pt-2"
+                className="prose prose-neutral text-sm pt-2 "
                 dangerouslySetInnerHTML={{
                   __html: props.doctor.description.split(".").join(".</br>"),
                 }}

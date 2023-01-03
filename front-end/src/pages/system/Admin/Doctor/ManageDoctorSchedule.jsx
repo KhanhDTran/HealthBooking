@@ -260,11 +260,12 @@ export default function ManageDoctorSchedule() {
                             timeList.map((item, index) => {
                               let hours = item.value.split(":")[0];
                               let minutes = item.value
-                                .split(":")[0]
+                                .split(":")[1]
                                 .split("-")[0];
                               if (
-                                +hours >= +currentMoment.getHours() &&
-                                +minutes > +currentMoment.getHours()
+                                +hours > +currentMoment.getHours() ||
+                                (+minutes >= +currentMoment.getMinutes() &&
+                                  +hours === +currentMoment.getHours())
                               ) {
                                 return (
                                   <div key={index}>
