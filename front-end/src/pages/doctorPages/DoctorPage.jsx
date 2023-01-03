@@ -24,8 +24,6 @@ export default function DetailDoctor() {
     }
   }
 
-  console.log(doctor);
-
   return (
     <>
       <Header />

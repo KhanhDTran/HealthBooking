@@ -1,0 +1,296 @@
+import _ from "lodash";
+import moment from "moment";
+import { NumericFormat } from "react-number-format";
+import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
+import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import { customStyles } from "../../utils/CommonUtils";
+import { fetchBookingOptions } from "../../store/actions/allcodeAction";
+
+export default function BookingModal(props) {
+  const dispatch = useDispatch();
+  console.log(props);
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [reason, setReason] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedGender, setSelectedGender] = useState(null);
+  const [genderOptions, setGenderOptions] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [provinceOptions, setProvinceOptions] = useState([]);
+
+  const { genders, provinces } = useSelector((state) => state.allcode);
+
+  useEffect(() => {
+    dispatch(fetchBookingOptions());
+  }, []);
+
+  useEffect(() => {
+    if (!_.isEmpty(genders)) {
+      setGenderOptions(genders);
+    }
+    if (!_.isEmpty(provinces)) {
+      setProvinceOptions(provinces);
+    }
+  }, [genders]);
+
+  function handleSaveBooking() {
+    if (validateInput()) {
+      console.log("213");
+    }
+  }
+
+  function validateInput() {
+    if (
+      !firstName ||
+      !lastName ||
+      !reason ||
+      !email ||
+      !phoneNumber ||
+      !address ||
+      !selectedGender.value ||
+      !selectedProvince.value
+    ) {
+      toast.warning("Missing input");
+      return false;
+    } else return true;
+  }
+
+  return (
+    <>
+      {!_.isEmpty(props.doctor) && !_.isEmpty(props.time) && (
+        <>
+          {/* Put this part before </body> tag */}
+          <input type="checkbox" id="booking-modal" className="modal-toggle" />
+          <div className="modal">
+            <div className="modal-box w-11/12 max-w-5xl">
+              <label
+                onClick={() => props.setOpenModal(false)}
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <h3 className="font-bold text-lg">Booking</h3>
+              <div className="divider"></div>
+              {/* ------------------------------------------------------------- */}
+
+              <div className="flex flex-col w-full border-opacity-50 gap-4">
+                <div className="flex flex-row gap-4">
+                  <div>
+                    <img
+                      src={props.doctor.image}
+                      className="w-24 h-24 rounded-full"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <span className="text-2xl font-semibold">
+                      {props.doctor.position.value}{" "}
+                      {props.doctor.user.firstName} {props.doctor.user.lastName}
+                    </span>
+                    <span>
+                      <i className="fa-regular fa-clock pr-2"></i>Thời gian :{" "}
+                      {props.time.time.value} ,
+                      {moment(props.time.date).format("DD/MM/YYYY")}
+                    </span>
+                    <span className="">
+                      {" "}
+                      <i className="fa-solid fa-dollar-sign pr-4"></i>Giá khám:{" "}
+                      <NumericFormat
+                        type="text"
+                        displayType="text"
+                        value={props.doctor.price.value}
+                        thousandSeparator={true}
+                        suffix="VNĐ"
+                      />
+                    </span>
+
+                    <span> </span>
+                  </div>
+                </div>
+                <div className="">content</div>
+              </div>
+
+              {/* ------------ */}
+
+              <div className=" md:container md:mx-auto flex flex-col ">
+                {/* ------------------------------------ */}
+
+                <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+                  {/* email Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="email">
+                        <span className="label-text">Email</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="input input-bordered w-full "
+                      />
+                    </div>
+                  </div>
+                  {/* email Input */}
+                  {/* gender Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="gender">
+                        <span className="label-text">Gender</span>
+                      </label>
+                    </div>
+                    <Select
+                      isClearable={true}
+                      styles={customStyles}
+                      value={selectedGender ? selectedGender : null}
+                      onChange={setSelectedGender}
+                      options={genderOptions}
+                    />
+                  </div>
+                  {/* gender Input */}
+                </div>
+
+                {/* ---------------------------- */}
+
+                <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+                  {/* firstName Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="firstName">
+                        <span className="label-text">First Name</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        placeholder="First Name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className="input input-bordered w-full "
+                      />
+                    </div>
+                  </div>
+                  {/* firstName Input */}
+                  {/* lastName Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="lastName">
+                        <span className="label-text">LastName</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        className="input input-bordered w-full "
+                      />
+                    </div>
+                  </div>
+                  {/* lastName Input */}
+                </div>
+                {/* ----------------------------- */}
+
+                {/* ---------------------------- */}
+                <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+                  {/* address Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="address-create-user">
+                        <span className="label-text">Address</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="address-create-user"
+                        placeholder="Address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="input input-bordered w-full "
+                      />
+                    </div>
+                  </div>
+                  {/* address Input */}
+                  {/* Province Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="Province">
+                        <span className="label-text">Province</span>
+                      </label>
+                    </div>
+                    <Select
+                      isClearable={true}
+                      styles={customStyles}
+                      value={selectedProvince ? selectedProvince : null}
+                      onChange={setSelectedProvince}
+                      options={provinceOptions}
+                    />
+                  </div>
+                  {/* Province Input */}
+                </div>
+                {/* ---------------------------- */}
+
+                <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+                  {/* reason Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="reason-booking">
+                        <span className="label-text">Reason</span>
+                      </label>
+                      <textarea
+                        className="textarea  textarea-bordered"
+                        placeholder="Reason"
+                        id="reason-booking"
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                      ></textarea>
+                    </div>
+                  </div>
+                  {/* reason Input */}
+                  {/* phoneNumber Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="phoneNumber">
+                        <span className="label-text">Phone Number</span>
+                      </label>
+                      <input
+                        type="number"
+                        id="phoneNumber"
+                        placeholder="Phone Number"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="input input-bordered w-full "
+                      />
+                    </div>
+                  </div>
+                  {/* phoneNumber Input */}
+                </div>
+              </div>
+
+              {/* ------------------------------------------------------------- */}
+              <div className="modal-action">
+                <div className="flex flex-row gap-4">
+                  {" "}
+                  <button
+                    className="btn btn-active btn-ghost"
+                    onClick={() => props.setOpenModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => handleSaveBooking()}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+}

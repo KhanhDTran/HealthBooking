@@ -162,7 +162,7 @@ export default function ManageDoctor() {
         });
         setSelectedPrice({
           value: doctor.price._id,
-          label: doctor.price.value,
+          label: doctor.price.value ,
         });
         setSelectedProvince({
           value: doctor.province._id,

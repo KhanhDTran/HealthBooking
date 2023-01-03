@@ -14,7 +14,6 @@ import { customStyles } from "../../../../utils/CommonUtils";
 export default function ManageUser() {
   const [users, setUsers] = useState([]);
   const [selectUser, setSelectUser] = useState(null);
-  const [isClearable, setIsClearable] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -241,7 +240,7 @@ export default function ManageUser() {
                   </label>
                 </div>
                 <Select
-                  isClearable={isClearable}
+                  isClearable={true}
                   styles={customStyles}
                   value={selectedGender ? selectedGender : null}
                   onChange={setSelectedGender}
@@ -257,7 +256,7 @@ export default function ManageUser() {
                   </label>
                 </div>
                 <Select
-                  isClearable={isClearable}
+                  isClearable={true}
                   styles={customStyles}
                   value={selectedRole ? selectedRole : null}
                   onChange={setSelectedRole}

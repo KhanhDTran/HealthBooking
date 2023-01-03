@@ -4,6 +4,7 @@ import {
   fetchCreateUserOptions,
   fetchManageDoctorsOptions,
   fetchTimeSchedule,
+  fetchBookingOptions,
 } from "../actions/allcodeAction";
 
 const initialState = {
@@ -26,6 +27,12 @@ const allcodeSlice = createSlice({
     builder.addCase(fetchProvinceOptions.fulfilled, (state, { payload }) => {
       if (payload) {
         state.provinces = payload;
+      }
+    });
+    builder.addCase(fetchBookingOptions.fulfilled, (state, { payload }) => {
+      if (payload) {
+        state.genders = payload.genders;
+        state.provinces = payload.provinces;
       }
     });
     builder.addCase(fetchCreateUserOptions.fulfilled, (state, { payload }) => {

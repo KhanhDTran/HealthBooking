@@ -1,6 +1,30 @@
 import { getAllcode } from "../../services/allcodeService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+export const fetchBookingOptions = createAsyncThunk(
+  "allcode/genders",
+  async () => {
+    try {
+      let genders = [];
+      let provinces = [];
+      let res = await getAllcode(["PROVINCE", "GENDER"]);
+      console.log(res);
+      if (res && res.data.errCode === 0) {
+        let allcode = res.data.allcodes;
+        allcode.map((item) => {
+          if (item.type === "GENDER")
+            genders.push({ value: item._id, label: item.value });
+          if (item.type === "PROVINCE")
+            provinces.push({ value: item._id, label: item.value });
+        });
+      }
+      return { genders, provinces };
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const fetchTimeSchedule = createAsyncThunk(
   "allcode/doctor-schedule",
   async () => {
