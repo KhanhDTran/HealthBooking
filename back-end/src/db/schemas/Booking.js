@@ -15,4 +15,4 @@ const bookingSchema = new Schema(
   }
 );
 
-export default mongoose.model("User", bookingSchema);
+export default mongoose.model("Booking", bookingSchema);

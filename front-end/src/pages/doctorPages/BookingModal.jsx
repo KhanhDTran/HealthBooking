@@ -7,22 +7,29 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { customStyles } from "../../utils/CommonUtils";
 import { fetchBookingOptions } from "../../store/actions/allcodeAction";
+import { fetchCreateBooking } from "../../store/actions/bookingAction";
 
 export default function BookingModal(props) {
   const dispatch = useDispatch();
-  console.log(props);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [reason, setReason] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [note, setNote] = useState("");
+  const [age, setAge] = useState(0);
   const [selectedGender, setSelectedGender] = useState(null);
   const [genderOptions, setGenderOptions] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [provinceOptions, setProvinceOptions] = useState([]);
 
-  const { genders, provinces } = useSelector((state) => state.allcode);
+  const { genders, provinces, roles, status } = useSelector(
+    (state) => state.allcode
+  );
+  const { createBookingSuccess } = useSelector((state) => state.booking);
+
+  console.log(props);
 
   useEffect(() => {
     dispatch(fetchBookingOptions());
@@ -39,7 +46,25 @@ export default function BookingModal(props) {
 
   function handleSaveBooking() {
     if (validateInput()) {
-      console.log("213");
+      dispatch(
+        fetchCreateBooking({
+          email,
+          firstName,
+          lastName,
+          gender: selectedGender.value,
+          address,
+          phoneNumber,
+          role: roles[2].value,
+          province: selectedProvince.value,
+          doctor: props.doctor._id,
+          note,
+          age,
+          status: status[0].value,
+          date: props.time.date,
+          time: props.time.time._id,
+          doctor: props.doctor._id,
+        })
+      );
     }
   }
 
@@ -51,8 +76,9 @@ export default function BookingModal(props) {
       !email ||
       !phoneNumber ||
       !address ||
-      !selectedGender.value ||
-      !selectedProvince.value
+      !selectedGender ||
+      !selectedProvince ||
+      !age
     ) {
       toast.warning("Missing input");
       return false;
@@ -110,7 +136,6 @@ export default function BookingModal(props) {
                     <span> </span>
                   </div>
                 </div>
-                <div className="">content</div>
               </div>
 
               {/* ------------ */}
@@ -266,6 +291,44 @@ export default function BookingModal(props) {
                     </div>
                   </div>
                   {/* phoneNumber Input */}
+                </div>
+                {/* ---------------------------------- */}
+                <div className="flex flex-col md:flex-row md:justify-items-stretch md: gap-x-4">
+                  {/* Note Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="Note-booking">
+                        <span className="label-text">Note</span>
+                      </label>
+                      <textarea
+                        className="textarea  textarea-bordered"
+                        placeholder="Note for doctor"
+                        id="Note-booking"
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+                      ></textarea>
+                    </div>
+                  </div>
+                  {/* Note Input */}
+                  {/* Age Input */}
+                  <div className="w-ful md:w-1/2">
+                    <div className="form-control w-ful">
+                      <label className="label" htmlFor="Age">
+                        <span className="label-text">Age</span>
+                      </label>
+                      <input
+                        type="number"
+                        min={1}
+                        max={120}
+                        id="Age"
+                        placeholder="Phone Number"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        className="input input-bordered w-full "
+                      />
+                    </div>
+                  </div>
+                  {/* Age Input */}
                 </div>
               </div>
 

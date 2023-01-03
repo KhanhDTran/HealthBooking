@@ -40,12 +40,24 @@ export default function DoctorSchedule(props) {
 
   useEffect(() => {
     if (props.doctor && props.doctor._id) {
-      dispatch(
-        fetchDoctorSchedule({
-          doctor: props.doctor._id,
-          date: currentDay.toDateString(),
-        })
-      );
+      if (moment().hour() >= 17) {
+        let today = new Date(currentDay);
+        let tomorrow = new Date(today.setDate(today.getDate() + 1));
+        dispatch(
+          fetchDoctorSchedule({
+            doctor: props.doctor._id,
+            date: tomorrow,
+          })
+        );
+        setSelectedDate(tomorrow);
+      } else {
+        dispatch(
+          fetchDoctorSchedule({
+            doctor: props.doctor._id,
+            date: currentDay.toDateString(),
+          })
+        );
+      }
     }
   }, [props.doctor]);
 
@@ -67,6 +79,7 @@ export default function DoctorSchedule(props) {
       }
       result.push(obj);
     }
+    if (moment().hour() >= 17) result.shift();
     return result;
   }
 
@@ -94,7 +107,7 @@ export default function DoctorSchedule(props) {
           <div className="" data-theme="cupcake">
             <div className="container mx-auto">
               <div className="flex w-full flex-col md:flex-row ">
-                <div className="grid flex flex-col gap-2   rounded-box place-items-center w-full md:w-1/2">
+                <div className="grid flex flex-col gap-2   rounded-box place-items-center w-full md:w-4/6">
                   <select
                     className="select select-info w-48"
                     onChange={(e) => handleSelectDay(e.target.value)}
@@ -108,7 +121,7 @@ export default function DoctorSchedule(props) {
                         );
                       })}
                   </select>
-                  <div className="flex flex-wrap gap-2 p-2 align-center justify-center">
+                  <div className="flex flex-wrap gap-2 p-2 align-center ">
                     {!_.isEmpty(schedules) &&
                       schedules.map((item, index) => {
                         let hours = item.time.value.split(":")[0];
@@ -152,7 +165,7 @@ export default function DoctorSchedule(props) {
                 </div>
                 {/* <i className="fa-regular fa-calendar-days"></i> Schedule */}
                 <div className="divider md:divider-horizontal"></div>
-                <div className="   rounded-box  w-full md:w-1/2">
+                <div className="   rounded-box  w-full md:w-2/6">
                   {!_.isEmpty(props.doctor) && (
                     <div className="flex flex-col  p-2">
                       <div>
@@ -184,7 +197,12 @@ export default function DoctorSchedule(props) {
                         </span>
                         <br />
                         <span>
-                          <i className="fa-regular fa-credit-card"></i>
+                          <i className="fa-regular fa-credit-card"></i>{" "}
+                          {props.doctor.payment.value === "Tất cả" ? (
+                            <>Thanh toán bằng tiền mặt và thẻ ATM</>
+                          ) : (
+                            <>Thanh toán bằng {props.doctor.payment.value}</>
+                          )}
                         </span>
                       </div>
                       {!_.isEmpty(props.doctor.note) && (
@@ -203,11 +221,13 @@ export default function DoctorSchedule(props) {
               </div>
             </div>
           </div>
-          <BookingModal
-            setOpenModal={setOpenModal}
-            doctor={props.doctor}
-            time={selectedTime}
-          />
+          {openModal && (
+            <BookingModal
+              setOpenModal={setOpenModal}
+              doctor={props.doctor}
+              time={selectedTime}
+            />
+          )}
         </>
       )}
     </div>

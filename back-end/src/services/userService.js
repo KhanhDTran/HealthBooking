@@ -115,9 +115,13 @@ export function createUserService(data) {
           role: data.role,
         });
         user.save().then(() => console.log("created a user, ", user));
-        resolve({ errCode: 0, message: "Created user successful" });
+        resolve({
+          errCode: 0,
+          message: "Created user successful",
+          user: user._id,
+        });
       } else {
-        resolve({ errCode: 2, message: "User already exist" });
+        resolve({ errCode: 2, message: "Email already exist" });
       }
     } catch (e) {
       reject(e);

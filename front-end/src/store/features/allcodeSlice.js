@@ -33,6 +33,8 @@ const allcodeSlice = createSlice({
       if (payload) {
         state.genders = payload.genders;
         state.provinces = payload.provinces;
+        state.roles = payload.roles;
+        state.status = payload.status;
       }
     });
     builder.addCase(fetchCreateUserOptions.fulfilled, (state, { payload }) => {

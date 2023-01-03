@@ -9,8 +9,8 @@ export const fetchDoctorSchedule = createAsyncThunk(
   "schedule/get-doctor-schedule",
   async (data) => {
     try {
-      let res = await getDoctorSchedule(data);
       let schedules = [];
+      let res = await getDoctorSchedule(data);
       if (res && res.data.errCode === 0) {
         schedules = res.data.schedules;
       }

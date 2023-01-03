@@ -7,8 +7,9 @@ export const fetchBookingOptions = createAsyncThunk(
     try {
       let genders = [];
       let provinces = [];
-      let res = await getAllcode(["PROVINCE", "GENDER"]);
-      console.log(res);
+      let roles = [];
+      let status = [];
+      let res = await getAllcode(["PROVINCE", "GENDER", "ROLE", "STATUS"]);
       if (res && res.data.errCode === 0) {
         let allcode = res.data.allcodes;
         allcode.map((item) => {
@@ -16,9 +17,13 @@ export const fetchBookingOptions = createAsyncThunk(
             genders.push({ value: item._id, label: item.value });
           if (item.type === "PROVINCE")
             provinces.push({ value: item._id, label: item.value });
+          if (item.type === "ROLE")
+            roles.push({ value: item._id, label: item.value });
+          if (item.type === "STATUS")
+          status.push({ value: item._id, label: item.value });
         });
       }
-      return { genders, provinces };
+      return { genders, provinces, roles, status };
     } catch (e) {
       console.log(e);
     }

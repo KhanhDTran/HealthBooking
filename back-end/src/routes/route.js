@@ -38,12 +38,17 @@ import {
   getDoctorSchedule,
 } from "../controllers/scheduleController.js";
 
+import { createBooking } from "../controllers/bookingController.js";
+
 let router = expess.Router();
 
 export function webRoute(app) {
   router.get("/users", (req, res) => {
     res.send("users page");
   });
+
+  // Booking
+  router.post("/api/create-booking", createBooking);
 
   // Schedule
   router.post("/api/upsert-schedule", upsertSchedule);
