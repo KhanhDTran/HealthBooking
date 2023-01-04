@@ -41,6 +41,7 @@ export const fetchConfirmBooking = createAsyncThunk(
     try {
       const toastId = toast.loading("Verify booking...");
       let res = await confirmBooking(data);
+      console.log(res);
       if (res && res.data.errCode === 0) {
         toast.update(toastId, {
           render: res.data.message,

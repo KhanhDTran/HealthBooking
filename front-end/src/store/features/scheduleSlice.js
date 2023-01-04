@@ -12,7 +12,11 @@ const initialState = {
 const scheduleSlice = createSlice({
   name: "schedule",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSchedules(state) {
+      state.schedules = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUpsertSchedule.fulfilled, (state, { payload }) => {
       if (payload.errCode === 0) {
@@ -28,4 +32,5 @@ const scheduleSlice = createSlice({
   },
 });
 
+export const { clearSchedules } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

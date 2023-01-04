@@ -10,10 +10,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllcode } from "../../../../services/allcodeService";
 import { toast } from "react-toastify";
+import moment from "moment";
+import _ from "lodash";
 import {
   fetchUpsertSchedule,
   fetchDoctorSchedule,
 } from "../../../../store/actions/scheduleAction";
+
+import { clearSchedules } from "../../../../store/features/scheduleSlice";
 
 export default function ManageDoctorSchedule() {
   const dispatch = useDispatch();
@@ -56,16 +60,19 @@ export default function ManageDoctorSchedule() {
     fetchTimesAllcode();
   }, []);
 
+  console.log(schedules);
+
   useEffect(() => {
     if (schedules.length > 0) {
-      for (let i = 0; i < schedules.length; i++) {
-        for (let j = 0; j < timeList.length; j++) {
-          if (timeList[j]._id === schedules[i].time) {
-            timeList[j].selected = true;
-            break;
-          }
+      timeList.map((item) => {
+        if (
+          _.findIndex(schedules, function (schedule) {
+            return schedule.time._id === item._id;
+          }) >= 0
+        ) {
+          item.selected = true;
         }
-      }
+      });
     }
     if (schedules[0] && schedules[0].maxNumber)
       setNumber(schedules[0].maxNumber);
@@ -83,6 +90,7 @@ export default function ManageDoctorSchedule() {
   }, [timeList]);
 
   useEffect(() => {
+    dispatch(clearSchedules());
     clearAllSelectTime();
     if (selectedDoctor) {
       doctors.map((item) => {
@@ -141,8 +149,9 @@ export default function ManageDoctorSchedule() {
   }
 
   function handleOnChangeDate(date) {
-    setSelectedDate(date);
+    dispatch(clearSchedules());
     clearAllSelectTime();
+    setSelectedDate(date);
   }
 
   function handleSave() {

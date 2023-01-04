@@ -78,7 +78,6 @@ export function getUserservice(data) {
     try {
       let users = await User.find().populate([
         { path: "role" },
-        { path: "position" },
         { path: "gender" },
       ]);
       resolve({ errCode: 0, users });

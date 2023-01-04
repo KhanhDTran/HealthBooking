@@ -65,6 +65,7 @@ export default function ManageUser() {
   async function fetchUsers() {
     try {
       let res = await getAllUsers();
+      console.log(res);
       if (res && res.data.errCode === 0) {
         setUsers(res.data.users);
       }
