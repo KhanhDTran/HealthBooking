@@ -8,6 +8,7 @@ const bookingSchema = new Schema(
     patient: { type: Schema.Types.String, ref: "Patient" },
     date: Date,
     time: { type: Schema.Types.String, ref: "Allcode" },
+    code: String,
     reason: String,
   },
   {

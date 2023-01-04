@@ -17,10 +17,8 @@ export const fetchBookingOptions = createAsyncThunk(
             genders.push({ value: item._id, label: item.value });
           if (item.type === "PROVINCE")
             provinces.push({ value: item._id, label: item.value });
-          if (item.type === "ROLE")
-            roles.push({ value: item._id, label: item.value });
-          if (item.type === "STATUS")
-          status.push({ value: item._id, label: item.value });
+          if (item.type === "ROLE") roles.push(item);
+          if (item.type === "STATUS") status.push(item);
         });
       }
       return { genders, provinces, roles, status };

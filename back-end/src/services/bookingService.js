@@ -2,9 +2,11 @@ import Booking from "../db/schemas/Booking.js";
 import Patient from "../db/schemas/Patient.js";
 import User from "../db/schemas/User.js";
 import { createUserService } from "./userService.js";
+import { genOtp, verifyOtp } from "./otpService.js";
+import { sendVerifyCode } from "./emailService.js";
 
 export function createBookingService(data) {
-  console.log(data);
+  // console.log(data);
   if (
     !data.email ||
     !data.firstName ||
@@ -73,6 +75,13 @@ export function createBookingService(data) {
           reason: data.reason,
         });
         if (booking) {
+          let token = genOtp(data.email);
+          await sendVerifyCode({
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            token,
+          });
           resolve({ errCode: 0, message: "Booking created" });
         } else {
           resolve({ errCode: 3, message: "Something was wrong" });
@@ -82,4 +91,24 @@ export function createBookingService(data) {
       reject(e);
     }
   });
+}
+
+export function confirmBookingService(data) {
+  if (
+    !data.email ||
+    !data.firstName ||
+    !data.lastName ||
+    !data.gender ||
+    !data.address ||
+    !data.phoneNumber ||
+    !data.role ||
+    !data.province ||
+    !data.doctor ||
+    !data.age ||
+    !data.status ||
+    !data.date ||
+    !data.time ||
+    !data.doctor
+  )
+    return { errCode: 1, message: "Missing parameter" };
 }
