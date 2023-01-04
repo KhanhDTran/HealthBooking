@@ -7,7 +7,10 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { customStyles } from "../../utils/CommonUtils";
 import { fetchBookingOptions } from "../../store/actions/allcodeAction";
-import { fetchCreateBooking } from "../../store/actions/bookingAction";
+import {
+  fetchCreateBooking,
+  fetchConfirmBooking,
+} from "../../store/actions/bookingAction";
 import OtpInput from "react-otp-input";
 import "./BookingModal.scss";
 
@@ -28,14 +31,28 @@ export default function BookingModal(props) {
 
   const [sec, setSec] = useState(0);
   const [verifyOtp, setVerifyOtp] = useState(false);
-  const [otp, setOtp] = useState();
+  const [otp, setOtp] = useState("");
 
   const { genders, provinces, roles, status } = useSelector(
     (state) => state.allcode
   );
-  const { createBookingSuccess } = useSelector((state) => state.booking);
+  const { createBookingSuccess, confirmBookingSuccess, patient } = useSelector(
+    (state) => state.booking
+  );
 
-  // console.log(sec);
+  function clearInputState() {
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setAddress("");
+    setReason("");
+    setPhoneNumber("");
+    setAge("");
+    setSelectedGender(null);
+    setSelectedProvince(null);
+    setOtp();
+    setSec(0);
+  }
 
   useEffect(() => {
     dispatch(fetchBookingOptions());
@@ -48,6 +65,14 @@ export default function BookingModal(props) {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [sec]);
+
+  useEffect(() => {
+    if (confirmBookingSuccess) {
+      clearInputState();
+      setVerifyOtp(false);
+      props.setOpenModal(false);
+    }
+  }, [confirmBookingSuccess]);
 
   useEffect(() => {
     if (createBookingSuccess) {
@@ -65,30 +90,30 @@ export default function BookingModal(props) {
     }
   }, [genders]);
 
+  console.log(otp);
+
   function handleSaveBooking() {
-    // if (validateInput()) {
-    //   dispatch(
-    //     fetchCreateBooking({
-    //       email,
-    //       firstName,
-    //       lastName,
-    //       gender: selectedGender.value,
-    //       address,
-    //       phoneNumber,
-    //       role: _.find(roles, { keyMap: "R3" })._id,
-    //       province: selectedProvince.value,
-    //       doctor: props.doctor._id,
-    //       note,
-    //       age,
-    //       status: _.find(status, { keyMap: "S1" })._id,
-    //       date: props.time.date,
-    //       time: props.time.time._id,
-    //       doctor: props.doctor._id,
-    //     })
-    //   );
-    // }
-    setVerifyOtp(true);
-    setSec(5);
+    if (validateInput()) {
+      dispatch(
+        fetchCreateBooking({
+          email,
+          firstName,
+          lastName,
+          gender: selectedGender.value,
+          address,
+          phoneNumber,
+          role: _.find(roles, { keyMap: "R3" })._id,
+          province: selectedProvince.value,
+          doctor: props.doctor._id,
+          note,
+          age,
+          status: _.find(status, { keyMap: "S1" })._id,
+          date: props.time.date,
+          time: props.time.time._id,
+          doctor: props.doctor._id,
+        })
+      );
+    }
   }
 
   function validateInput() {
@@ -112,11 +137,28 @@ export default function BookingModal(props) {
     setSec(10);
   }
 
+  function handleSendVerify() {
+    if (+otp < 100000) {
+      toast.warning("Please enter verification code");
+    } else {
+      dispatch(
+        fetchConfirmBooking({
+          email,
+          status: _.find(status, { keyMap: "S2" })._id,
+          date: props.time.date,
+          time: props.time.time._id,
+          doctor: props.doctor._id,
+          patient,
+          token: otp,
+        })
+      );
+    }
+  }
+
   return (
     <>
       {!_.isEmpty(props.doctor) && !_.isEmpty(props.time) && (
         <>
-          {/* Put this part before </body> tag */}
           <input type="checkbox" id="booking-modal" className="modal-toggle" />
           <div className="modal">
             <div className="modal-box w-11/12 max-w-5xl">
@@ -390,7 +432,7 @@ export default function BookingModal(props) {
                   <div className="flex text-center align-center justify-center">
                     <span className="text-2xl text-bold">Verification </span>
                   </div>
-                  <div className="">
+                  <div className="flex justify-center">
                     <span>We've send a verification code to: {email} </span>{" "}
                   </div>
                   <div className="flex  align-center justify-center  w-full">
@@ -424,7 +466,10 @@ export default function BookingModal(props) {
                   )}
 
                   <div className="flex justify-center">
-                    <button className="btn btn-success text-white">
+                    <button
+                      className="btn btn-success text-white"
+                      onClick={() => handleSendVerify()}
+                    >
                       Verify
                     </button>
                   </div>

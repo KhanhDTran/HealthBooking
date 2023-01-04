@@ -3,7 +3,62 @@ import Patient from "../db/schemas/Patient.js";
 import User from "../db/schemas/User.js";
 import { createUserService } from "./userService.js";
 import { genOtp, verifyOtp } from "./otpService.js";
-import { sendVerifyCode } from "./emailService.js";
+import { sendVerifyCodeEmail } from "./emailService.js";
+
+export function resendVerificationService(data) {
+  if (!data.email || !data.firstName || data.lastName)
+    return { errCode: 1, message: "Missing parameter" };
+  return new Promise(async (resolve, reject) => {
+    try {
+      let token = genOtp(data.email);
+      await sendVerifyCodeEmail({
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        token,
+      });
+      resolve({ errCode: 0, message: "Resent verification code " });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+export function confirmBookingService(data) {
+  if (
+    !data.email ||
+    !data.status ||
+    !data.date ||
+    !data.time ||
+    !data.doctor ||
+    !data.token ||
+    !data.patient
+  )
+    return { errCode: 1, message: "Missing parameter" };
+  return new Promise(async (resolve, reject) => {
+    try {
+      let verify = verifyOtp(data.token, data.email);
+      if (verify) {
+        await Booking.findOneAndUpdate(
+          {
+            doctor: data.doctor,
+            patient: data.patient,
+            time: data.time,
+            date: data.date,
+          },
+          { status: data.status }
+        );
+        resolve({
+          errCode: 0,
+          message: "Booking had been verified. Thank You!!!",
+        });
+      } else {
+        resolve({ errCode: 2, message: "Wrong verification code" });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
 
 export function createBookingService(data) {
   // console.log(data);
@@ -55,7 +110,7 @@ export function createBookingService(data) {
       }
       let checkBooking = await Booking.findOne({
         doctor: data.doctor,
-        patient: data.patient,
+        patient: patient,
         time: data.time,
         date: data.date,
         status: data.status,
@@ -68,7 +123,7 @@ export function createBookingService(data) {
       } else {
         let booking = await Booking.create({
           doctor: data.doctor,
-          patient: data.patient,
+          patient: patient,
           time: data.time,
           date: data.date,
           status: data.status,
@@ -76,13 +131,13 @@ export function createBookingService(data) {
         });
         if (booking) {
           let token = genOtp(data.email);
-          await sendVerifyCode({
+          await sendVerifyCodeEmail({
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
             token,
           });
-          resolve({ errCode: 0, message: "Booking created" });
+          resolve({ errCode: 0, message: "Booking created", patient });
         } else {
           resolve({ errCode: 3, message: "Something was wrong" });
         }
@@ -91,24 +146,4 @@ export function createBookingService(data) {
       reject(e);
     }
   });
-}
-
-export function confirmBookingService(data) {
-  if (
-    !data.email ||
-    !data.firstName ||
-    !data.lastName ||
-    !data.gender ||
-    !data.address ||
-    !data.phoneNumber ||
-    !data.role ||
-    !data.province ||
-    !data.doctor ||
-    !data.age ||
-    !data.status ||
-    !data.date ||
-    !data.time ||
-    !data.doctor
-  )
-    return { errCode: 1, message: "Missing parameter" };
 }

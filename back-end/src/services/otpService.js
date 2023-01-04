@@ -9,7 +9,7 @@ export function genOtp(secret) {
   return token;
 }
 
-export function verifyOtp(secret, token) {
+export function verifyOtp(token, secret) {
   totp.options = {
     digits: 6,
     step: 90,

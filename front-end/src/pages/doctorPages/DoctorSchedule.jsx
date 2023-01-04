@@ -40,7 +40,10 @@ export default function DoctorSchedule(props) {
 
   useEffect(() => {
     if (props.doctor && props.doctor._id) {
-      if (moment().hour() >= 17) {
+      if (
+        moment().hour() >= 17 ||
+        (moment().hour() === 16 && moment().minute() >= 30)
+      ) {
         let today = new Date(currentDay);
         let tomorrow = new Date(today.setDate(today.getDate() + 1));
         dispatch(
@@ -79,7 +82,11 @@ export default function DoctorSchedule(props) {
       }
       result.push(obj);
     }
-    if (moment().hour() >= 17) result.shift();
+    if (
+      moment().hour() >= 17 ||
+      (moment().hour() === 16 && moment().minute() >= 30)
+    )
+      result.shift();
     return result;
   }
 

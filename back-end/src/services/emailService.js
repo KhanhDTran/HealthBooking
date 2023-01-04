@@ -24,7 +24,7 @@ async function main() {
   // send mail with defined transport object
 }
 
-export async function sendVerifyCode(data) {
+export async function sendVerifyCodeEmail(data) {
   let info = await transporter.sendMail({
     from: `"Booking Health 👻" <${process.env.EMAIL_APP_USERNAME}>`, // sender address
     to: `${data.email}`, // list of receivers

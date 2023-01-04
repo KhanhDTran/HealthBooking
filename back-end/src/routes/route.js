@@ -38,7 +38,11 @@ import {
   getDoctorSchedule,
 } from "../controllers/scheduleController.js";
 
-import { createBooking } from "../controllers/bookingController.js";
+import {
+  createBooking,
+  confirmBooking,
+  resendVerification
+} from "../controllers/bookingController.js";
 
 let router = expess.Router();
 
@@ -49,6 +53,8 @@ export function webRoute(app) {
 
   // Booking
   router.post("/api/create-booking", createBooking);
+  router.post("/api/confirm-booking", confirmBooking);
+  router.post("/api/resend-verification", resendVerification)
 
   // Schedule
   router.post("/api/upsert-schedule", upsertSchedule);
