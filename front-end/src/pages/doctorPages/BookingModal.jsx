@@ -10,9 +10,11 @@ import { fetchBookingOptions } from "../../store/actions/allcodeAction";
 import {
   fetchCreateBooking,
   fetchConfirmBooking,
+  fetchResendVerification,
 } from "../../store/actions/bookingAction";
 import OtpInput from "react-otp-input";
 import "./BookingModal.scss";
+import { bookingSuccess } from "../../store/features/bookingSlice";
 
 export default function BookingModal(props) {
   const dispatch = useDispatch();
@@ -36,9 +38,12 @@ export default function BookingModal(props) {
   const { genders, provinces, roles, status } = useSelector(
     (state) => state.allcode
   );
-  const { createBookingSuccess, confirmBookingSuccess, patient } = useSelector(
-    (state) => state.booking
-  );
+  const {
+    createBookingSuccess,
+    confirmBookingSuccess,
+    resendVerificationSuccess,
+    patient,
+  } = useSelector((state) => state.booking);
 
   function clearInputState() {
     setEmail("");
@@ -67,19 +72,21 @@ export default function BookingModal(props) {
   }, [sec]);
 
   useEffect(() => {
-    if (confirmBookingSuccess) {
-      clearInputState();
-      setVerifyOtp(false);
-      props.setOpenModal(false);
-    }
-  }, [confirmBookingSuccess]);
-
-  useEffect(() => {
     if (createBookingSuccess) {
       setVerifyOtp(true);
       setSec(60);
     }
-  }, [createBookingSuccess]);
+    if (resendVerificationSuccess) {
+      setSec(60);
+      setOtp("");
+    }
+    if (confirmBookingSuccess) {
+      clearInputState();
+      setVerifyOtp(false);
+      dispatch(bookingSuccess());
+      props.setOpenModal(false);
+    }
+  }, [createBookingSuccess, resendVerificationSuccess, confirmBookingSuccess]);
 
   useEffect(() => {
     if (!_.isEmpty(genders)) {
@@ -89,8 +96,6 @@ export default function BookingModal(props) {
       setProvinceOptions(provinces);
     }
   }, [genders]);
-
-  console.log(otp);
 
   function handleSaveBooking() {
     if (validateInput()) {
@@ -134,7 +139,13 @@ export default function BookingModal(props) {
   }
 
   function handleResendOtp() {
-    setSec(10);
+    dispatch(
+      fetchResendVerification({
+        email,
+        firstName,
+        lastName,
+      })
+    );
   }
 
   function handleSendVerify() {
@@ -144,10 +155,12 @@ export default function BookingModal(props) {
       dispatch(
         fetchConfirmBooking({
           email,
+          firstName,
+          lastName,
           status: _.find(status, { keyMap: "S2" })._id,
           date: props.time.date,
-          time: props.time.time._id,
-          doctor: props.doctor._id,
+          time: props.time,
+          doctor: props.doctor,
           patient,
           token: otp,
         })
@@ -454,16 +467,14 @@ export default function BookingModal(props) {
                     <span>s</span>
                   </div>
 
-                  {sec === 0 && (
-                    <div className="flex justify-center">
-                      <a
-                        className="link link-neutral"
-                        onClick={() => handleResendOtp()}
-                      >
-                        Resend verification code
-                      </a>
-                    </div>
-                  )}
+                  <div className="flex justify-center">
+                    <a
+                      className="link link-neutral"
+                      onClick={() => handleResendOtp()}
+                    >
+                      Resend verification code
+                    </a>
+                  </div>
 
                   <div className="flex justify-center">
                     <button

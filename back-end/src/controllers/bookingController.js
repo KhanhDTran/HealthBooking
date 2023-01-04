@@ -7,6 +7,7 @@ import {
 
 export async function resendVerification(req, res) {
   try {
+    await delay(1000);
     let response = await resendVerificationService(req.body);
     return res.status(200).json(response);
   } catch (e) {
@@ -17,6 +18,7 @@ export async function resendVerification(req, res) {
 
 export async function confirmBooking(req, res) {
   try {
+    await delay(1000);
     let response = await confirmBookingService(req.body);
     return res.status(200).json(response);
   } catch (e) {

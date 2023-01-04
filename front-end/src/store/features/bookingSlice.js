@@ -12,10 +12,17 @@ const initialState = {
   patient: {},
 };
 
-const specialtySlice = createSlice({
+const bookingSlice = createSlice({
   name: "booking",
   initialState,
-  reducers: {},
+  reducers: {
+    bookingSuccess(state) {
+      state.createBookingSuccess = false;
+      state.confirmBookingSuccess = false;
+      state.resendVerificationSuccess = false;
+      state.patient = {};
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchResendVerification.fulfilled, (state, { payload }) => {
       if (payload.errCode === 0) {
@@ -37,4 +44,5 @@ const specialtySlice = createSlice({
     });
   },
 });
-export default specialtySlice.reducer;
+export const { bookingSuccess } = bookingSlice.actions;
+export default bookingSlice.reducer;

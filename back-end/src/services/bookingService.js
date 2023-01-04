@@ -3,10 +3,10 @@ import Patient from "../db/schemas/Patient.js";
 import User from "../db/schemas/User.js";
 import { createUserService } from "./userService.js";
 import { genOtp, verifyOtp } from "./otpService.js";
-import { sendVerifyCodeEmail } from "./emailService.js";
+import { sendVerifyCodeEmail, sendEmailBookingDetail } from "./emailService.js";
 
 export function resendVerificationService(data) {
-  if (!data.email || !data.firstName || data.lastName)
+  if (!data.email || !data.firstName || !data.lastName)
     return { errCode: 1, message: "Missing parameter" };
   return new Promise(async (resolve, reject) => {
     try {
@@ -24,8 +24,11 @@ export function resendVerificationService(data) {
   });
 }
 export function confirmBookingService(data) {
+  console.log(data);
   if (
     !data.email ||
+    !data.firstName ||
+    !data.lastName ||
     !data.status ||
     !data.date ||
     !data.time ||
@@ -40,13 +43,14 @@ export function confirmBookingService(data) {
       if (verify) {
         await Booking.findOneAndUpdate(
           {
-            doctor: data.doctor,
+            doctor: data.doctor._id,
             patient: data.patient,
-            time: data.time,
+            time: data.time.time._id,
             date: data.date,
           },
           { status: data.status }
         );
+        await sendEmailBookingDetail(data);
         resolve({
           errCode: 0,
           message: "Booking had been verified. Thank You!!!",
@@ -117,8 +121,8 @@ export function createBookingService(data) {
       });
       if (checkBooking) {
         resolve({
-          errCode: 2,
-          message: "Booking already been sent, waiting for verify",
+          errCode: 0,
+          message: "Booking already been created, waiting for verify",
         });
       } else {
         let booking = await Booking.create({
